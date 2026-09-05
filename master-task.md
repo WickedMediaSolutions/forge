@@ -1,4 +1,4 @@
-# Master Task List - Evennia Map Maker
+# Master Task List - Evennia Atlas
 
 ## Phase 1: Models & Coordinate System
 - [x] Direction enum (10 directions)

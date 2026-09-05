@@ -1,4 +1,4 @@
-# Evennia Map Maker
+# Evennia Atlas
 
 A Windows desktop application for visually creating and editing MUD areas for Evennia.
 
@@ -16,12 +16,12 @@ dotnet build
 
 ### Run
 ```powershell
-dotnet run --project EvenniaMapMaker
+dotnet run --project EvenniaAtlas
 ```
 
 Or run the built executable:
 ```powershell
-.\EvenniaMapMaker\bin\Debug\net8.0-windows\EvenniaMapMaker.exe
+.\EvenniaAtlas\bin\Debug\net8.0-windows\EvenniaAtlas.exe
 ```
 
 ## Basic Controls
