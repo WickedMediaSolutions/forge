@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="New Project" Width="400" Height="220"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize"
+        ResizeMode="NoResize" TextOptions.TextFormattingMode="Display"
         Background="#2D2D2D">
     <Grid Margin="20">
         <Grid.RowDefinitions>

@@ -1,0 +1,469 @@
+{
+  "areaId": "acceptance-v1",
+  "areaName": "V1 Acceptance Test Map",
+  "version": 1,
+  "rooms": [
+    {
+      "id": "acceptance_room_0001",
+      "title": "Acceptance Origin",
+      "roomType": "",
+      "description": "The central origin room for acceptance testing.",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "tags": [],
+      "notes": "",
+      "typeclassPath": "typeclasses.rooms.Room",
+      "aliases": [
+        {
+          "key": "workshop",
+          "category": "names"
+        }
+      ],
+      "evenniaTags": [
+        {
+          "key": "starter_area",
+          "category": "zone",
+          "data": "hub"
+        }
+      ],
+      "attributes": [
+        {
+          "key": "desc",
+          "value": "The central origin room.",
+          "category": "system",
+          "lockString": ""
+        }
+      ],
+      "permissions": [
+        "Builders"
+      ],
+      "lockString": "control:id({acceptance_origin_owner}) or perm(Builders)"
+    },
+    {
+      "id": "acceptance_room_0002",
+      "title": "Room B (North)",
+      "roomType": "",
+      "description": "",
+      "x": 0,
+      "y": -1,
+      "z": 0,
+      "tags": [],
+      "notes": "",
+      "typeclassPath": "",
+      "aliases": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": ""
+    },
+    {
+      "id": "acceptance_room_0003",
+      "title": "Room C (East)",
+      "roomType": "",
+      "description": "",
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "tags": [],
+      "notes": "",
+      "typeclassPath": "",
+      "aliases": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": ""
+    },
+    {
+      "id": "acceptance_room_0004",
+      "title": "Room D (Northeast)",
+      "roomType": "",
+      "description": "",
+      "x": 1,
+      "y": -1,
+      "z": 0,
+      "tags": [],
+      "notes": "",
+      "typeclassPath": "",
+      "aliases": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": ""
+    },
+    {
+      "id": "acceptance_room_0005",
+      "title": "Room E (West)",
+      "roomType": "",
+      "description": "",
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "tags": [],
+      "notes": "",
+      "typeclassPath": "",
+      "aliases": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": ""
+    },
+    {
+      "id": "acceptance_room_0006",
+      "title": "Room F (Up)",
+      "roomType": "",
+      "description": "",
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "tags": [],
+      "notes": "",
+      "typeclassPath": "",
+      "aliases": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": ""
+    },
+    {
+      "id": "acceptance_room_0007",
+      "title": "Room G (Down)",
+      "roomType": "",
+      "description": "",
+      "x": 0,
+      "y": 0,
+      "z": -1,
+      "tags": [],
+      "notes": "",
+      "typeclassPath": "",
+      "aliases": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": ""
+    }
+  ],
+  "exits": [
+    {
+      "sourceRoomId": "acceptance_room_0001",
+      "destinationRoomId": "acceptance_room_0002",
+      "direction": "north",
+      "reverseDirection": "south",
+      "isOneWay": false,
+      "exitType": "normal",
+      "aliases": [],
+      "key": "northern_exit",
+      "description": "Exit from Acceptance Origin north to Room B (North).",
+      "typeclassPath": "",
+      "aliasesList": [
+        {
+          "key": "northward",
+          "category": "directions"
+        }
+      ],
+      "evenniaTags": [
+        {
+          "key": "open_path",
+          "category": "exit_type",
+          "data": ""
+        }
+      ],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": null
+    },
+    {
+      "sourceRoomId": "acceptance_room_0002",
+      "destinationRoomId": "acceptance_room_0001",
+      "direction": "south",
+      "reverseDirection": "north",
+      "isOneWay": false,
+      "exitType": "normal",
+      "aliases": [],
+      "key": "south",
+      "description": "Exit from Room B (North) south to Acceptance Origin.",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": null
+    },
+    {
+      "sourceRoomId": "acceptance_room_0001",
+      "destinationRoomId": "acceptance_room_0003",
+      "direction": "east",
+      "reverseDirection": "west",
+      "isOneWay": false,
+      "exitType": "door",
+      "aliases": [],
+      "key": "east",
+      "description": "Exit from Acceptance Origin east to Room C (East).",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": {
+        "name": "Stone Door",
+        "startsOpen": false,
+        "startsClosed": true,
+        "startsLocked": true,
+        "keyId": "acceptance_test_key",
+        "sharedDoorId": "acceptance_door_ac",
+        "typeclass": "evennia.objects.objects.DefaultDoor",
+        "lockable": true,
+        "synchronizeOpposite": true,
+        "traverseLockString": "control:id({acceptance_door_owner})",
+        "lockedFailureMessage": "The stone door is securely locked.",
+        "closedFailureMessage": "The stone door is closed.",
+        "description": "A heavy stone door between origin and eastern room.",
+        "doorAliases": [
+          {
+            "key": "stone_door",
+            "category": "objects"
+          }
+        ],
+        "doorTags": [
+          {
+            "key": "heavy",
+            "category": "material",
+            "data": ""
+          }
+        ],
+        "doorAttributes": [
+          {
+            "key": "hardness",
+            "value": "10",
+            "category": "stats",
+            "lockString": ""
+          }
+        ],
+        "doorPermissions": [
+          "Adventurers"
+        ]
+      }
+    },
+    {
+      "sourceRoomId": "acceptance_room_0003",
+      "destinationRoomId": "acceptance_room_0001",
+      "direction": "west",
+      "reverseDirection": "east",
+      "isOneWay": false,
+      "exitType": "door",
+      "aliases": [],
+      "key": "west",
+      "description": "Exit from Room C (East) west to Acceptance Origin.",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": {
+        "name": "Stone Door",
+        "startsOpen": false,
+        "startsClosed": true,
+        "startsLocked": true,
+        "keyId": "acceptance_test_key",
+        "sharedDoorId": "acceptance_door_ac",
+        "typeclass": "evennia.objects.objects.DefaultDoor",
+        "lockable": true,
+        "synchronizeOpposite": true,
+        "traverseLockString": "control:id({acceptance_door_owner})",
+        "lockedFailureMessage": "The stone door is securely locked.",
+        "closedFailureMessage": "The stone door is closed.",
+        "description": "A heavy stone door between origin and eastern room.",
+        "doorAliases": [
+          {
+            "key": "stone_door",
+            "category": "objects"
+          }
+        ],
+        "doorTags": [
+          {
+            "key": "heavy",
+            "category": "material",
+            "data": ""
+          }
+        ],
+        "doorAttributes": [
+          {
+            "key": "hardness",
+            "value": "10",
+            "category": "stats",
+            "lockString": ""
+          }
+        ],
+        "doorPermissions": [
+          "Adventurers"
+        ]
+      }
+    },
+    {
+      "sourceRoomId": "acceptance_room_0001",
+      "destinationRoomId": "acceptance_room_0004",
+      "direction": "northeast",
+      "reverseDirection": "southwest",
+      "isOneWay": false,
+      "exitType": "normal",
+      "aliases": [],
+      "key": "northeast",
+      "description": "Exit from Acceptance Origin northeast to Room D (Northeast).",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": null
+    },
+    {
+      "sourceRoomId": "acceptance_room_0004",
+      "destinationRoomId": "acceptance_room_0001",
+      "direction": "southwest",
+      "reverseDirection": "northeast",
+      "isOneWay": false,
+      "exitType": "normal",
+      "aliases": [],
+      "key": "southwest",
+      "description": "Exit from Room D (Northeast) southwest to Acceptance Origin.",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": null
+    },
+    {
+      "sourceRoomId": "acceptance_room_0001",
+      "destinationRoomId": "acceptance_room_0005",
+      "direction": "west",
+      "reverseDirection": "east",
+      "isOneWay": false,
+      "exitType": "normal",
+      "aliases": [],
+      "key": "west",
+      "description": "Exit from Acceptance Origin west to Room E (West).",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": null
+    },
+    {
+      "sourceRoomId": "acceptance_room_0005",
+      "destinationRoomId": "acceptance_room_0001",
+      "direction": "east",
+      "reverseDirection": "west",
+      "isOneWay": false,
+      "exitType": "normal",
+      "aliases": [],
+      "key": "east",
+      "description": "Exit from Room E (West) east to Acceptance Origin.",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": null
+    },
+    {
+      "sourceRoomId": "acceptance_room_0001",
+      "destinationRoomId": "acceptance_room_0006",
+      "direction": "up",
+      "reverseDirection": "down",
+      "isOneWay": false,
+      "exitType": "normal",
+      "aliases": [],
+      "key": "up",
+      "description": "Exit from Acceptance Origin up to Room F (Up).",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": null
+    },
+    {
+      "sourceRoomId": "acceptance_room_0006",
+      "destinationRoomId": "acceptance_room_0001",
+      "direction": "down",
+      "reverseDirection": "up",
+      "isOneWay": false,
+      "exitType": "normal",
+      "aliases": [],
+      "key": "down",
+      "description": "Exit from Room F (Up) down to Acceptance Origin.",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": null
+    },
+    {
+      "sourceRoomId": "acceptance_room_0001",
+      "destinationRoomId": "acceptance_room_0007",
+      "direction": "down",
+      "reverseDirection": "up",
+      "isOneWay": false,
+      "exitType": "normal",
+      "aliases": [],
+      "key": "down",
+      "description": "Exit from Acceptance Origin down to Room G (Down).",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": null
+    },
+    {
+      "sourceRoomId": "acceptance_room_0007",
+      "destinationRoomId": "acceptance_room_0001",
+      "direction": "up",
+      "reverseDirection": "down",
+      "isOneWay": false,
+      "exitType": "normal",
+      "aliases": [],
+      "key": "up",
+      "description": "Exit from Room G (Down) up to Acceptance Origin.",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": null
+    },
+    {
+      "sourceRoomId": "acceptance_room_0002",
+      "destinationRoomId": "acceptance_room_0004",
+      "direction": "east",
+      "reverseDirection": "west",
+      "isOneWay": true,
+      "exitType": "normal",
+      "aliases": [],
+      "key": "east",
+      "description": "One-way exit from Room B east to Room D.",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "permissions": [],
+      "lockString": "",
+      "door": null
+    }
+  ]
+}

@@ -1,11 +1,11 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using EvenniaAtlas.Models;
-using EvenniaAtlas.ViewModels;
+using EvenniaMapMaker.Models;
+using EvenniaMapMaker.ViewModels;
 
-namespace EvenniaAtlas;
+namespace EvenniaMapMaker;
 
 public partial class MainWindow : Window
 {
@@ -22,6 +22,11 @@ public partial class MainWindow : Window
     private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         var p = e.PropertyName;
+        if (p is nameof(MainViewModel.IsRoomSelected) or nameof(MainViewModel.IsConnectionSelected))
+        {
+            NoSelText.Visibility = (!ViewModel.IsRoomSelected && !ViewModel.IsConnectionSelected)
+                ? Visibility.Visible : Visibility.Collapsed;
+        }
         if (p == nameof(MainViewModel.SelectedConnectionDirection) && !_suppressComboEvents)
             SyncDirectionCombo();
     }
@@ -76,32 +81,4 @@ public partial class MainWindow : Window
     private void Delete_Click(object s, RoutedEventArgs e) { ViewModel.DeleteSelected(); MapCanvasControl.RefreshMap(); }
     private void Undo_Click(object s, RoutedEventArgs e) { ViewModel.Undo(); MapCanvasControl.RefreshMap(); }
     private void Redo_Click(object s, RoutedEventArgs e) { ViewModel.Redo(); MapCanvasControl.RefreshMap(); }
-    private void Exit_Click(object s, RoutedEventArgs e) => Close();
-    private void Validate_Click(object s, RoutedEventArgs e) => ViewModel.ValidateProject();
-    private void ZoomIn_Click(object s, RoutedEventArgs e) => ViewModel.ZoomIn();
-    private void ZoomOut_Click(object s, RoutedEventArgs e) => ViewModel.ZoomOut();
-    private void Center_Click(object s, RoutedEventArgs e) => MapCanvasControl.CenterSelectedRoom();
-    private void Fit_Click(object s, RoutedEventArgs e) => MapCanvasControl.FitMap();
-
-    // Help menu handlers
-    private void HelpHowToUse_Click(object s, RoutedEventArgs e)
-    {
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(
-            "https://github.com/dirtysouthjosh/evennia-atlas#readme")
-            { UseShellExecute = true });
-    }
-
-    private void HelpGitHub_Click(object s, RoutedEventArgs e)
-    {
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(
-            "https://github.com/dirtysouthjosh/evennia-atlas")
-            { UseShellExecute = true });
-    }
-
-    private void HelpAbout_Click(object s, RoutedEventArgs e)
-    {
-        var dialog = new Dialogs.AboutDialog { Owner = this };
-        dialog.ShowDialog();
-    }
 }
-

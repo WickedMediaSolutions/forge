@@ -2,6 +2,7 @@
 
 public class RoomModel
 {
+    // Atlas core fields
     public string Id { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string RoomType { get; set; } = string.Empty;
@@ -9,8 +10,16 @@ public class RoomModel
     public int X { get; set; }
     public int Y { get; set; }
     public int Z { get; set; }
-    public List<string> Tags { get; set; } = new();
+    public List<string> Tags { get; set; } = new();        // Atlas convenience tags (comma-separated)
     public string Notes { get; set; } = string.Empty;
+
+    // Evennia-native metadata
+    public string TypeclassPath { get; set; } = string.Empty;
+    public System.Collections.ObjectModel.ObservableCollection<AliasModel> Aliases { get; set; } = new();
+    public System.Collections.ObjectModel.ObservableCollection<TagModel> EvenniaTags { get; set; } = new();
+    public System.Collections.ObjectModel.ObservableCollection<AttributeModel> Attributes { get; set; } = new();
+    public string LockString { get; set; } = string.Empty;
+    public System.Collections.ObjectModel.ObservableCollection<string> Permissions { get; set; } = new();
 
     [System.Text.Json.Serialization.JsonIgnore]
     public string DisplayTitle => string.IsNullOrWhiteSpace(Title) ? Id : Title;

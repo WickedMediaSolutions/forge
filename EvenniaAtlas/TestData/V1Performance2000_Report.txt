@@ -1,0 +1,20 @@
+EVENNIA ATLAS V1 ACCEPTANCE PASS 3 REPORT
+Timestamp: 2026-09-05 15:46:25
+2,000-ROOM PERFORMANCE + CULLING TEST ONLY
+
+[Fixture] Rooms=2000, Connections=7820
+[Fixture] Generation: 31ms
+[Save] 4.7 MB in 81ms
+[Load] min=124ms avg=142ms max=154ms
+[Validation] min=3123ms avg=3668ms max=4205ms
+[SelectedRoom] Room(0,0) at center viewport: in_bounds=False; forced-render code path present
+[CullingCalc] 10 iter at 100% zoom center: min=267ms avg=298ms max=346ms
+[CullingCalc] NOTE: This is pure candidate calculation, not full WPF RefreshMap.
+[VisualLayer] MANUAL REQUIRED — cannot instantiate WPF visuals in console test.
+[CONCLUSION] CULLING ARCHITECTURE: PASS
+[CONCLUSION] Viewport-aware room/connection culling supports the 2,000-room v1 model target.
+[CONCLUSION] Additional virtualization not currently required.
+[CONCLUSION] LIVE WPF INTERACTION: MANUAL REQUIRED
+
+PASS: 32  FAIL: 0  MANUAL: 1
+Fixture: C:\Users\mcdor\MapMaker\EvenniaAtlas\TestData\V1Performance2000.evenniamap

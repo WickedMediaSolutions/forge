@@ -12,12 +12,20 @@
         <ScrollViewer x:Name="ScrollViewer"
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto"
-                      Background="#1E1E1E">
+                      Background="#1E1E1E"
+                      ScrollChanged="OnScrollChanged">
             <Canvas x:Name="MapSurface"
                     Width="14000" Height="14000"
                     Background="#252526"
                     MouseLeftButtonDown="OnMapMouseDown"
+                    MouseRightButtonDown="OnMapRightClick"
+                    MouseMove="OnMapMouseMove"
+                    MouseLeftButtonUp="OnMapMouseUp"
                     MouseWheel="OnMapWheel">
+                <Canvas.LayoutTransform>
+                    <ScaleTransform ScaleX="{Binding ZoomScale}"
+                                    ScaleY="{Binding ZoomScale}"/>
+                </Canvas.LayoutTransform>
                 <Canvas x:Name="GridLayer" />
                 <Canvas x:Name="ConnectionsLayer" />
                 <Canvas x:Name="RoomsLayer" />
