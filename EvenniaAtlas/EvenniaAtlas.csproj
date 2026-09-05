@@ -8,6 +8,13 @@
     <UseWPF>true</UseWPF>
     <RootNamespace>EvenniaAtlas</RootNamespace>
     <AssemblyName>EvenniaAtlas</AssemblyName>
+    <ApplicationIcon>EvenniaAtlas.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="EvenniaAtlas.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

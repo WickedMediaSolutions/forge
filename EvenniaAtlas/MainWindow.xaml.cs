@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using EvenniaAtlas.Models;
 using EvenniaAtlas.ViewModels;
 
@@ -15,8 +17,23 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        SetWindowIcon();
         DataContext = new MainViewModel();
         ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+    }
+
+    private void SetWindowIcon()
+    {
+        try
+        {
+            var iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EvenniaAtlas.ico");
+            if (File.Exists(iconPath))
+                Icon = BitmapFrame.Create(new Uri(iconPath));
+        }
+        catch
+        {
+            // Icon is non-critical; continue without it
+        }
     }
 
     private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
