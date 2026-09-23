@@ -72,6 +72,7 @@
                 <Run Text="• "/><Run FontWeight="SemiBold" Text="Map Canvas "/><Run Text="— The central area where rooms appear as nodes. Drag rooms to arrange them, and draw exit connections between them."/>
                 <LineBreak/>
                 <Run Text="• "/><Run FontWeight="SemiBold" Text="Properties Panel "/><Run Text="— Displays and lets you edit the selected room's attributes: name, description, coordinates, and other data."/>
+            </TextBlock>
 <TextBlock Text="Creating and Opening a Project" FontSize="13"
                        FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
             <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
@@ -95,6 +96,7 @@
             </TextBlock>
             <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
                 <Run Text="Once you save (File → Save or Ctrl+S), the star disappears. If you close the application or open another project while the star is showing, you will be prompted to save first. The indicator resets only when the in-memory project exactly matches the saved file."/>
+            </TextBlock>
 <Separator Background="#3E3E42" Height="1" Margin="0,16,0,16"/>
 
             <!-- ============================================ -->
@@ -118,7 +120,8 @@
                        FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
             <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
                 <Run Text="Opens an existing project file. Use "/><Run FontWeight="SemiBold" Text="File → Open Project"/><Run Text=" and browse to the project file. The editor loads all rooms, exits, spawns, game data, and other saved content from the file. If the currently open project has unsaved changes, you are prompted to save or discard them before the new project loads."/>
-<TextBlock Text="Save" FontSize="13"
+            </TextBlock>
+            <TextBlock Text="Save" FontSize="13"
                        FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
             <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
                 <Run Text="Writes the current state of the project to its associated file on disk. Use "/><Run FontWeight="SemiBold" Text="File → Save"/><Run Text=" or press "/><Run FontWeight="SemiBold" Text="Ctrl+S"/><Run Text=". If the project has not been saved before (no file path is set), Save behaves identically to Save As and opens a file-save dialog."/>

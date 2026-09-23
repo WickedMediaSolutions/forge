@@ -274,6 +274,123 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
+<!-- EVENNIA -->
+                        <Expander Header="EVENNIA" IsExpanded="False"
+                                  Foreground="#E0E0E0" FontSize="12" FontWeight="SemiBold"
+                                  Background="#2D2D2D" BorderBrush="#3E3E42"
+                                  Margin="0,8,0,0" Padding="4">
+                            <StackPanel Margin="4,4,0,0">
+                                <TextBlock Text="Typeclass Path" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                                <TextBox Text="{Binding SelectedRoomTypeclassPath, UpdateSourceTrigger=PropertyChanged}"
+                                         Margin="0,0,0,6"/>
+
+                                <TextBlock Text="Lock String" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                                <TextBox Text="{Binding SelectedRoomLockString, UpdateSourceTrigger=PropertyChanged}"
+                                         Margin="0,0,0,8"/>
+
+                                <!-- ALIASES -->
+                                <TextBlock Text="Aliases (Key / Category)" Foreground="#808080" FontSize="11" FontWeight="SemiBold" Margin="0,4,0,2"/>
+                                <Button Content="+" Click="AddRoomAlias_Click" Width="22" Height="22"
+                                        FontSize="11" Padding="0" Margin="0,0,0,2"/>
+                                <ItemsControl ItemsSource="{Binding RoomAliases}" Margin="0,0,0,6">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="20"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                <TextBox Grid.Column="1" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                <Button Grid.Column="2" Content="×" Click="RemoveRoomAlias_Click" Width="18" Height="18"
+                                                        FontSize="10" Padding="0"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <!-- TAGS -->
+                                <TextBlock Text="Tags (Key / Category / Data)" Foreground="#808080" FontSize="11" FontWeight="SemiBold" Margin="0,4,0,2"/>
+                                <Button Content="+" Click="AddRoomEvenniaTag_Click" Width="22" Height="22"
+                                        FontSize="11" Padding="0" Margin="0,0,0,2"/>
+                                <ItemsControl ItemsSource="{Binding RoomEvenniaTags}" Margin="0,0,0,6">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="20"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                <TextBox Grid.Column="1" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                <TextBox Grid.Column="2" Text="{Binding Data, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                <Button Grid.Column="3" Content="×" Click="RemoveRoomEvenniaTag_Click" Width="18" Height="18"
+                                                        FontSize="10" Padding="0"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <!-- ATTRIBUTES -->
+                                <TextBlock Text="Attributes (Key / Value / Category / LockString)" Foreground="#808080" FontSize="11" FontWeight="SemiBold" Margin="0,4,0,2"/>
+                                <Button Content="+" Click="AddRoomAttribute_Click" Width="22" Height="22"
+                                        FontSize="11" Padding="0" Margin="0,0,0,2"/>
+                                <ItemsControl ItemsSource="{Binding RoomAttributes}" Margin="0,0,0,6">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0" Margin="0,1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="20"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                    <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                    <Button Grid.Column="2" Content="×" Click="RemoveRoomAttribute_Click" Width="18" Height="18"
+                                                            FontSize="10" Padding="0"/>
+                                                </Grid>
+                                                <Grid Grid.Row="1" Margin="0,1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                    <TextBox Grid.Column="1" Text="{Binding LockString, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </Grid>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <!-- PERMISSIONS -->
+                                <TextBlock Text="Permissions" Foreground="#808080" FontSize="11" FontWeight="SemiBold" Margin="0,4,0,2"/>
+                                <Button Content="+" Click="AddRoomPermission_Click" Width="22" Height="22"
+                                        FontSize="11" Padding="0" Margin="0,0,0,2"/>
+                                <ItemsControl ItemsSource="{Binding RoomPermissions}" Margin="0,0,0,6">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="20"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Grid.Column="0" Text="{Binding ., Mode=OneWay}" LostFocus="PermissionTextBox_LostFocus" Margin="0,0,2,0"/>
+                                                <Button Grid.Column="1" Content="×" Click="RemoveRoomPermission_Click" Width="18" Height="18"
+                                                        FontSize="10" Padding="0"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Expander>
                         <TextBlock Text="EXITS" FontWeight="SemiBold" Foreground="#E0E0E0" Margin="0,8,0,4"/>
                         <ItemsControl ItemsSource="{Binding RoomExits}">
                             <ItemsControl.ItemTemplate>
@@ -322,6 +439,162 @@
                                   IsChecked="{Binding SelectedConnectionIsOneWay}"
                                   Margin="0,0,0,6"/>
 
+<!-- EVENNIA EXIT METADATA -->
+                        <Expander Header="EVENNIA EXIT" IsExpanded="False"
+                                  Foreground="#E0E0E0" FontSize="12" FontWeight="SemiBold"
+                                  Background="#2D2D2D" BorderBrush="#3E3E42"
+                                  Margin="0,8,0,0" Padding="4">
+                            <StackPanel Margin="4,4,0,0">
+<TextBlock Text="Key Name" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                                <TextBox Text="{Binding SelectedConnectionKeyName, UpdateSourceTrigger=PropertyChanged}"
+                                         Margin="0,0,0,6"/>
+<TextBlock Text="Description" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                                <TextBox Text="{Binding SelectedConnectionDescription, UpdateSourceTrigger=PropertyChanged}"
+                                         Margin="0,0,0,6"/>
+
+                                <TextBlock Text="Typeclass Path" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                                <TextBox Text="{Binding SelectedConnectionTypeclassPath, UpdateSourceTrigger=PropertyChanged}"
+                                         Margin="0,0,0,6"/>
+<TextBlock Text="Source Room ID" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                                <TextBlock Text="{Binding SelectedConnectionSrcId}" Foreground="#B0B0B0" FontSize="11"
+                                           Margin="0,0,0,6"/>
+
+                                <TextBlock Text="Destination Room ID" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                                <TextBlock Text="{Binding SelectedConnectionDstId}" Foreground="#B0B0B0" FontSize="11"
+                                           Margin="0,0,0,6"/>
+<!-- ALIASES -->
+                                <Grid Margin="0,4,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Aliases" Foreground="#808080" FontSize="11" VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" Content="+" Width="24" Height="22"
+                                            Click="AddConnectionAlias_Click"
+                                            Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                </Grid>
+                                <ItemsControl ItemsSource="{Binding ConnectionAliases}" Margin="0,2,0,4">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                <TextBox Grid.Column="1" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,2,0"/>
+                                                <Button Grid.Column="2" Content="X" Width="22" Height="22"
+                                                        Click="RemoveConnectionAlias_Click"
+                                                        Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+<!-- TAGS -->
+                                <Grid Margin="0,4,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Tags" Foreground="#808080" FontSize="11" VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" Content="+" Width="24" Height="22"
+                                            Click="AddConnectionTag_Click"
+                                            Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                </Grid>
+                                <ItemsControl ItemsSource="{Binding ConnectionTags}" Margin="0,2,0,4">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                <TextBox Grid.Column="1" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,2,0"/>
+                                                <TextBox Grid.Column="2" Text="{Binding Data, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,2,0"/>
+                                                <Button Grid.Column="3" Content="X" Width="22" Height="22"
+                                                        Click="RemoveConnectionTag_Click"
+                                                        Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+<!-- ATTRIBUTES -->
+                                <Grid Margin="0,4,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Attributes" Foreground="#808080" FontSize="11" VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" Content="+" Width="24" Height="22"
+                                            Click="AddConnectionAttribute_Click"
+                                            Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                </Grid>
+                                <ItemsControl ItemsSource="{Binding ConnectionAttributes}" Margin="0,2,0,4">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Margin="0,1">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                    <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,2,0"/>
+                                                    <Button Grid.Column="2" Content="X" Width="22" Height="22"
+                                                            Click="RemoveConnectionAttribute_Click"
+                                                            Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                                </Grid>
+                                                <Grid Margin="0,2,0,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                    <TextBox Grid.Column="1" Text="{Binding LockString, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,0,0"/>
+                                                </Grid>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+<!-- PERMISSIONS -->
+                                <Grid Margin="0,4,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Permissions" Foreground="#808080" FontSize="11" VerticalAlignment="Center"/>
+                                    <Button Grid.Column="1" Content="+" Width="24" Height="22"
+                                            Click="AddConnectionPermission_Click"
+                                            Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                </Grid>
+                                <ItemsControl ItemsSource="{Binding ConnectionPermissions}" Margin="0,2,0,4">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Grid.Column="0" Text="{Binding ., Mode=OneTime}"
+                                                         LostFocus="ConnectionPermissionTextBox_LostFocus" Margin="0,0,2,0"/>
+                                                <Button Grid.Column="1" Content="X" Width="22" Height="22"
+                                                        Click="RemoveConnectionPermission_Click"
+                                                        Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+<!-- LOCK STRING -->
+                                <TextBlock Text="Lock String" Foreground="#808080" FontSize="11" Margin="0,4,0,2"/>
+                                <TextBox Text="{Binding SelectedConnectionLockString, UpdateSourceTrigger=PropertyChanged}"
+                                         Margin="0,0,0,6"/>
+</StackPanel>
+                        </Expander>
                         <StackPanel Visibility="{Binding ShowDoorProperties, Converter={StaticResource BoolToVis}}">
                             <TextBlock Text="DOOR" FontSize="12" FontWeight="SemiBold"
                                        Foreground="#E0E0E0" Margin="0,8,0,6"/>
@@ -345,6 +618,171 @@
                             <TextBlock Text="Key ID" Foreground="#808080" FontSize="11" Margin="0,4,0,2"/>
                             <TextBox Text="{Binding SelectedConnectionKeyId, UpdateSourceTrigger=PropertyChanged}"
                                      Margin="0,0,0,6"/>
+
+                            <Expander Header="EVENNIA DOOR" IsExpanded="False"
+                                      Foreground="#E0E0E0" FontSize="12" FontWeight="SemiBold"
+                                      Background="#2D2D2D" BorderBrush="#3E3E42"
+                                      Margin="0,8,0,0" Padding="4">
+                                <StackPanel Margin="4,4,0,0">
+                                    <TextBlock Text="Typeclass" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                                    <TextBox Text="{Binding SelectedDoorTypeclass, UpdateSourceTrigger=PropertyChanged}"
+                                             Margin="0,0,0,6"/>
+
+                                    <CheckBox Content="Lockable"
+                                              IsChecked="{Binding SelectedDoorLockable}"
+                                              Margin="0,0,0,4"/>
+                                    <CheckBox Content="Synchronize Opposite"
+                                              IsChecked="{Binding SelectedDoorSynchronizeOpposite}"
+                                              Margin="0,0,0,4"/>
+
+                                    <TextBlock Text="Traverse Lock String" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                                    <TextBox Text="{Binding SelectedDoorTraverseLockString, UpdateSourceTrigger=PropertyChanged}"
+                                             Margin="0,0,0,6"/>
+
+                                    <TextBlock Text="Locked Failure Message" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                                    <TextBox Text="{Binding SelectedDoorLockedFailure, UpdateSourceTrigger=PropertyChanged}"
+                                             Margin="0,0,0,6"/>
+
+                                    <TextBlock Text="Closed Failure Message" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                                    <TextBox Text="{Binding SelectedDoorClosedFailure, UpdateSourceTrigger=PropertyChanged}"
+                                             Margin="0,0,0,6"/>
+
+                                    <TextBlock Text="Description" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                                    <TextBox Text="{Binding SelectedDoorDescription, UpdateSourceTrigger=PropertyChanged}"
+                                             Margin="0,0,0,6"/>
+
+                                    <!-- ALIASES -->
+                                    <Grid Margin="0,4,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Aliases" Foreground="#808080" FontSize="11" VerticalAlignment="Center"/>
+                                        <Button Grid.Column="1" Content="+" Width="24" Height="22"
+                                                Click="AddDoorAlias_Click"
+                                                Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                    </Grid>
+                                    <ItemsControl ItemsSource="{Binding DoorAliases}" Margin="0,2,0,4">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                    <TextBox Grid.Column="1" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,2,0"/>
+                                                    <Button Grid.Column="2" Content="X" Width="22" Height="22"
+                                                            Click="RemoveDoorAlias_Click"
+                                                            Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <!-- TAGS -->
+                                    <Grid Margin="0,4,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Tags" Foreground="#808080" FontSize="11" VerticalAlignment="Center"/>
+                                        <Button Grid.Column="1" Content="+" Width="24" Height="22"
+                                                Click="AddDoorTag_Click"
+                                                Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                    </Grid>
+                                    <ItemsControl ItemsSource="{Binding DoorTags}" Margin="0,2,0,4">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                    <TextBox Grid.Column="1" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,2,0"/>
+                                                    <TextBox Grid.Column="2" Text="{Binding Data, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,2,0"/>
+                                                    <Button Grid.Column="3" Content="X" Width="22" Height="22"
+                                                            Click="RemoveDoorTag_Click"
+                                                            Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <!-- ATTRIBUTES -->
+                                    <Grid Margin="0,4,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Attributes" Foreground="#808080" FontSize="11" VerticalAlignment="Center"/>
+                                        <Button Grid.Column="1" Content="+" Width="24" Height="22"
+                                                Click="AddDoorAttribute_Click"
+                                                Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                    </Grid>
+                                    <ItemsControl ItemsSource="{Binding DoorAttributes}" Margin="0,2,0,4">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                        <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,2,0"/>
+                                                        <Button Grid.Column="2" Content="X" Width="22" Height="22"
+                                                                Click="RemoveDoorAttribute_Click"
+                                                                Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                                    </Grid>
+                                                    <Grid Margin="0,2,0,0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBox Grid.Column="0" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                                                        <TextBox Grid.Column="1" Text="{Binding LockString, UpdateSourceTrigger=PropertyChanged}" Margin="2,0,0,0"/>
+                                                    </Grid>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <!-- PERMISSIONS -->
+                                    <Grid Margin="0,4,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Permissions" Foreground="#808080" FontSize="11" VerticalAlignment="Center"/>
+                                        <Button Grid.Column="1" Content="+" Width="24" Height="22"
+                                                Click="AddDoorPermission_Click"
+                                                Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                    </Grid>
+                                    <ItemsControl ItemsSource="{Binding DoorPermissions}" Margin="0,2,0,4">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0,1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBox Grid.Column="0" Text="{Binding ., Mode=OneTime}"
+                                                             LostFocus="DoorPermissionTextBox_LostFocus" Margin="0,0,2,0"/>
+                                                    <Button Grid.Column="1" Content="X" Width="22" Height="22"
+                                                            Click="RemoveDoorPermission_Click"
+                                                            Style="{StaticResource ToolbarButtonStyle}" Padding="0"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Expander>
                         </StackPanel>
                     </StackPanel>
 

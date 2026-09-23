@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using EvenniaAtlas.Models;
 using EvenniaAtlas.ViewModels;
 
@@ -16,6 +17,11 @@ public partial class ItemEditorWindow : Window
         vm.MarkDirtyCallback = markDirtyCallback;
         vm.SetProject(project);
         DataContext = vm;
+
+        // Any TwoWay binding edit marks the project dirty — even without changing selection
+        AddHandler(Binding.SourceUpdatedEvent,
+            new EventHandler<DataTransferEventArgs>((_, _) => vm.MarkDirtyCallback?.Invoke()),
+            handledEventsToo: true);
     }
 
     private void ItemTypeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -547,7 +547,10 @@ public class MainViewModel : BaseViewModel
 
     private void DeleteConnection(ConnectionModel conn)
     {
-        var rev = Connections.FirstOrDefault(c => c.SharedDoorId == conn.SharedDoorId && c.Id != conn.Id);
+        // Door connections: match by SharedDoorId.  Normal exits (empty SharedDoorId): use structural reverse matching.
+        var rev = string.IsNullOrEmpty(conn.SharedDoorId)
+            ? FindReverseConnection(conn)
+            : FindReverseByDoorId(conn.SharedDoorId, conn.Id);
         Connections.Remove(conn); if (rev != null) Connections.Remove(rev); _project.Connections = Connections.ToList();
         PushUndo("Delete " + conn.Id, () => { Connections.Add(conn); if (rev != null) Connections.Add(rev); _project.Connections = Connections.ToList(); RefreshMap(); }, () => { Connections.Remove(conn); if (rev != null) Connections.Remove(rev); _project.Connections = Connections.ToList(); RefreshMap(); });
         SelectedConnection = null; MarkDirty(); RefreshMap();

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -69,6 +70,138 @@ public partial class MainWindow : Window
     private void ConnectionListItem_Click(object sender, MouseButtonEventArgs e)
     {
         if (sender is Border b && b.DataContext is ConnectionModel conn) ViewModel.SelectedConnection = conn;
+    }
+
+    // Evennia room metadata handlers
+    private void AddRoomAlias_Click(object sender, RoutedEventArgs e) => ViewModel.AddRoomAlias();
+    private void RemoveRoomAlias_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && b.DataContext is AliasModel alias) ViewModel.RemoveRoomAlias(alias);
+    }
+
+    private void AddRoomEvenniaTag_Click(object sender, RoutedEventArgs e) => ViewModel.AddRoomEvenniaTag();
+    private void RemoveRoomEvenniaTag_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && b.DataContext is TagModel tag) ViewModel.RemoveRoomEvenniaTag(tag);
+    }
+
+    private void AddRoomAttribute_Click(object sender, RoutedEventArgs e) => ViewModel.AddRoomAttribute();
+    private void RemoveRoomAttribute_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && b.DataContext is AttributeModel attr) ViewModel.RemoveRoomAttribute(attr);
+    }
+
+    private void AddRoomPermission_Click(object sender, RoutedEventArgs e) => ViewModel.AddRoomPermission();
+    private void RemoveRoomPermission_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && b.DataContext is string perm) ViewModel.RemoveRoomPermission(perm);
+    }
+// Evennia connection metadata handlers
+    private void AddConnectionAlias_Click(object sender, RoutedEventArgs e) => ViewModel.AddConnectionAlias();
+    private void RemoveConnectionAlias_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && b.DataContext is AliasModel alias) ViewModel.RemoveConnectionAlias(alias);
+    }
+
+    private void AddConnectionTag_Click(object sender, RoutedEventArgs e) => ViewModel.AddConnectionTag();
+    private void RemoveConnectionTag_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && b.DataContext is TagModel tag) ViewModel.RemoveConnectionTag(tag);
+    }
+
+    private void AddConnectionAttribute_Click(object sender, RoutedEventArgs e) => ViewModel.AddConnectionAttribute();
+    private void RemoveConnectionAttribute_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && b.DataContext is AttributeModel attr) ViewModel.RemoveConnectionAttribute(attr);
+    }
+
+    private void AddConnectionPermission_Click(object sender, RoutedEventArgs e) => ViewModel.AddConnectionPermission();
+    private void RemoveConnectionPermission_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && b.DataContext is string perm) ViewModel.RemoveConnectionPermission(perm);
+    }
+
+    // Evennia door metadata handlers
+    private void AddDoorAlias_Click(object sender, RoutedEventArgs e) => ViewModel.AddDoorAlias();
+    private void RemoveDoorAlias_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && b.DataContext is AliasModel alias) ViewModel.RemoveDoorAlias(alias);
+    }
+
+    private void AddDoorTag_Click(object sender, RoutedEventArgs e) => ViewModel.AddDoorTag();
+    private void RemoveDoorTag_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && b.DataContext is TagModel tag) ViewModel.RemoveDoorTag(tag);
+    }
+
+    private void AddDoorAttribute_Click(object sender, RoutedEventArgs e) => ViewModel.AddDoorAttribute();
+    private void RemoveDoorAttribute_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && b.DataContext is AttributeModel attr) ViewModel.RemoveDoorAttribute(attr);
+    }
+
+    private void AddDoorPermission_Click(object sender, RoutedEventArgs e) => ViewModel.AddDoorPermission();
+    private void RemoveDoorPermission_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button b && b.DataContext is string perm) ViewModel.RemoveDoorPermission(perm);
+    }
+
+    private void DoorPermissionTextBox_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (sender is not TextBox tb) return;
+        if (tb.DataContext is not string originalValue) return;
+        var perms = ViewModel.DoorPermissions;
+        if (perms == null) return;
+
+        var idx = FindPermissionIndex(perms, originalValue);
+        if (idx < 0) return;
+
+        string newValue = tb.Text ?? string.Empty;
+        if (newValue == originalValue) return;
+
+        perms[idx] = newValue;
+        ViewModel.MarkDirtyPublic();
+    }
+
+    private void ConnectionPermissionTextBox_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (sender is not TextBox tb) return;
+        if (tb.DataContext is not string originalValue) return;
+        var perms = ViewModel.ConnectionPermissions;
+        if (perms == null) return;
+
+        var idx = FindPermissionIndex(perms, originalValue);
+        if (idx < 0) return;
+
+        string newValue = tb.Text ?? string.Empty;
+        if (newValue == originalValue) return;
+
+        perms[idx] = newValue;
+        ViewModel.MarkDirtyPublic();
+    }
+
+    private void PermissionTextBox_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (sender is not TextBox tb) return;
+        if (tb.DataContext is not string originalValue) return;
+        var perms = ViewModel.RoomPermissions;
+        if (perms == null) return;
+
+        var idx = FindPermissionIndex(perms, originalValue);
+        if (idx < 0) return;
+
+        string newValue = tb.Text ?? string.Empty;
+        if (newValue == originalValue) return;
+
+        perms[idx] = newValue;
+        ViewModel.MarkDirtyPublic();
+    }
+
+    private static int FindPermissionIndex(ObservableCollection<string> perms, string target)
+    {
+        for (int i = 0; i < perms.Count; i++)
+            if (ReferenceEquals(perms[i], target)) return i;
+        return -1;
     }
 
     private void Window_Closing(object sender, CancelEventArgs e) { if (!ViewModel.ConfirmClose()) e.Cancel = true; }

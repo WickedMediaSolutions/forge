@@ -16,12 +16,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Images\the-forge-logo-ico.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Images\the-forge-banner-100.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Resource Include="Images\the-forge-logo-ico.png" />
+    <Resource Include="Images\the-forge-banner-100.png" />
   </ItemGroup>
 
 </Project>

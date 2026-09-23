@@ -74,6 +74,8 @@ public class GameDataViewModel : BaseViewModel
             if (SetField(ref _selectedDamageType, value))
             {
                 if (old != null) MarkDirty();
+                OnPropertyChanged(nameof(ActiveSelectedEntry));
+                OnPropertyChanged(nameof(HasActiveSelectedEntry));
             }
         }
     }
@@ -88,6 +90,8 @@ public class GameDataViewModel : BaseViewModel
             if (SetField(ref _selectedFaction, value))
             {
                 if (old != null) MarkDirty();
+                OnPropertyChanged(nameof(ActiveSelectedEntry));
+                OnPropertyChanged(nameof(HasActiveSelectedEntry));
             }
         }
     }
@@ -102,6 +106,8 @@ public class GameDataViewModel : BaseViewModel
             if (SetField(ref _selectedProfession, value))
             {
                 if (old != null) MarkDirty();
+                OnPropertyChanged(nameof(ActiveSelectedEntry));
+                OnPropertyChanged(nameof(HasActiveSelectedEntry));
             }
         }
     }
@@ -116,6 +122,8 @@ public class GameDataViewModel : BaseViewModel
             if (SetField(ref _selectedSpecies, value))
             {
                 if (old != null) MarkDirty();
+                OnPropertyChanged(nameof(ActiveSelectedEntry));
+                OnPropertyChanged(nameof(HasActiveSelectedEntry));
             }
         }
     }
@@ -130,6 +138,8 @@ public class GameDataViewModel : BaseViewModel
             if (SetField(ref _selectedAlignment, value))
             {
                 if (old != null) MarkDirty();
+                OnPropertyChanged(nameof(ActiveSelectedEntry));
+                OnPropertyChanged(nameof(HasActiveSelectedEntry));
             }
         }
     }
