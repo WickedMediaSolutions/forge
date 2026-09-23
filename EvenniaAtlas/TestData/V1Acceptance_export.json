@@ -1,7 +1,7 @@
 {
   "areaId": "acceptance-v1",
   "areaName": "V1 Acceptance Test Map",
-  "version": 1,
+  "version": 2,
   "rooms": [
     {
       "id": "acceptance_room_0001",

@@ -1,13 +1,13 @@
-; Evennia Atlas - Inno Setup Installer Script
+; Rites of Passage: The Forge - Inno Setup Installer Script
 ; Version 1.0.0
 ; Target: Windows x64, Per-User Installation
 
-#define MyAppName "Evennia Atlas"
+#define MyAppName "Rites of Passage: The Forge"
 #define MyAppVersion "1.0.0"
 #define MyAppPublisher "Wicked Media Solutions"
 #define MyAppDescription "Visual World & Map Editor for Evennia"
 #define MyAppExeName "EvenniaAtlas.exe"
-#define MySourceDir "..\publish\temp"
+#define MySourceDir "..\EvenniaAtlas\publish\release"
 
 [Setup]
 AppId={{B8A7D3E2-F1C0-4B5A-9D8E-7F6A5B4C3D2E}}
@@ -22,11 +22,11 @@ ArchitecturesAllowed=x64os
 ArchitecturesInstallIn64BitMode=x64compatible
 PrivilegesRequired=lowest
 OutputDir=.\
-OutputBaseFilename=EvenniaAtlas-Setup-1.0.0
+OutputBaseFilename=Rites-of-Passage-The-Forge-Setup-1.0.0
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
-SetupIconFile=..\EvenniaAtlas\EvenniaAtlas.ico
+SetupIconFile=..\EvenniaAtlas\Images\the-forge-logo.ico
 WizardSmallImageFile=WizardSmallImage.bmp
 WizardImageFile=WizardImageFile.bmp
 UninstallDisplayName={#MyAppName}
@@ -54,5 +54,5 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#MyAppName}}"; Flags: nowait postinstall skipifsilent
 
 [Messages]
-WelcomeLabel1=Welcome to the Evennia Atlas Setup Wizard
-WelcomeLabel2=This will install Evennia Atlas on your computer.
+WelcomeLabel1=Welcome to the Rites of Passage: The Forge Setup Wizard
+WelcomeLabel2=This will install Rites of Passage: The Forge on your computer.

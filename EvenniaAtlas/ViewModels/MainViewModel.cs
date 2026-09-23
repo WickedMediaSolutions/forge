@@ -1,6 +1,7 @@
 
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 using EvenniaAtlas.Models;
 using EvenniaAtlas.Services;
 using Microsoft.Win32;
@@ -16,6 +17,7 @@ public class MainViewModel : BaseViewModel
     private bool _isDirty;
     private int _roomCounter;
     private int _connectionCounter;
+    private int _spawnCounter = 1;
     private readonly Stack<UndoAction> _undoStack = new();
     private readonly Stack<UndoAction> _redoStack = new();
     private bool _firstRoomPrompted;
@@ -26,11 +28,22 @@ public class MainViewModel : BaseViewModel
     {
         Rooms = new ObservableCollection<RoomModel>();
         Connections = new ObservableCollection<ConnectionModel>();
+
+        AddItemSpawnCommand = new RelayCommand(_ => AddItemSpawn(), _ => SelectedRoom != null && _project != null);
+        RemoveItemSpawnCommand = new RelayCommand(_ => RemoveItemSpawn(), _ => HasSelectedItemSpawn);
+        AddNpcSpawnCommand = new RelayCommand(_ => AddNpcSpawn(), _ => SelectedRoom != null && _project != null);
+        RemoveNpcSpawnCommand = new RelayCommand(_ => RemoveNpcSpawn(), _ => HasSelectedNpcSpawn);
+
         StartNewProject();
     }
 
     public ObservableCollection<RoomModel> Rooms { get; }
     public ObservableCollection<ConnectionModel> Connections { get; }
+    public ObservableCollection<SpawnEntryViewModel> SelectedRoomItemSpawns { get; } = new();
+    public ObservableCollection<SpawnEntryViewModel> SelectedRoomNpcSpawns { get; } = new();
+    public MapProject CurrentProject => _project;
+    public IEnumerable<ItemModel> AvailableItems => _project?.Items ?? Enumerable.Empty<ItemModel>();
+    public IEnumerable<NpcModel> AvailableNpcs => _project?.Npcs ?? Enumerable.Empty<NpcModel>();
     public event Action? MapNeedsRefresh;
 
     private int _currentZ;
@@ -74,11 +87,11 @@ public class MainViewModel : BaseViewModel
     public string ProjectName => _project.Name;
     public string ProjectId => _project.Id;
     public bool IsDirty => _isDirty;
-    public string TitleBarText { get { var n = string.IsNullOrEmpty(_project.Name) ? "Untitled" : _project.Name; return "Evennia Atlas - " + n + (_isDirty ? " *" : ""); } }
+    public string TitleBarText { get { var n = string.IsNullOrEmpty(_project.Name) ? "Untitled" : _project.Name; return "Rites of Passage: The Forge - " + n + (_isDirty ? " *" : ""); } }
     public string StatusText { get { var sel = SelectedRoom; if (sel != null) return "Room: " + sel.Id + "  (" + sel.X + ", " + sel.Y + ", " + sel.Z + ")"; return "Rooms: " + Rooms.Count + "  Exits: " + Connections.Count + "  " + FloorLabel; } }
 
     private RoomModel? _selectedRoom;
-    public RoomModel? SelectedRoom { get => _selectedRoom; set { if (!SetField(ref _selectedRoom, value)) return; SelectedConnection = null; FireRoomPropsChanged(); OnPropertyChanged(nameof(StatusText)); } }
+    public RoomModel? SelectedRoom { get => _selectedRoom; set { if (!SetField(ref _selectedRoom, value)) return; SelectedConnection = null; SelectedItemSpawn = null; SelectedNpcSpawn = null; SyncSelectedRoomSpawns(); FireRoomPropsChanged(); OnPropertyChanged(nameof(StatusText)); } }
 
     private ConnectionModel? _selectedConnection;
     public ConnectionModel? SelectedConnection { get => _selectedConnection; set { if (!SetField(ref _selectedConnection, value)) return; if (value != null && _selectedRoom != null) { _selectedRoom = null; FireRoomPropsChanged(); } OnPropertyChanged(nameof(IsRoomSelected)); OnPropertyChanged(nameof(IsConnectionSelected)); OnPropertyChanged(nameof(StatusText)); FireConnPropsChanged(); } }
@@ -86,6 +99,38 @@ public class MainViewModel : BaseViewModel
     public bool IsRoomSelected => _selectedRoom != null;
     public bool IsConnectionSelected => _selectedConnection != null;
     public bool IsDoorSelected => SelectedConnection?.ExitType == ExitType.Door;
+
+    private SpawnEntryViewModel? _selectedItemSpawn;
+    public SpawnEntryViewModel? SelectedItemSpawn
+    {
+        get => _selectedItemSpawn;
+        set
+        {
+            if (!SetField(ref _selectedItemSpawn, value)) return;
+            OnPropertyChanged(nameof(HasSelectedItemSpawn));
+        }
+    }
+    public bool HasSelectedItemSpawn => _selectedItemSpawn != null;
+
+    private SpawnEntryViewModel? _selectedNpcSpawn;
+    public SpawnEntryViewModel? SelectedNpcSpawn
+    {
+        get => _selectedNpcSpawn;
+        set
+        {
+            if (!SetField(ref _selectedNpcSpawn, value)) return;
+            OnPropertyChanged(nameof(HasSelectedNpcSpawn));
+        }
+    }
+    public bool HasSelectedNpcSpawn => _selectedNpcSpawn != null;
+
+    // ---- Spawn commands ----
+
+    public ICommand AddItemSpawnCommand { get; }
+    public ICommand RemoveItemSpawnCommand { get; }
+    public ICommand AddNpcSpawnCommand { get; }
+    public ICommand RemoveNpcSpawnCommand { get; }
+
     public bool ShowDoorProperties => SelectedConnection?.ExitType == ExitType.Door;
 
     public string? SelectedRoomTitle { get => _selectedRoom?.Title; set { if (_selectedRoom != null) { _selectedRoom.Title = value ?? ""; MarkDirty(); OnPropertyChanged(); RefreshStatus(); } } }
@@ -279,6 +324,42 @@ public class MainViewModel : BaseViewModel
     private void RefreshStatus() { OnPropertyChanged(nameof(StatusText)); }
     private void RefreshMap() { MapNeedsRefresh?.Invoke(); }
 
+    // ---- Spawn synchronization ----
+
+    public void SyncSelectedRoomSpawns()
+    {
+        SelectedRoomItemSpawns.Clear();
+        SelectedRoomNpcSpawns.Clear();
+
+        if (_project == null || SelectedRoom == null)
+            return;
+
+        foreach (var spawn in _project.Spawns)
+        {
+            if (spawn.RoomId != SelectedRoom.Id)
+                continue;
+
+            var wrapper = new SpawnEntryViewModel(spawn, AvailableItems, AvailableNpcs, MarkDirty);
+
+            if (spawn.EntityType == EntityType.Item)
+                SelectedRoomItemSpawns.Add(wrapper);
+            else if (spawn.EntityType == EntityType.Npc)
+                SelectedRoomNpcSpawns.Add(wrapper);
+        }
+    }
+
+    private string GenerateSpawnId()
+    {
+        string candidate;
+        do
+        {
+            candidate = _project.Id + "_spawn_" + _spawnCounter.ToString("D4");
+            _spawnCounter++;
+        }
+        while (_project.Spawns.Any(s => s.Id == candidate));
+        return candidate;
+    }
+
     // CENTRAL EXIT CREATION - only CreateConnection creates exits
     public RoomModel? CreateRoomAt(int x, int y, int z, bool refresh = true)
     {
@@ -418,6 +499,45 @@ public class MainViewModel : BaseViewModel
 
     public void DeleteRoom(RoomModel room)
     {
+        // Hard-block deletion if spawns reference this room
+        var referencingSpawns = _project.Spawns.Where(s => s.RoomId == room.Id).ToList();
+        if (referencingSpawns.Count > 0)
+        {
+            MessageBox.Show(
+                $"Cannot delete room '{room.Id}' because {referencingSpawns.Count} spawn(s) reference it. Remove the spawns first.",
+                "Cannot Delete Room",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+            return;
+        }
+
+        var questRefs = _project.Quests
+            .Where(q => q.Objectives.Any(o => o.ObjectiveType == QuestObjectiveType.VisitRoom && o.TargetId == room.Id))
+            .ToList();
+        if (questRefs.Count > 0)
+        {
+            var questNames = string.Join(", ", questRefs.Select(q => q.Key));
+            MessageBox.Show(
+                $"Cannot delete room '{room.Id}' because it is used by quest(s): {questNames}. Remove the quest references first.",
+                "Cannot Delete Room",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+            return;
+        }
+        // Hard-block deletion if any NPC patrol waypoint references this room
+        var patrolNpcs = _project.Npcs
+            .Where(npc => npc.Patrol.Waypoints.Any(w => w.RoomId == room.Id))
+            .ToList();
+        if (patrolNpcs.Count > 0)
+        {
+            var npcNames = string.Join(", ", patrolNpcs.Select(n => n.Key));
+            MessageBox.Show(
+                "Cannot delete room '" + room.Id + "' because it is used by NPC patrol(s): " + npcNames + ". Remove the patrol waypoints first.",
+                "Cannot Delete Room",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+            return;
+        }
         var cons = Connections.Where(c => c.SourceRoomId == room.Id || c.DestinationRoomId == room.Id).ToList();
         foreach (var c in cons) Connections.Remove(c);
         Rooms.Remove(room); _project.Rooms = Rooms.ToList(); _project.Connections = Connections.ToList();
@@ -431,6 +551,116 @@ public class MainViewModel : BaseViewModel
         Connections.Remove(conn); if (rev != null) Connections.Remove(rev); _project.Connections = Connections.ToList();
         PushUndo("Delete " + conn.Id, () => { Connections.Add(conn); if (rev != null) Connections.Add(rev); _project.Connections = Connections.ToList(); RefreshMap(); }, () => { Connections.Remove(conn); if (rev != null) Connections.Remove(rev); _project.Connections = Connections.ToList(); RefreshMap(); });
         SelectedConnection = null; MarkDirty(); RefreshMap();
+    }
+
+    // ---- Spawn Add / Remove (structural) ----
+
+    public void AddItemSpawn()
+    {
+        if (_project == null || SelectedRoom == null) return;
+
+        var spawnModel = new SpawnModel
+        {
+            Id = GenerateSpawnId(),
+            RoomId = SelectedRoom.Id,
+            EntityId = string.Empty,
+            EntityType = EntityType.Item,
+            Quantity = 1,
+            RespawnSeconds = 0,
+            Enabled = true
+        };
+
+        _project.Spawns.Add(spawnModel);
+        var wrapper = new SpawnEntryViewModel(spawnModel, AvailableItems, AvailableNpcs, MarkDirty);
+        SelectedRoomItemSpawns.Add(wrapper);
+        SelectedItemSpawn = wrapper;
+
+        MarkDirty();
+        PushUndo("Add Item Spawn " + spawnModel.Id,
+            () => { _project.Spawns.Remove(spawnModel); SyncSelectedRoomSpawns(); },
+            () => { _project.Spawns.Add(spawnModel); SyncSelectedRoomSpawns(); });
+    }
+
+    public void AddNpcSpawn()
+    {
+        if (_project == null || SelectedRoom == null) return;
+
+        var spawnModel = new SpawnModel
+        {
+            Id = GenerateSpawnId(),
+            RoomId = SelectedRoom.Id,
+            EntityId = string.Empty,
+            EntityType = EntityType.Npc,
+            Quantity = 1,
+            RespawnSeconds = 0,
+            Enabled = true
+        };
+
+        _project.Spawns.Add(spawnModel);
+        var wrapper = new SpawnEntryViewModel(spawnModel, AvailableItems, AvailableNpcs, MarkDirty);
+        SelectedRoomNpcSpawns.Add(wrapper);
+        SelectedNpcSpawn = wrapper;
+
+        MarkDirty();
+        PushUndo("Add NPC Spawn " + spawnModel.Id,
+            () => { _project.Spawns.Remove(spawnModel); SyncSelectedRoomSpawns(); },
+            () => { _project.Spawns.Add(spawnModel); SyncSelectedRoomSpawns(); });
+    }
+
+    public void RemoveItemSpawn()
+    {
+        if (_project == null || SelectedItemSpawn == null) return;
+
+        var spawnModel = SelectedItemSpawn.Model;
+        var index = _project.Spawns.IndexOf(spawnModel);
+
+        _project.Spawns.Remove(spawnModel);
+        SelectedRoomItemSpawns.Remove(SelectedItemSpawn);
+        SelectedItemSpawn = null;
+
+        MarkDirty();
+        PushUndo("Remove Item Spawn " + spawnModel.Id,
+            () =>
+            {
+                if (index >= 0 && index <= _project.Spawns.Count)
+                    _project.Spawns.Insert(index, spawnModel);
+                else
+                    _project.Spawns.Add(spawnModel);
+                SyncSelectedRoomSpawns();
+            },
+            () =>
+            {
+                _project.Spawns.Remove(spawnModel);
+                SyncSelectedRoomSpawns();
+            });
+    }
+
+    public void RemoveNpcSpawn()
+    {
+        if (_project == null || SelectedNpcSpawn == null) return;
+
+        var spawnModel = SelectedNpcSpawn.Model;
+        var index = _project.Spawns.IndexOf(spawnModel);
+
+        _project.Spawns.Remove(spawnModel);
+        SelectedRoomNpcSpawns.Remove(SelectedNpcSpawn);
+        SelectedNpcSpawn = null;
+
+        MarkDirty();
+        PushUndo("Remove NPC Spawn " + spawnModel.Id,
+            () =>
+            {
+                if (index >= 0 && index <= _project.Spawns.Count)
+                    _project.Spawns.Insert(index, spawnModel);
+                else
+                    _project.Spawns.Add(spawnModel);
+                SyncSelectedRoomSpawns();
+            },
+            () =>
+            {
+                _project.Spawns.Remove(spawnModel);
+                SyncSelectedRoomSpawns();
+            });
     }
 
     // ---- Connector context-menu deletion methods ----
@@ -536,7 +766,7 @@ public class MainViewModel : BaseViewModel
         }
         return (curClone, revClone);
     }
-    public void StartNewProject() { _project = new MapProject { Id = "untitled", Name = "Untitled", Version = 1, DefaultRoomTitle = "" }; _currentFilePath = null; _isDirty = false; _roomCounter = 0; _connectionCounter = 0; _firstRoomPrompted = false; Rooms.Clear(); Connections.Clear(); _undoStack.Clear(); _redoStack.Clear(); SelectedRoom = null; SelectedConnection = null; CurrentZ = 0; _zoomScale = ZoomDefault; OnPropertyChanged(nameof(ZoomPercentage)); NotifyProjectChanged(); RefreshMap(); }
+    public void StartNewProject() { _project = new MapProject { Id = "untitled", Name = "Untitled", Version = 2, DefaultRoomTitle = "" }; _currentFilePath = null; _isDirty = false; _roomCounter = 0; _connectionCounter = 0; _spawnCounter = 1; _firstRoomPrompted = false; Rooms.Clear(); Connections.Clear(); SelectedRoomItemSpawns.Clear(); SelectedRoomNpcSpawns.Clear(); _undoStack.Clear(); _redoStack.Clear(); SelectedRoom = null; SelectedConnection = null; CurrentZ = 0; _zoomScale = ZoomDefault; OnPropertyChanged(nameof(ZoomPercentage)); NotifyProjectChanged(); RefreshMap(); }
 
     public void NewProject()
     {
@@ -544,9 +774,9 @@ public class MainViewModel : BaseViewModel
         var dlg = new EvenniaAtlas.Dialogs.NewProjectDialog();
         if (dlg.ShowDialog() == true)
         {
-            _project = new MapProject { Id = dlg.AreaId, Name = dlg.AreaName, Version = 1, DefaultRoomTitle = "" };
-            _currentFilePath = null; _isDirty = false; _roomCounter = 0; _connectionCounter = 0; _firstRoomPrompted = false;
-            Rooms.Clear(); Connections.Clear(); _undoStack.Clear(); _redoStack.Clear();
+            _project = new MapProject { Id = dlg.AreaId, Name = dlg.AreaName, Version = 2, DefaultRoomTitle = "" };
+            _currentFilePath = null; _isDirty = false; _roomCounter = 0; _connectionCounter = 0; _spawnCounter = 1; _firstRoomPrompted = false;
+            Rooms.Clear(); Connections.Clear(); SelectedRoomItemSpawns.Clear(); SelectedRoomNpcSpawns.Clear(); _undoStack.Clear(); _redoStack.Clear();
             SelectedRoom = null; SelectedConnection = null; CurrentZ = 0; _zoomScale = ZoomDefault; OnPropertyChanged(nameof(ZoomPercentage));
             NotifyProjectChanged(); RefreshMap();
         }
@@ -561,11 +791,12 @@ public class MainViewModel : BaseViewModel
             try
             {
                 _project = _fileService.Load(dlg.FileName); _currentFilePath = dlg.FileName; _isDirty = false; _firstRoomPrompted = true;
-                Rooms.Clear(); Connections.Clear();
+                Rooms.Clear(); Connections.Clear(); SelectedRoomItemSpawns.Clear(); SelectedRoomNpcSpawns.Clear();
                 foreach (var r in _project.Rooms) Rooms.Add(r);
                 foreach (var c in _project.Connections) Connections.Add(c);
                 _roomCounter = Rooms.Count > 0 ? Rooms.Max(r => int.TryParse(r.Id.Split(Convert.ToChar(95)).Last(), out var n) ? n : 0) : 0;
                 _connectionCounter = Connections.Count > 0 ? Connections.Max(c => int.TryParse(c.Id.Split(Convert.ToChar(95)).Last(), out var n) ? n : 0) : 0;
+                _spawnCounter = _project.Spawns.Count > 0 ? _project.Spawns.Max(s => int.TryParse(s.Id.Split(Convert.ToChar(95)).Last(), out var n) ? n : 0) : 0;
                 _undoStack.Clear(); _redoStack.Clear(); SelectedRoom = null; SelectedConnection = null; CurrentZ = 0; _zoomScale = ZoomDefault; OnPropertyChanged(nameof(ZoomPercentage));
                 NotifyProjectChanged(); RefreshMap();
             }
@@ -577,7 +808,33 @@ public class MainViewModel : BaseViewModel
 
     public bool SaveProjectAs() { var dlg = new SaveFileDialog { Filter = "Evennia Map Files (*.evenniamap)|*.evenniamap", Title = "Save Map Project", DefaultExt = ".evenniamap" }; if (dlg.ShowDialog() == true) { _currentFilePath = dlg.FileName; return SaveProject(); } return false; }
 
-    public void ExportEvennia() { SyncToProject(); var dlg = new SaveFileDialog { Filter = "Evennia JSON (*.evennia.json)|*.evennia.json", Title = "Export Evennia JSON", DefaultExt = ".evennia.json", FileName = _project.Id + ".evennia.json" }; if (dlg.ShowDialog() == true) { try { _exportService.Export(dlg.FileName, _project); MessageBox.Show("Exported to: " + dlg.FileName, "Export Complete", MessageBoxButton.OK, MessageBoxImage.Information); } catch (Exception ex) { MessageBox.Show("Export failed: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error); } } }
+    public void ExportEvennia()
+    {
+        SyncToProject();
+
+        var validator = new MapValidationService();
+        var issues = validator.Validate(_project);
+        if (issues.Exists(i => i.Severity == ValidationSeverity.Error))
+        {
+            var dialog = new Dialogs.ValidationResultsDialog(issues) { Owner = Application.Current.MainWindow };
+            dialog.ShowDialog();
+            return;
+        }
+
+        var dlg = new SaveFileDialog { Filter = "Evennia JSON (*.evennia.json)|*.evennia.json", Title = "Export Evennia JSON", DefaultExt = ".evennia.json", FileName = _project.Id + ".evennia.json" };
+        if (dlg.ShowDialog() == true)
+        {
+            try
+            {
+                _exportService.Export(dlg.FileName, _project);
+                MessageBox.Show("Exported to: " + dlg.FileName, "Export Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Export failed: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+    }
 
     public void ValidateProject()
     {

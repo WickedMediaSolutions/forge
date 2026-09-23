@@ -1,0 +1,68 @@
+{
+  "version": 2,
+  "id": "v1-backcompat",
+  "name": "V1 Backward Compat Test",
+  "defaultRoomTitle": "Room",
+  "rooms": [
+    {
+      "id": "v1_room_a",
+      "title": "Origin",
+      "roomType": "",
+      "description": "The origin room.",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "tags": [],
+      "notes": "",
+      "typeclassPath": "typeclasses.rooms.Room",
+      "aliases": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "lockString": "",
+      "permissions": []
+    },
+    {
+      "id": "v1_room_b",
+      "title": "Room B",
+      "roomType": "",
+      "description": "",
+      "x": 0,
+      "y": -1,
+      "z": 0,
+      "tags": [],
+      "notes": "",
+      "typeclassPath": "",
+      "aliases": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "lockString": "",
+      "permissions": []
+    }
+  ],
+  "connections": [
+    {
+      "id": "v1_conn_ab",
+      "sourceRoomId": "v1_room_a",
+      "destinationRoomId": "v1_room_b",
+      "direction": 0,
+      "reverseDirection": 1,
+      "isOneWay": false,
+      "exitType": 0,
+      "aliases": "",
+      "sharedDoorId": "",
+      "door": null,
+      "autoCreateReverse": true,
+      "keyName": "north",
+      "description": "",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "lockString": "",
+      "permissions": []
+    }
+  ],
+  "items": [],
+  "npcs": [],
+  "spawns": []
+}

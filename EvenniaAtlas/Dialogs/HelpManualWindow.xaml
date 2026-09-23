@@ -1,0 +1,1564 @@
+<Window x:Class="EvenniaAtlas.Dialogs.HelpManualWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Rites of Passage: The Forge — User Manual" Width="600" Height="500"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResize"
+        TextOptions.TextFormattingMode="Display"
+        Background="#232326" WindowStyle="ToolWindow">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24,20">
+            <!-- Heading -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                <Border Background="#4CAF50" Width="4" CornerRadius="1"
+                        VerticalAlignment="Stretch" Margin="0,0,10,0"/>
+                <TextBlock Text="Rites of Passage: The Forge User Manual"
+                           FontSize="18" FontWeight="SemiBold"
+                           Foreground="#E0E0E0" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <Separator Background="#3E3E42" Height="1" Margin="0,0,0,16"/>
+
+            <!-- Table of Contents -->
+            <TextBlock Text="Table of Contents" FontSize="14" FontWeight="SemiBold"
+                       Foreground="#B0B0B0" Margin="0,0,0,12"/>
+
+            <StackPanel Margin="8,0,0,0">
+                <TextBlock Text="Getting Started" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Projects" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Map &amp; Room Editing" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Connections &amp; Exits" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Item Spawns" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="NPC Spawns" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Item Editor" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="NPC Editor" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Shop Editor" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Loot Table Editor" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Quest Editor" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Dialogue Editor" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Game Data Editor" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Validation" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Evennia Export" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Keyboard Shortcuts" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+                <TextBlock Text="Troubleshooting" FontSize="12" Foreground="#808080" Margin="0,0,0,6"/>
+            </StackPanel>
+            <Separator Background="#3E3E42" Height="1" Margin="0,16,0,16"/>
+
+            <!-- ============================================ -->
+            <!-- Getting Started Section                      -->
+            <!-- ============================================ -->
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Border Background="#4CAF50" Width="4" CornerRadius="1"
+                        VerticalAlignment="Stretch" Margin="0,0,10,0"/>
+                <TextBlock Text="Getting Started" FontSize="14" FontWeight="SemiBold"
+                           Foreground="#B0B0B0" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <TextBlock Text="What Is Rites of Passage: The Forge?" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Rites of Passage: The Forge is an offline world-building editor for the Evennia multi-user game engine. It provides a visual interface for designing rooms, connecting exits, placing NPC and item spawns, editing game data, and exporting directly to Evennia batch-build commands. All work is stored in a single, portable project file."/>
+            </TextBlock>
+
+            <TextBlock Text="Main Window Areas" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The main window is divided into several areas:"/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Menu Bar "/><Run Text="— File, Edit, View, Tools, and Help menus across the top of the window."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Room List "/><Run Text="— A tree or list on the left side showing all rooms in the project. Click a room to select and edit it."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Map Canvas "/><Run Text="— The central area where rooms appear as nodes. Drag rooms to arrange them, and draw exit connections between them."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Properties Panel "/><Run Text="— Displays and lets you edit the selected room's attributes: name, description, coordinates, and other data."/>
+<TextBlock Text="Creating and Opening a Project" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="To start a new world, go to "/><Run FontWeight="SemiBold" Text="File → New Project"/><Run Text=". You will be prompted to choose a location and name for the new project file. Once created, an empty world with a single starting room is ready for editing."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="To continue working on an existing project, use "/><Run FontWeight="SemiBold" Text="File → Open Project"/><Run Text=" and select the project file. The editor restores your rooms, exits, and all game data exactly as you left it."/>
+            </TextBlock>
+
+            <TextBlock Text="Saving Your Work" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Save the current project with "/><Run FontWeight="SemiBold" Text="File → Save"/><Run Text=" (or "/><Run FontWeight="SemiBold" Text="Ctrl+S"/><Run Text="). If the project has never been saved before, this behaves like Save As and asks for a file location."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="Use "/><Run FontWeight="SemiBold" Text="File → Save As"/><Run Text=" to save a copy of the project under a new name or location. The editor continues working with the newly saved file."/>
+            </TextBlock>
+
+            <TextBlock Text="The Dirty Indicator" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,6" TextWrapping="Wrap">
+                <Run Text="Whenever you make a change that has not yet been saved, an asterisk (★) appears in the window title bar next to the project name — for example, "/><Run FontStyle="Italic" Text="MyWorld.forge ★"/><Run Text=". This dirty marker is your visual cue that the current state differs from the file on disk."/>
+            </TextBlock>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Once you save (File → Save or Ctrl+S), the star disappears. If you close the application or open another project while the star is showing, you will be prompted to save first. The indicator resets only when the in-memory project exactly matches the saved file."/>
+<Separator Background="#3E3E42" Height="1" Margin="0,16,0,16"/>
+
+            <!-- ============================================ -->
+            <!-- Projects Section                              -->
+            <!-- ============================================ -->
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Border Background="#4CAF50" Width="4" CornerRadius="1"
+                        VerticalAlignment="Stretch" Margin="0,0,10,0"/>
+                <TextBlock Text="Projects" FontSize="14" FontWeight="SemiBold"
+                           Foreground="#B0B0B0" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <TextBlock Text="New Project" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Creates a blank project from scratch. Go to "/><Run FontWeight="SemiBold" Text="File → New Project"/><Run Text=". A save dialog opens so you can choose where to create the project file and what to name it. The new project starts with a single default room placed on the map canvas, ready for editing."/>
+            </TextBlock>
+
+            <TextBlock Text="Open Project" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Opens an existing project file. Use "/><Run FontWeight="SemiBold" Text="File → Open Project"/><Run Text=" and browse to the project file. The editor loads all rooms, exits, spawns, game data, and other saved content from the file. If the currently open project has unsaved changes, you are prompted to save or discard them before the new project loads."/>
+<TextBlock Text="Save" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Writes the current state of the project to its associated file on disk. Use "/><Run FontWeight="SemiBold" Text="File → Save"/><Run Text=" or press "/><Run FontWeight="SemiBold" Text="Ctrl+S"/><Run Text=". If the project has not been saved before (no file path is set), Save behaves identically to Save As and opens a file-save dialog."/>
+            </TextBlock>
+
+            <TextBlock Text="Save As" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Saves the project to a new file while keeping the original untouched. Use "/><Run FontWeight="SemiBold" Text="File → Save As"/><Run Text=". A save dialog lets you choose a new name or location. After Save As completes, the editor switches to the new file — all subsequent saves go to that new path."/>
+            </TextBlock>
+
+            <TextBlock Text="Unsaved-Change Prompts" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The editor tracks whether the current project has been modified since the last save. In the following situations, a confirmation dialog appears:"/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Closing the window "/><Run Text="— You are asked whether to save, discard, or cancel."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Opening a different project "/><Run Text="— You are asked to save the current project first."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Starting a New Project "/><Run Text="— Same prompt: save changes before creating the new project."/>
+                <LineBreak/>
+                <Run Text="Each prompt offers three choices: "/><Run FontWeight="SemiBold" Text="Save"/><Run Text=" (saves and continues), "/><Run FontWeight="SemiBold" Text="Don't Save"/><Run Text=" (discards all unsaved changes and continues), or "/><Run FontWeight="SemiBold" Text="Cancel"/><Run Text=" (aborts the operation and returns to the editor)."/>
+            </TextBlock>
+
+            <TextBlock Text="Project File Behavior" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Forge stores all project data in a single file. This file contains every room, exit, NPC spawn, item spawn, game-data definition, and editor setting. The file is self-contained and portable — you can move it to another machine, share it with collaborators, or back it up like any normal file. No external database or configuration is required."/>
+            </TextBlock>
+
+            <TextBlock Text="Atomic Save Protection" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,6" TextWrapping="Wrap">
+                <Run Text="When you save, the editor never writes directly over the existing file. Instead, it writes the complete project to a temporary file first. Only after the write succeeds fully is the temporary file renamed to replace the original project file."/>
+            </TextBlock>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="This atomic save strategy protects your data in case of a crash or power loss during the save operation. The original file remains intact until the new version is safely on disk, so you never end up with a partial or corrupted project file."/>
+            </TextBlock>
+
+<!-- ============================================ -->
+            <!-- Map & Room Editing Section                   -->
+            <!-- ============================================ -->
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Border Background="#4CAF50" Width="4" CornerRadius="1"
+                        VerticalAlignment="Stretch" Margin="0,0,10,0"/>
+                <TextBlock Text="Map &amp; Room Editing" FontSize="14" FontWeight="SemiBold"
+                           Foreground="#B0B0B0" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <TextBlock Text="Overview" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Map and room editing is the core workflow in The Forge. The main window provides a "/><Run FontWeight="SemiBold" Text="Room List"/><Run Text=" on the left, a large "/><Run FontWeight="SemiBold" Text="Map Canvas"/><Run Text=" in the center, and a "/><Run FontWeight="SemiBold" Text="Properties Panel"/><Run Text=" on the right. Together, these three areas let you navigate, arrange, and configure every room in your world. Most actions are also available through the right-click context menu on rooms in both the Room List and the Map Canvas."/>
+            </TextBlock>
+
+            <!-- Room List -->
+            <TextBlock Text="Room List" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Room List"/><Run Text=" is a tree-view panel docked to the left side of the main window. It shows every room in the current project, organized hierarchically. Each room is displayed with its name and, if assigned, its room ID. A search bar at the top of the Room List lets you filter rooms by name — type any part of a room name to narrow the list in real time."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Right-click "/><Run Text="any room in the Room List to open a context menu with commands for creating, deleting, and centering on that room."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Double-click "/><Run Text="a room to center the map view on that room."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Single-click "/><Run Text="a room to select it for editing; its properties appear in the Properties Panel and it is highlighted on the Map Canvas."/>
+                <LineBreak/>
+                <Run Text="• The list supports "/><Run FontWeight="SemiBold" Text="multi-select"/><Run Text=" via Ctrl+Click or Shift+Click so you can delete or move several rooms at once."/>
+            </TextBlock>
+<!-- Map Canvas -->
+            <TextBlock Text="Map Canvas" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Map Canvas"/><Run Text=" is the large central area where rooms are displayed as interactive nodes. Each room appears as a rectangular card showing its name, type, and ID. Exit connections are drawn as lines with arrows between room nodes. The canvas supports panning, zooming, and direct manipulation of rooms."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Pan "/><Run Text="the canvas by clicking and dragging on empty space, or by holding the middle mouse button and moving."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Zoom "/><Run Text="in and out using the mouse scroll wheel. Zoom centers on the cursor position for precise control."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Right-click "/><Run Text="empty canvas space to open a context menu for creating a new room at that position."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Right-click "/><Run Text="a room node to open a context menu with room-specific commands (center, delete, edit properties, and draw exits)."/>
+                <LineBreak/>
+                <Run Text="• A "/><Run FontWeight="SemiBold" Text="coordinated crosshair"/><Run Text=" follows the mouse cursor on the canvas, showing the world coordinates of the current position. This helps you place rooms at precise coordinates."/>
+            </TextBlock>
+
+            <!-- Selecting Rooms -->
+            <TextBlock Text="Selecting Rooms" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="You can select a room in several ways. The currently selected room is highlighted in both the Room List and the Map Canvas, and its properties populate the Properties Panel."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Single-click "/><Run Text="a room in the Room List."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Single-click "/><Run Text="a room node on the Map Canvas."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Ctrl+Click or Shift+Click "/><Run Text="rooms in the Room List or on the canvas to select multiple rooms simultaneously. Multi-select is useful for batch deleting or moving several rooms at once."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Ctrl+A "/><Run Text="on the canvas selects all rooms."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Click empty canvas space "/><Run Text="to clear the current selection."/>
+            </TextBlock>
+
+            <!-- Creating Rooms -->
+            <TextBlock Text="Creating Rooms" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="New rooms can be created in several ways. Every new room receives a default name and a unique room ID, and is placed at the specified coordinates on the map."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Right-click empty canvas space "/><Run Text="and choose "/><Run FontWeight="SemiBold" Text="Add Room"/><Run Text=". The new room appears where you clicked."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Right-click a room in the Room List "/><Run Text="and choose "/><Run FontWeight="SemiBold" Text="Add Room"/><Run Text=". The new room is added at default coordinates."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Choose Edit → Add Room "/><Run Text="from the menu bar."/>
+                <LineBreak/>
+                <Run Text="• Press "/><Run FontWeight="SemiBold" Text="Ctrl+N"/><Run Text=" to create a new room at default coordinates."/>
+                <LineBreak/>
+                <Run Text="• Use "/><Run FontWeight="SemiBold" Text="Build Mode"/><Run Text=" (described below) for rapid, click-to-place room creation."/>
+            </TextBlock>
+<!-- Moving Rooms -->
+            <TextBlock Text="Moving Rooms" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Rooms can be repositioned freely on the Map Canvas. Moving a room updates its world coordinates automatically."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Click and drag "/><Run Text="a room node on the canvas to move it. Release the mouse button to place the room at the new position."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Select multiple rooms "/><Run Text="then drag any one of them to move the entire group together. All selected rooms maintain their relative positions as you drag."/>
+                <LineBreak/>
+                <Run Text="• You can also set exact coordinates by typing values into the "/><Run FontWeight="SemiBold" Text="X"/><Run Text=", "/><Run FontWeight="SemiBold" Text="Y"/><Run Text=", and "/><Run FontWeight="SemiBold" Text="Z"/><Run Text=" fields in the Properties Panel when a room is selected."/>
+                <LineBreak/>
+                <Run Text="• Exit connections automatically follow when a room is moved — the lines redraw to stay connected to the room's new position."/>
+            </TextBlock>
+
+            <!-- Deleting Rooms -->
+            <TextBlock Text="Deleting Rooms" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Deleting a room removes it permanently from the project. Any exit connections that involve the deleted room are also removed."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Right-click a room "/><Run Text="on the canvas or in the Room List and choose "/><Run FontWeight="SemiBold" Text="Delete Room"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Select a room "/><Run Text="and press the "/><Run FontWeight="SemiBold" Text="Delete"/><Run Text=" key."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Select multiple rooms "/><Run Text="and press Delete or use the context menu to remove them all at once."/>
+                <LineBreak/>
+                <Run Text="• A confirmation dialog appears before deletion to prevent accidental removal."/>
+            </TextBlock>
+
+            <!-- Editing Room Properties -->
+            <TextBlock Text="Editing Room Properties" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="When a room is selected, the "/><Run FontWeight="SemiBold" Text="Properties Panel"/><Run Text=" on the right side of the window displays all of its editable fields. Changes take effect immediately and are tracked for undo/redo."/>
+            </TextBlock>
+
+            <TextBlock Text="Room ID" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Each room has a unique "/><Run FontWeight="SemiBold" Text="Room ID"/><Run Text=". This ID is used to reference the room in exits, spawns, and game-data entries. The editor auto-generates IDs for new rooms, but you can type a custom ID in the Properties Panel. Room IDs must be unique across the entire project — the editor warns you if you enter a duplicate."/>
+            </TextBlock>
+
+            <TextBlock Text="Title / Name" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Title"/><Run Text=" (or Name) field sets the room's display name. This is the name players see when they enter the room in-game. Room names appear on the room nodes on the Map Canvas and in the Room List. The name does not need to be unique — multiple rooms can share the same name."/>
+            </TextBlock>
+<TextBlock Text="Room Type" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Type"/><Run Text=" field categorizes the room. Built-in options include standard room types such as "/><Run FontWeight="SemiBold" Text="Room"/><Run Text=", "/><Run FontWeight="SemiBold" Text="Hub"/><Run Text=", "/><Run FontWeight="SemiBold" Text="Shop"/><Run Text=", and "/><Run FontWeight="SemiBold" Text="Wilderness"/><Run Text=". The type controls which Evennia typeclass the room uses when exported, and it is displayed on the room node on the Map Canvas for quick visual identification."/>
+            </TextBlock>
+
+            <TextBlock Text="Description" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Description"/><Run Text=" field contains the room's in-game description — the flavor text that players see when they enter the room or use the "/><Run FontWeight="SemiBold" Text="look"/><Run Text=" command. It is a multi-line text area in the Properties Panel. You can write rich descriptive text to establish atmosphere, detail the environment, or provide narrative clues."/>
+            </TextBlock>
+
+            <TextBlock Text="Coordinates (X, Y, Z)" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Every room has three coordinate fields: "/><Run FontWeight="SemiBold" Text="X"/><Run Text=" (east-west), "/><Run FontWeight="SemiBold" Text="Y"/><Run Text=" (north-south), and "/><Run FontWeight="SemiBold" Text="Z"/><Run Text=" (floor or elevation). These values determine where the room appears on the Map Canvas and are exported to Evennia as the room's spatial coordinates."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="X and Y "/><Run Text="position the room horizontally and vertically on the map. Drag a room on the canvas to change these values visually, or type exact numbers into the fields."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Z "/><Run Text="controls the floor or elevation level (see Floors / Z-Level Navigation below)."/>
+            </TextBlock>
+<TextBlock Text="Tags" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Tags"/><Run Text=" field lets you assign one or more tags to a room. Tags are short, comma-separated labels that can be used to categorize rooms for gameplay logic, quests, or export filtering. For example, a tag like "/><Run FontWeight="SemiBold" Text="indoors"/><Run Text=", "/><Run FontWeight="SemiBold" Text="safe_zone"/><Run Text=", or "/><Run FontWeight="SemiBold" Text="dungeon"/><Run Text=" can be read by in-game scripts. Tags are exported to Evennia as part of the room's data."/>
+            </TextBlock>
+
+            <TextBlock Text="Notes" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Notes"/><Run Text=" field is a free-form, multi-line text area for your own design notes. Notes are not exported to Evennia — they are purely for your reference during world-building. Use this field to jot down quest ideas, trap descriptions, NPC schedules, or any other planning information tied to the room."/>
+            </TextBlock>
+
+            <!-- Floors / Z-Level Navigation -->
+            <TextBlock Text="Floors / Z-Level Navigation" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Z coordinate represents vertical layers — floors, levels, or elevation. The Map Canvas displays one Z-level at a time, letting you build multi-story dungeons, towers, or layered overworlds."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Floor selector "/><Run Text="— A control near the canvas (typically a numeric up/down or a dropdown) lets you switch the current floor view. The canvas shows only rooms whose Z coordinate matches the current floor."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Changing floors "/><Run Text="hides rooms on other Z-levels from the canvas, but all rooms remain listed in the Room List regardless of the current floor."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Exits between floors "/><Run Text="— You can connect rooms on different Z-levels with exits. When you view one floor, exits leading to rooms on other floors still display on the canvas."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Stair-like navigation "/><Run Text="— Use Z-levels to model stairs, elevators, ladders, or multi-level terrain by placing rooms at different Z values and linking them with exits."/>
+            </TextBlock>
+<!-- Zoom -->
+            <TextBlock Text="Zoom" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Map Canvas supports smooth zooming to help you work at any scale, from inspecting a single room up close to viewing the entire world at a glance."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Scroll wheel "/><Run Text="— Roll the mouse wheel forward to zoom in, backward to zoom out. Zoom centers on the cursor position so you can target a specific area while zooming."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Zoom level indicator "/><Run Text="— The current zoom percentage may be shown in a status area near the canvas."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Zoom limits "/><Run Text="— There are minimum and maximum zoom levels to keep the map usable; you cannot zoom infinitely in or out."/>
+            </TextBlock>
+
+            <!-- Fit Map -->
+            <TextBlock Text="Fit Map" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Fit Map"/><Run Text=" command automatically adjusts the canvas zoom and scroll position so that every room in the current floor is visible within the viewport. This is useful when you have zoomed or panned far away and want to see the entire map at once."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• Access Fit Map from the "/><Run FontWeight="SemiBold" Text="View → Fit Map"/><Run Text=" menu."/>
+                <LineBreak/>
+                <Run Text="• The zoom level is calculated to fit all rooms comfortably with a small margin around the edges."/>
+                <LineBreak/>
+                <Run Text="• If no rooms exist on the current floor, the view resets to the default zoom level and position."/>
+            </TextBlock>
+
+            <!-- Center Selected -->
+            <TextBlock Text="Center Selected" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Center Selected"/><Run Text=" command pans the Map Canvas so that the currently selected room is at the center of the viewport. It does not change the zoom level."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• Access Center Selected from the "/><Run FontWeight="SemiBold" Text="View → Center Selected"/><Run Text=" menu."/>
+                <LineBreak/>
+                <Run Text="• You can also "/><Run FontWeight="SemiBold" Text="double-click "/><Run Text="a room in the Room List to center on it."/>
+                <LineBreak/>
+                <Run Text="• Right-click a room on the canvas or in the Room List and choose "/><Run FontWeight="SemiBold" Text="Center"/><Run Text=" from the context menu."/>
+                <LineBreak/>
+                <Run Text="• If multiple rooms are selected, the view centers on the first room in the selection."/>
+            </TextBlock>
+
+            <!-- Build Mode -->
+            <TextBlock Text="Build Mode" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Build Mode is a special editing mode for rapidly placing rooms on the Map Canvas. When Build Mode is active, every click on empty canvas space creates a new room — no context menu or extra step is needed."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Toggle Build Mode "/><Run Text="from the "/><Run FontWeight="SemiBold" Text="Edit → Build Mode"/><Run Text=" menu, or by pressing the Build Mode toolbar button if available."/>
+                <LineBreak/>
+                <Run Text="• While Build Mode is on, the cursor changes to indicate you are in placement mode, and a visual indicator (such as a highlight or label) may appear on the canvas."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Click on empty canvas space "/><Run Text="to create a new room at that location. Each click places one room with default properties."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Clicking on an existing room "/><Run Text="while in Build Mode selects that room instead of creating a new one."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Exit Build Mode "/><Run Text="by toggling it off via the menu, pressing Escape, or switching to another tool."/>
+                <LineBreak/>
+                <Run Text="• Build Mode is ideal for quickly sketching out the geography of a new area before refining individual room details."/>
+            </TextBlock>
+            <!-- ============================================ -->
+            <!-- Connections & Exits Section                   -->
+            <!-- ============================================ -->
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Border Background="#4CAF50" Width="4" CornerRadius="1"
+                        VerticalAlignment="Stretch" Margin="0,0,10,0"/>
+                <TextBlock Text="Connections &amp; Exits" FontSize="14" FontWeight="SemiBold"
+                           Foreground="#B0B0B0" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <TextBlock Text="Overview" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Connections (also called exits) link rooms together and define how players and NPCs navigate your world. Each connection has a direction, a source room, and a destination room. The Forge supports all ten standard Evennia directions and offers both automatic and manual creation methods."/>
+            </TextBlock>
+
+            <!-- Creating Connections -->
+            <TextBlock Text="Creating Connections" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Exits can be created in several ways. All exit creation funnels through a single centralized method, ensuring consistent behavior regardless of which workflow you use."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Right-click a room "/><Run Text="on the canvas or in the Room List and choose "/><Run FontWeight="SemiBold" Text="Add Exit"/><Run Text=". A DirectionChooserDialog pops up where you pick a direction and a destination room from a list."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Compass buttons "/><Run Text="on the map toolbar provide quick directional navigation. Clicking a compass direction (NW/N/NE/W/&#x2022;/E/SW/S/SE + UP/DOWN) navigates to the neighboring room in that direction. If no connection exists yet, one is created automatically. In Build Mode, if no room exists in that direction, a new room is created and connected."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Keyboard numpad "/><Run Text="(1&#x2013;9 for eight cardinal directions, arrow keys for N/S/E/W, PageUp/PageDown for Up/Down) works the same way as the compass &#x2014; navigate, connect, or build as needed."/>
+                <LineBreak/>
+                <Run Text="• Each new connection receives a unique connection ID and automatically calculates its "/><Run FontWeight="SemiBold" Text="ReverseDirection"/><Run Text=" (the opposite direction needed to return from the destination back to the source)."/>
+            </TextBlock>
+
+            <!-- Selecting Connections -->
+            <TextBlock Text="Selecting Connections" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="You can select a connection to view and edit its properties. Selecting a connection deselects any currently selected room, and vice versa."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Click a connector line "/><Run Text="on the Map Canvas. The line has a transparent hit-test area that makes it easy to target even thin lines. The selected connection line is highlighted."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="In the Room EXITS panel"/><Run Text=", each outgoing exit for the currently selected room is listed. Click any exit in the list to select that connection."/>
+                <LineBreak/>
+                <Run Text="• When selected, the "/><Run FontWeight="SemiBold" Text="Properties Panel"/><Run Text=" switches to show exit properties: Id, Source, Destination, Direction, KeyName, Description, Aliases, Exit Type, and One-Way status."/>
+            </TextBlock>
+
+            <!-- Editing Exit Direction and Name -->
+            <TextBlock Text="Editing Exit Direction and Name" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="When a connection is selected, the Properties Panel provides fields for editing its direction and identifying name:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Direction "/><Run Text="— A dropdown with all ten directions: North, South, East, West, Northeast, Northwest, Southeast, Southwest, Up, and Down. Changing the direction automatically updates the calculated ReverseDirection on the paired exit (if one exists)."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="KeyName "/><Run Text="— An optional name for the exit (e.g., 'oak door', 'dark tunnel'). When exported to Evennia, the KeyName becomes the exit's key; if left empty, the direction string is used as a fallback."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Description "/><Run Text="— An optional description shown to players when they look at or approach the exit."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Aliases "/><Run Text="— Comma-separated alternate names for the exit (Atlas convenience field). For example, an exit named 'oak door' could have aliases like 'door, exit, out'."/>
+                <LineBreak/>
+                <Run Text="• All property changes support "/><Run FontWeight="SemiBold" Text="undo/redo"/><Run Text=". Direction and One-Way changes are treated as atomic undo operations; text fields use coalescing so that only the before/after values are stored."/>
+            </TextBlock>
+<!-- Source and Destination Rooms -->
+            <TextBlock Text="Source and Destination Rooms" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Every connection links two rooms: a "/><Run FontWeight="SemiBold" Text="source"/><Run Text=" (where the exit originates) and a "/><Run FontWeight="SemiBold" Text="destination"/><Run Text=" (where it leads)."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• The source and destination room IDs are displayed as read-only fields in the exit properties panel."/>
+                <LineBreak/>
+                <Run Text="• When a room is selected, its "/><Run FontWeight="SemiBold" Text="EXITS panel"/><Run Text=" (located in the Properties Panel) lists all outgoing connections from that room. Each listed exit shows its direction and destination room ID."/>
+                <LineBreak/>
+                <Run Text="• Moving a room on the canvas automatically keeps all of its connections intact — the connector lines redraw to follow the room to its new position."/>
+            </TextBlock>
+
+            <!-- One-Way vs Reverse Connections -->
+            <TextBlock Text="One-Way vs Bidirectional Connections" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="By default, connections are "/><Run FontWeight="SemiBold" Text="bidirectional"/><Run Text=" — traveling from room A to room B implies a return path from B back to A. The Forge lets you toggle exits as one-way for cases like trap doors, chutes, or narrative restrictions."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• The "/><Run FontWeight="SemiBold" Text="One-Way"/><Run Text=" checkbox in the exit Properties Panel marks a connection as one-directional."/>
+                <LineBreak/>
+                <Run Text="• A "/><Run FontWeight="SemiBold" Text="one-way exit"/><Run Text=" does not require a reverse connection. It simply goes from source to destination with no automatic return path."/>
+                <LineBreak/>
+                <Run Text="• A "/><Run FontWeight="SemiBold" Text="bidirectional exit"/><Run Text=" (One-Way unchecked) is expected to have a matching reverse connection. The Forge validates that bidirectional exits have a paired reverse connection — if one is missing, a validation error (C008) is raised."/>
+                <LineBreak/>
+                <Run Text="• The "/><Run FontWeight="SemiBold" Text="ReverseDirection"/><Run Text=" field is automatically calculated (North ↔ South, Northeast ↔ Southwest, Up ↔ Down, etc.) and is shown on the reverse connection in its paired exit."/>
+                <LineBreak/>
+                <Run Text="• You can edit the "/><Run FontWeight="SemiBold" Text="IsOneWay"/><Run Text=" property after creation — changes are undoable."/>
+            </TextBlock>
+
+            <!-- Auto Reverse -->
+            <TextBlock Text="Auto Reverse" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Auto Reverse"/><Run Text=" feature automatically creates the matching return exit whenever you create a new connection. It is "/><Run FontWeight="SemiBold" Text="ON by default"/><Run Text=" and is indicated by an LED-style status light on the toolbar."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Toggle Auto Reverse"/><Run Text=" by clicking the AUTO REVERSE button on the toolbar. The button shows an LED that glows when Auto Reverse is active and is dim when off."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="When ON: "/><Run Text="Creating a connection from A → B (direction North, for example) automatically creates a matching reverse connection from B → A (direction South), with the same exit type and a shared door identifier."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="When OFF: "/><Run Text="Only the requested direction is created. No reverse connection is generated. This is useful when you want to manually control connections or create one-way exits."/>
+                <LineBreak/>
+                <Run Text="• Auto Reverse only affects "/><Run FontWeight="SemiBold" Text="newly created"/><Run Text=" connections. It does not retroactively add reverses to existing imported connections, and turning it off does not remove any existing reverse exits."/>
+                <LineBreak/>
+                <Run Text="• The status bar also displays "/><Run FontWeight="SemiBold" Text="Auto-R: ON"/><Run Text=" or "/><Run FontWeight="SemiBold" Text="Auto-R: OFF"/><Run Text=" for quick reference."/>
+            </TextBlock>
+
+            <!-- Deleting Connections -->
+            <TextBlock Text="Deleting Connections" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Connections can be deleted individually or as paired sets."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Right-click a connector line "/><Run Text="on the Map Canvas to open the connector context menu, then choose "/><Run FontWeight="SemiBold" Text="Delete"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="• If the connection is bidirectional (shared via a door ID), the context menu offers "/><Run FontWeight="SemiBold" Text="Delete Both"/><Run Text=" to remove both halves of the paired exit at once. The paired reverse is identified through structural matching: source/destination swapped + direction matches ReverseDirection."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Select a connection "/><Run Text="and press the "/><Run FontWeight="SemiBold" Text="Delete"/><Run Text=" key."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Deleting a room "/><Run Text="also cascade-deletes all connections that reference that room as either source or destination."/>
+                <LineBreak/>
+                <Run Text="• Deletion is "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" — using Undo restores both the deleted connection and its paired reverse (if one was removed)."/>
+            </TextBlock>
+
+            <!-- Cross-Floor Connections -->
+            <TextBlock Text="Cross-Floor Connections" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Forge supports multi-floor worlds through its Z-level (floor) system. Connections can link rooms on different floors using the Up and Down directions."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• Use the "/><Run FontWeight="SemiBold" Text="Up"/><Run Text=" and "/><Run FontWeight="SemiBold" Text="Down"/><Run Text=" compass buttons or keyboard shortcuts (PageUp/PageDown) to create vertical connections between rooms on different Z levels."/>
+                <LineBreak/>
+                <Run Text="• When you navigate vertically to an existing room on another floor, The Forge automatically switches the active floor to match the destination, and a cross-floor connection is created."/>
+                <LineBreak/>
+                <Run Text="• In Build Mode, navigating Up or Down to empty space creates a new room on that floor and connects it — the floor view switches to the newly created room's Z level."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="U/D badges "/><Run Text="appear on room nodes that have vertical exits. Clicking a U or D badge selects the destination room, switches the floor view, and centers the map on the destination."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Vertical connection lines "/><Run Text="(Up/Down exits) are "/><Run FontWeight="SemiBold" Text="not drawn"/><Run Text=" as lines on the canvas because the source and destination rooms exist on different floors. The U/D badges serve as the visual indicator instead."/>
+            </TextBlock>
+
+            <!-- How Connections Appear on the Map -->
+            <TextBlock Text="How Connections Appear on the Map" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Map Canvas renders connections as lines between room nodes, with visual cues that convey important information at a glance."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Standard exits "/><Run Text="are drawn as solid lines connecting the two rooms."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="One-way exits "/><Run Text="display a directional arrow indicator along the line, showing which direction the exit flows."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Door exits "/><Run Text="are drawn with "/><Run FontWeight="SemiBold" Text="dashed brown lines"/><Run Text=", visually distinguishing them from normal exits."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Bidirectional pairs "/><Run Text="(where both rooms have exits linking to each other in opposite directions) are "/><Run FontWeight="SemiBold" Text="deduplicated to a single visual line"/><Run Text=" on the canvas, keeping the map clean and readable."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Connection lines are only drawn for same-floor exits. "/><Run Text="Vertical (Up/Down) connections are not rendered as lines; instead, U and D badges appear on the room nodes."/>
+                <LineBreak/>
+                <Run Text="• The canvas applies "/><Run FontWeight="SemiBold" Text="Z-level filtering"/><Run Text=" — only rooms and connections on the currently active floor are displayed. Switch floors to see connections on other levels."/>
+                <LineBreak/>
+                <Run Text="• Connector lines have a transparent hit-test area wider than the visual line itself, making them easy to click for selection even at low zoom levels."/>
+                <LineBreak/>
+                <Run Text="• Exit lines automatically redraw when rooms are moved, and the map supports viewport-aware culling for performance on large maps."/>
+            </TextBlock>
+
+            <!-- Connection Validation -->
+            <TextBlock Text="Connection Validation" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Forge includes a read-only validation system that checks all connections for common issues. Run validation from the toolbar or menu at any time — it never modifies your map data."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="Connection validation rules:"/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="C001 — Empty connection ID (ERROR)"/><Run Text=": The connection has no identifier."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="C002 — Duplicate connection ID (ERROR)"/><Run Text=": Two connections share the same ID."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="C003 — Missing source room (ERROR)"/><Run Text=": The exit references a source room that does not exist."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="C004 — Missing destination room (ERROR)"/><Run Text=": The exit references a destination room that does not exist."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="C005 — Self-connection (WARNING)"/><Run Text=": The source and destination are the same room."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="C006 — Direction mismatch (ERROR)"/><Run Text=": The connection's assigned direction does not match the actual coordinate delta between source and destination."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="C007 — Duplicate direction from same source (ERROR)"/><Run Text=": The same room has multiple exits with the same direction. Only one exit per direction is allowed."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="C008 — Missing reverse for bidirectional exit (ERROR)"/><Run Text=": A bidirectional (non-one-way) exit has no matching reverse connection. Every bidirectional exit needs a paired return path."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="C009 — Reverse exit marked as one-way (WARNING)"/><Run Text=": The reverse side of a bidirectional exit has its One-Way flag set, which is inconsistent."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="Validation results appear in a scrollable dialog. Each issue includes a severity level (Error or Warning), a code, a human-readable message, and the IDs of the affected rooms and connections for quick navigation."/>
+            </TextBlock>
+
+<!-- ============================================ -->
+            <!-- Item Spawns Section                          -->
+            <!-- ============================================ -->
+
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,10">
+                <Border Background="#4CAF50" Width="4" CornerRadius="1"
+                        VerticalAlignment="Stretch" Margin="0,0,10,0"/>
+                <TextBlock Text="Item Spawns" FontSize="14" FontWeight="SemiBold"
+                           Foreground="#D0D0D0"/>
+            </StackPanel>
+
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Item spawns let you place items directly into rooms on your map. Each spawn defines what item appears, how many copies are available, and when they respawn after being picked up. Item spawns are managed through the "/><Run FontWeight="SemiBold" Text="ITEM SPAWNS"/><Run Text=" panel in the Properties Panel on the right side of the main window, visible when a room is selected."/>
+            </TextBlock>
+<!-- Adding an Item Spawn -->
+            <TextBlock Text="Adding an Item Spawn" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="You can add item spawns to any existing room:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Select a room"/><Run Text=" by clicking it on the Map Canvas. The Properties Panel on the right will update to show the room's details, including the ITEM SPAWNS section."/>
+                <LineBreak/>
+                <Run Text="• Click the "/><Run FontWeight="SemiBold" Text="Add Item Spawn"/><Run Text=" button in the ITEM SPAWNS panel. A new spawn entry is created with a unique auto-generated ID (e.g., "/><Run FontStyle="Italic" Text="myarea_spawn_0001"/><Run Text="), assigned to the currently selected room."/>
+                <LineBreak/>
+                <Run Text="• The new spawn is automatically selected and appears in the ITEM SPAWNS list. Its default values are: Quantity = 1, Respawn = 0 seconds, Enabled = "/><Run FontStyle="Italic" Text="true"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="• Adding an item spawn is a fully "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" operation (Ctrl+Z)."/>
+            </TextBlock>
+<!-- Selecting the Spawned Item -->
+            <TextBlock Text="Selecting the Spawned Item" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Each spawn entry includes a "/><Run FontWeight="SemiBold" Text="dropdown (ComboBox)"/><Run Text=" that lists all items defined in the Item Editor. This is how you choose which item appears in the room:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• The dropdown displays items by their "/><Run FontWeight="SemiBold" Text="Key"/><Run Text=" (name). Only items that exist in the Item Editor are available in the list."/>
+                <LineBreak/>
+                <Run Text="• Selecting an item from the dropdown binds it to the spawn by setting the item's ID as the spawn's EntityId."/>
+                <LineBreak/>
+                <Run Text="• Changing the selected item marks the project as dirty (unsaved changes)."/>
+                <LineBreak/>
+                <Run Text="• If no item is selected, the dropdown is blank and the spawn references no item — validation will flag this as a dangling reference (DR005)."/>
+            </TextBlock>
+<!-- Quantity -->
+            <TextBlock Text="Quantity" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Qty"/><Run Text=" (Quantity) field controls how many copies of the item are available at this spawn point:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• The default quantity is "/><Run FontWeight="SemiBold" Text="1"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="• You can set it to any positive integer. For example, setting Qty to 5 means five copies of the item are available in the room."/>
+                <LineBreak/>
+                <Run Text="• Changing the quantity marks the project as dirty."/>
+            </TextBlock>
+
+            <!-- Respawn Time -->
+            <TextBlock Text="Respawn Time" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Respawn (s)"/><Run Text=" field determines how many seconds must pass before the item reappears after being picked up:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• The default respawn time is "/><Run FontWeight="SemiBold" Text="0 seconds"/><Run Text=", meaning the item does not respawn once picked up."/>
+                <LineBreak/>
+                <Run Text="• Enter a positive number to set a respawn delay in seconds (e.g., 300 = 5 minutes). After the item is taken, it will reappear at the spawn point once the timer elapses."/>
+                <LineBreak/>
+                <Run Text="• Changing the respawn time marks the project as dirty."/>
+            </TextBlock>
+<!-- Enabled / Disabled -->
+            <TextBlock Text="Enabled / Disabled State" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Each spawn has an "/><Run FontWeight="SemiBold" Text="Enabled"/><Run Text=" checkbox that controls whether the spawn is active:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• By default, spawns are "/><Run FontWeight="SemiBold" Text="Enabled (checked)"/><Run Text=" — the item will appear in the room."/>
+                <LineBreak/>
+                <Run Text="• Unchecking "/><Run FontWeight="SemiBold" Text="Enabled"/><Run Text=" disables the spawn. The item will not appear in the room until the spawn is re-enabled. This is useful for temporarily hiding items or toggling spawns for quest conditions."/>
+                <LineBreak/>
+                <Run Text="• Toggling the enabled state marks the project as dirty."/>
+            </TextBlock>
+
+            <!-- Removing an Item Spawn -->
+            <TextBlock Text="Removing an Item Spawn" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="To remove an item spawn from the selected room:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Select the spawn"/><Run Text=" you want to remove by clicking it in the ITEM SPAWNS list. The selected spawn is highlighted."/>
+                <LineBreak/>
+                <Run Text="• Click the "/><Run FontWeight="SemiBold" Text="Remove"/><Run Text=" button. The spawn is removed from both the list and the project data."/>
+                <LineBreak/>
+                <Run Text="• The Remove button is only enabled when a spawn is currently selected."/>
+                <LineBreak/>
+                <Run Text="• Removing an item spawn is "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" (Ctrl+Z). The spawn is restored at its original position in the project's spawn list, preserving its ID, settings, and room assignment."/>
+            </TextBlock>
+<!-- Relationship to Room Placement -->
+            <TextBlock Text="Relationship to Room Placement" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Item spawns are tightly bound to individual rooms:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• Every spawn is linked to a specific room by its "/><Run FontWeight="SemiBold" Text="RoomId"/><Run Text=". The ITEM SPAWNS panel only shows spawns belonging to the currently selected room."/>
+                <LineBreak/>
+                <Run Text="• When you select a different room, the spawn list refreshes automatically to show that room's spawns. Any previously selected spawn is deselected."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Room deletion is blocked"/><Run Text=" if the room still has spawns assigned to it. A warning dialog appears: "/><Run FontStyle="Italic" Text="Cannot delete room 'X' because N spawn(s) reference it. Remove the spawns first."/><Run Text=" You must remove all spawns from a room before you can delete that room."/>
+            </TextBlock>
+
+            <!-- Validation -->
+            <TextBlock Text="Item Spawn Validation" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Forge's validation system checks spawns for common issues. Run validation from the toolbar or menu at any time:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="Item spawn validation rules:"/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="S001 — Empty spawn ID (ERROR)"/><Run Text=": A spawn entry has no identifier."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="S002 — Duplicate spawn ID (ERROR)"/><Run Text=": Two spawns share the same ID."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="DR001 — Spawn references missing room (ERROR)"/><Run Text=": A spawn's RoomId points to a room that does not exist in the project."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="These validation rules apply to both item spawns and NPC spawns. Validation errors block Evennia export — you must resolve all errors before exporting your project."/>
+            </TextBlock>
+<!-- ============================================ -->
+            <!-- NPC Spawns Section                            -->
+            <!-- ============================================ -->
+
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,10">
+                <Border Background="#4CAF50" Width="4" CornerRadius="1"
+                        VerticalAlignment="Stretch" Margin="0,0,10,0"/>
+                <TextBlock Text="NPC Spawns" FontSize="14" FontWeight="SemiBold"
+                           Foreground="#D0D0D0"/>
+            </StackPanel>
+
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="NPC spawns let you place monsters and NPCs directly into rooms on your map. Each spawn defines which NPC appears, how many copies are present, and when they respawn after being defeated. NPC spawns are managed through the "/><Run FontWeight="SemiBold" Text="MONSTER / NPC SPAWNS"/><Run Text=" panel in the Properties Panel on the right side of the main window, visible when a room is selected."/>
+            </TextBlock>
+<!-- Adding an NPC Spawn -->
+            <TextBlock Text="Adding an NPC Spawn" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="You can add NPC spawns to any existing room:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Select a room"/><Run Text=" by clicking it on the Map Canvas. The Properties Panel on the right will update to show the room's details, including the MONSTER / NPC SPAWNS section."/>
+                <LineBreak/>
+                <Run Text="• Click the "/><Run FontWeight="SemiBold" Text="Add Monster/NPC Spawn"/><Run Text=" button in the MONSTER / NPC SPAWNS panel. A new spawn entry is created with a unique auto-generated ID (e.g., "/><Run FontStyle="Italic" Text="untitled_spawn_0001"/><Run Text="), assigned to the currently selected room."/>
+                <LineBreak/>
+                <Run Text="• The new spawn is automatically selected and appears in the MONSTER / NPC SPAWNS list. Its default values are: Quantity = 1, Respawn = 0 seconds, Enabled = "/><Run FontStyle="Italic" Text="true"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="• Adding an NPC spawn is a fully "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" operation (Ctrl+Z)."/>
+            </TextBlock>
+<!-- Selecting the NPC -->
+            <TextBlock Text="Selecting the NPC" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Each spawn entry includes a "/><Run FontWeight="SemiBold" Text="dropdown (ComboBox)"/><Run Text=" that lists all NPCs defined in the NPC Editor. This is how you choose which NPC appears in the room:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• The dropdown displays NPCs by their "/><Run FontWeight="SemiBold" Text="Key"/><Run Text=" (name). Only NPCs that exist in the NPC Editor are available in the list."/>
+                <LineBreak/>
+                <Run Text="• Selecting an NPC from the dropdown binds it to the spawn by setting the NPC's ID as the spawn's EntityId."/>
+                <LineBreak/>
+                <Run Text="• Changing the selected NPC marks the project as dirty (unsaved changes)."/>
+                <LineBreak/>
+                <Run Text="• If no NPC is selected, the dropdown is blank and the spawn references no NPC — validation will flag this as a dangling reference (DR012)."/>
+            </TextBlock>
+<!-- Quantity -->
+            <TextBlock Text="Quantity" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Qty"/><Run Text=" (Quantity) field controls how many copies of the NPC are available at this spawn point:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• The default quantity is "/><Run FontWeight="SemiBold" Text="1"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="• You can set it to any positive integer. For example, setting Qty to 3 means three copies of the NPC can appear in the room simultaneously."/>
+                <LineBreak/>
+                <Run Text="• Changing the quantity marks the project as dirty."/>
+            </TextBlock>
+
+            <!-- Respawn Time -->
+            <TextBlock Text="Respawn Time" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Respawn (s)"/><Run Text=" field determines how many seconds must pass before the NPC reappears after being defeated:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• The default respawn time is "/><Run FontWeight="SemiBold" Text="0 seconds"/><Run Text=", meaning the NPC does not respawn once defeated."/>
+                <LineBreak/>
+                <Run Text="• Enter a positive number to set a respawn delay in seconds (e.g., 300 = 5 minutes). After the NPC is defeated, a new copy will appear at the spawn point once the timer elapses."/>
+                <LineBreak/>
+                <Run Text="• Changing the respawn time marks the project as dirty."/>
+            </TextBlock>
+<!-- Enabled / Disabled -->
+            <TextBlock Text="Enabled / Disabled State" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Each spawn has an "/><Run FontWeight="SemiBold" Text="Enabled"/><Run Text=" checkbox that controls whether the spawn is active:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• By default, spawns are "/><Run FontWeight="SemiBold" Text="Enabled (checked)"/><Run Text=" — the NPC will appear in the room."/>
+                <LineBreak/>
+                <Run Text="• Unchecking "/><Run FontWeight="SemiBold" Text="Enabled"/><Run Text=" disables the spawn. The NPC will not appear in the room until the spawn is re-enabled. This is useful for temporarily hiding NPCs or toggling spawns for quest conditions."/>
+                <LineBreak/>
+                <Run Text="• Toggling the enabled state marks the project as dirty."/>
+            </TextBlock>
+
+            <!-- Removing an NPC Spawn -->
+            <TextBlock Text="Removing an NPC Spawn" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="To remove an NPC spawn from the selected room:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Select the spawn"/><Run Text=" you want to remove by clicking it in the MONSTER / NPC SPAWNS list. The selected spawn is highlighted."/>
+                <LineBreak/>
+                <Run Text="• Click the "/><Run FontWeight="SemiBold" Text="Remove"/><Run Text=" button. The spawn is removed from both the list and the project data."/>
+                <LineBreak/>
+                <Run Text="• The Remove button is only enabled when a spawn is currently selected."/>
+                <LineBreak/>
+                <Run Text="• Removing an NPC spawn is "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" (Ctrl+Z). The spawn is restored at its original position in the project's spawn list, preserving its ID, settings, and room assignment."/>
+            </TextBlock>
+<!-- Relationship to Room Placement -->
+            <TextBlock Text="Relationship to Room Placement" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="NPC spawns are tightly bound to individual rooms:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="• Every spawn is linked to a specific room by its "/><Run FontWeight="SemiBold" Text="RoomId"/><Run Text=". The MONSTER / NPC SPAWNS panel only shows spawns belonging to the currently selected room."/>
+                <LineBreak/>
+                <Run Text="• When you select a different room, the spawn list refreshes automatically to show that room's spawns. Any previously selected spawn is deselected."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="Room deletion is blocked"/><Run Text=" if the room still has spawns assigned to it. A warning dialog appears: "/><Run FontStyle="Italic" Text="Cannot delete room 'X' because N spawn(s) reference it. Remove the spawns first."/><Run Text=" You must remove all spawns (both item and NPC) from a room before you can delete that room."/>
+            </TextBlock>
+
+            <!-- Validation -->
+            <TextBlock Text="NPC Spawn Validation" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Forge's validation system checks NPC spawns for common issues. Run validation from the toolbar or menu at any time:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="NPC spawn validation rules:"/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="S001 — Empty spawn ID (ERROR)"/><Run Text=": A spawn entry has no identifier."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="S002 — Duplicate spawn ID (ERROR)"/><Run Text=": Two spawns share the same ID."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="DR001 — Spawn references missing room (ERROR)"/><Run Text=": A spawn's RoomId points to a room that does not exist in the project."/>
+                <LineBreak/>
+                <Run Text="• "/><Run FontWeight="SemiBold" Text="DR012 — NPC spawn references missing NPC (ERROR)"/><Run Text=": An NPC spawn's EntityId points to an NPC that does not exist in the project. This occurs when the spawn's dropdown selection references an NPC that has been deleted from the NPC Editor."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="These validation rules (S001, S002, DR001) also apply to item spawns. The DR012 rule is specific to NPC spawns. Validation errors block Evennia export — you must resolve all errors before exporting your project."/>
+            </TextBlock>
+<!-- ============================================ -->
+            <!-- Item Editor Section                            -->
+            <!-- ============================================ -->
+
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,10">
+                <Border Background="#4CAF50" Width="4" CornerRadius="1"
+                        VerticalAlignment="Stretch" Margin="0,0,10,0"/>
+                <TextBlock Text="Item Editor" FontSize="14" FontWeight="SemiBold"
+                           Foreground="#D0D0D0"/>
+            </StackPanel>
+
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="Item Editor"/><Run Text=" is where you define every item in your project. Items created here appear as selectable options in the Item Spawns dropdown, in Loot Tables, in Shop inventories, and in Quest rewards. The Item Editor is accessed from the main window."/>
+            </TextBlock>
+            <!-- Opening the Item Editor -->
+            <TextBlock Text="Opening the Item Editor" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="You can open the Item Editor in several ways:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Menu bar"/><Run Text=" &#8212; Click "/><Run FontWeight="SemiBold" Text="Tools &#8594; Item Editor"/><Run Text=" in the main window menu. A separate dialog window opens showing all items currently defined in the project."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Toolbar button"/><Run Text=" &#8212; If the Item Editor button is present on the toolbar, clicking it opens the editor directly."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Keyboard shortcut"/><Run Text=" &#8212; The Item Editor has an assigned keyboard shortcut for quick access."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="The Item Editor opens as a modeless dialog, meaning you can interact with the main map window while the editor remains open. This allows you to reference rooms and spawns as you work on items."/>
+            </TextBlock>
+            <!-- Creating Items -->
+            <TextBlock Text="Creating Items" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="To add a new item to your project:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Click the New Item button"/><Run Text=" in the Item Editor toolbar. A new item is created with a unique auto-generated ID (e.g., "/><Run FontStyle="Italic" Text="myproject_item_0001"/><Run Text=") and default placeholder values."/>
+                <LineBreak/>
+                <Run Text="&#8226; The new item appears in the list on the left side of the editor and is automatically selected, ready for editing."/>
+                <LineBreak/>
+                <Run Text="&#8226; Default values for a new item include: Key = "/><Run FontStyle="Italic" Text="New Item"/><Run Text=", Category = "/><Run FontStyle="Italic" Text="Misc"/><Run Text=", Type = "/><Run FontStyle="Italic" Text="Object"/><Run Text=", and empty Description, Notes, and other fields."/>
+                <LineBreak/>
+                <Run Text="&#8226; Creating an item is a fully "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" operation (Ctrl+Z). Undoing item creation removes the item from the project and from any spawns or references that pointed to it."/>
+            </TextBlock>
+
+            <!-- Selecting Items -->
+            <TextBlock Text="Selecting Items" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Item Editor displays a list of all items on the left side of the dialog:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Click an item in the list"/><Run Text=" to select it. The right-side property panel updates to show that item's fields for editing."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Search/Filter"/><Run Text=" &#8212; A search box at the top of the item list lets you filter by Key (name) or ID to quickly find a specific item."/>
+                <LineBreak/>
+                <Run Text="&#8226; The selected item is highlighted in the list. Only one item can be selected at a time."/>
+                <LineBreak/>
+                <Run Text="&#8226; If you have unsaved changes in the currently selected item's fields, switching to another item saves those changes to the project data automatically (and marks the project dirty)."/>
+            </TextBlock>
+            <!-- Duplicating Items -->
+            <TextBlock Text="Duplicating Items" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="You can create a copy of an existing item to use as a starting point for a new one:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Select the item"/><Run Text=" you want to duplicate in the list."/>
+                <LineBreak/>
+                <Run Text="&#8226; Click the "/><Run FontWeight="SemiBold" Text="Duplicate"/><Run Text=" button. A new item is created with a unique ID and the same Key appended with "/><Run FontStyle="Italic" Text=" (Copy)"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="All properties are copied"/><Run Text=" &#8212; Type, Category, Description, Notes, Requirements, Modifiers, Effects, Sources, Crafting Components, and all Metadata fields (Aliases, Tags, Attributes, Permissions) are duplicated exactly."/>
+                <LineBreak/>
+                <Run Text="&#8226; The duplicated item is automatically selected and scrolled into view in the list."/>
+                <LineBreak/>
+                <Run Text="&#8226; Duplication is an "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" operation (Ctrl+Z)."/>
+            </TextBlock>
+
+            <!-- Deleting Items -->
+            <TextBlock Text="Deleting Items" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="To permanently remove an item from the project:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Select the item"/><Run Text=" in the list and click the "/><Run FontWeight="SemiBold" Text="Delete"/><Run Text=" button."/>
+                <LineBreak/>
+                <Run Text="&#8226; A "/><Run FontWeight="SemiBold" Text="confirmation dialog"/><Run Text=" appears, warning you that deleting this item will also affect any spawns, loot tables, shops, or quests that reference it. The dialog lists the number of references that will be broken."/>
+                <LineBreak/>
+                <Run Text="&#8226; If you confirm, the item is removed from the project and any references to it (in spawns, shops, loot tables, etc.) are set to "/><Run FontStyle="Italic" Text="(none)"/><Run Text=" &#8212; becoming dangling references that validation will flag."/>
+                <LineBreak/>
+                <Run Text="&#8226; Deletion is an "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" operation (Ctrl+Z). Undoing restores the item and re-links any references that were broken."/>
+            </TextBlock>
+            <!-- ID, Key, and Name Fields -->
+            <TextBlock Text="Item ID, Key, and Name" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Every item has three fundamental identifier fields:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="ID"/><Run Text=" &#8212; A read-only unique identifier auto-generated when the item is created (e.g., "/><Run FontStyle="Italic" Text="myproject_item_0001"/><Run Text="). The ID is used internally to link items to spawns, loot tables, shops, and quests. It cannot be changed after creation to preserve referential integrity."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Key"/><Run Text=" &#8212; The primary display name of the item (e.g., "/><Run FontStyle="Italic" Text="Iron Sword"/><Run Text=", "/><Run FontStyle="Italic" Text="Health Potion"/><Run Text="). This is what players see in-game and what appears in spawn dropdowns, shop lists, and loot tables. The Key must be unique across all items &#8212; the editor validates this and shows an error if you enter a duplicate Key."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Name"/><Run Text=" &#8212; An optional display name that can differ from the Key. When set, the Name field overrides the Key for in-game display purposes. This is useful for items that have a short Key for reference but a longer, more descriptive Name for players (e.g., Key = "/><Run FontStyle="Italic" Text="rusty_sword"/><Run Text=", Name = "/><Run FontStyle="Italic" Text="Rusty Iron Sword of the Forgotten Guard"/><Run Text=")."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Changing the Key or Name marks the project as dirty. If you change the Key to a value already used by another item, a validation message appears immediately, and the change is not committed until the conflict is resolved."/>
+            </TextBlock>
+
+            <!-- Type and Category -->
+            <TextBlock Text="Item Type and Category" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Two dropdown fields classify how the item behaves in the game world:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Type"/><Run Text=" &#8212; Determines the item's base behavior. Available types include: "/><Run FontStyle="Italic" Text="Weapon"/><Run Text=", "/><Run FontStyle="Italic" Text="Armor"/><Run Text=", "/><Run FontStyle="Italic" Text="Consumable"/><Run Text=", "/><Run FontStyle="Italic" Text="Quest"/><Run Text=", "/><Run FontStyle="Italic" Text="Key"/><Run Text=", "/><Run FontStyle="Italic" Text="Container"/><Run Text=", "/><Run FontStyle="Italic" Text="Currency"/><Run Text=", "/><Run FontStyle="Italic" Text="Readable"/><Run Text=", "/><Run FontStyle="Italic" Text="Light"/><Run Text=", "/><Run FontStyle="Italic" Text="Tool"/><Run Text=", and "/><Run FontStyle="Italic" Text="Object"/><Run Text=" (generic). The Type influences how the item is exported to Evennia and which rules apply to it in-game."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Category"/><Run Text=" &#8212; A secondary classification used for organization and loot filtering. Categories are user-definable and help group items by theme or purpose (e.g., "/><Run FontStyle="Italic" Text="Weapons"/><Run Text=", "/><Run FontStyle="Italic" Text="Potions"/><Run Text=", "/><Run FontStyle="Italic" Text="Quest Items"/><Run Text=", "/><Run FontStyle="Italic" Text="Valuables"/><Run Text=", "/><Run FontStyle="Italic" Text="Keys"/><Run Text=", "/><Run FontStyle="Italic" Text="Misc"/><Run Text=")."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Changing Type or Category marks the project as dirty."/>
+            </TextBlock>
+            <!-- Description and Notes -->
+            <TextBlock Text="Description and Notes" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Two multi-line text fields let you provide documentation and narrative detail for each item:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Description"/><Run Text=" &#8212; The flavor text shown to players when they examine the item in-game (e.g., "/><Run FontStyle="Italic" Text="A well-worn iron blade, its edge still sharp despite years of neglect."/><Run Text="). This field supports freeform text and is exported as the item's Evennia description."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Notes"/><Run Text=" &#8212; Designer-only notes that are "/><Run FontWeight="SemiBold" Text="not exported"/><Run Text=" to Evennia. Use this field for internal documentation, reminders, design rationale, or implementation todos. Notes are visible only within The Forge."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Both fields support multi-line text. Editing either field marks the project as dirty. Text changes support undo/redo with coalescing, so only the before/after values are stored."/>
+            </TextBlock>
+
+            <!-- Requirements -->
+            <TextBlock Text="Requirements" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Requirements define the conditions a player must meet to equip or use the item:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Level"/><Run Text=" &#8212; The minimum character level required. Leave blank or set to 0 for no level requirement."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Strength"/><Run Text=", "/><Run FontWeight="SemiBold" Text="Dexterity"/><Run Text=", "/><Run FontWeight="SemiBold" Text="Intelligence"/><Run Text=", "/><Run FontWeight="SemiBold" Text="Wisdom"/><Run Text=", "/><Run FontWeight="SemiBold" Text="Constitution"/><Run Text=", "/><Run FontWeight="SemiBold" Text="Charisma"/><Run Text=" &#8212; Numeric stat requirements. Each field accepts an integer value; leave blank or 0 for no requirement."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Skill"/><Run Text=" &#8212; A skill name or identifier required to use the item (e.g., "/><Run FontStyle="Italic" Text="Lockpicking"/><Run Text=" for a lockpick, "/><Run FontStyle="Italic" Text="Alchemy"/><Run Text=" for a potion kit)."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Skill Level"/><Run Text=" &#8212; The minimum level of the required skill."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Stat requirement fields are numeric-only. Non-numeric input is rejected. Changing any requirement field marks the project as dirty."/>
+            </TextBlock>
+            <!-- Modifiers -->
+            <TextBlock Text="Modifiers" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Modifiers define how the item affects a character's stats when equipped or used. Each modifier entry has three components:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Stat"/><Run Text=" &#8212; The stat being modified (e.g., "/><Run FontStyle="Italic" Text="Attack"/><Run Text=", "/><Run FontStyle="Italic" Text="Defense"/><Run Text=", "/><Run FontStyle="Italic" Text="HP"/><Run Text=", "/><Run FontStyle="Italic" Text="MP"/><Run Text=", "/><Run FontStyle="Italic" Text="Speed"/><Run Text=", or any custom stat defined in your game)."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Value"/><Run Text=" &#8212; The numeric amount (positive for bonuses, negative for penalties). For example, a sword might have Attack +5, while cursed armor might have Speed -2."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Type"/><Run Text=" &#8212; How the modifier is applied: "/><Run FontStyle="Italic" Text="Flat"/><Run Text=" (adds/subtracts directly) or "/><Run FontStyle="Italic" Text="Percent"/><Run Text=" (multiplies the base stat by a percentage)."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Use the "/><Run FontWeight="SemiBold" Text="Add Modifier"/><Run Text=" button to create a new modifier row. Use the "/><Run FontWeight="SemiBold" Text="Remove"/><Run Text=" button (X) on each row to delete that modifier."/>
+                <LineBreak/>
+                <Run Text="&#8226; Modifier changes (add, remove, edit) are all "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" and mark the project as dirty."/>
+            </TextBlock>
+
+            <!-- Effects -->
+            <TextBlock Text="Effects" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Effects define special behaviors that trigger when the item is used, equipped, or consumed. Like modifiers, each effect entry has several fields:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Effect Type"/><Run Text=" &#8212; The kind of effect: "/><Run FontStyle="Italic" Text="Heal"/><Run Text=", "/><Run FontStyle="Italic" Text="Damage"/><Run Text=", "/><Run FontStyle="Italic" Text="Buff"/><Run Text=", "/><Run FontStyle="Italic" Text="Debuff"/><Run Text=", "/><Run FontStyle="Italic" Text="Teleport"/><Run Text=", "/><Run FontStyle="Italic" Text="Summon"/><Run Text=", "/><Run FontStyle="Italic" Text="Status"/><Run Text=", "/><Run FontStyle="Italic" Text="Script"/><Run Text=", or "/><Run FontStyle="Italic" Text="Custom"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Target"/><Run Text=" &#8212; Who or what the effect applies to: "/><Run FontStyle="Italic" Text="Self"/><Run Text=", "/><Run FontStyle="Italic" Text="Target"/><Run Text=", "/><Run FontStyle="Italic" Text="Area"/><Run Text=", or "/><Run FontStyle="Italic" Text="Room"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Value"/><Run Text=" &#8212; The numeric magnitude of the effect (e.g., heal amount, damage dealt, buff strength)."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Duration"/><Run Text=" &#8212; How long the effect lasts in seconds. 0 means instantaneous; a positive number creates a temporary effect."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Script"/><Run Text=" &#8212; For Script and Custom types, a reference to a Python script or function name (e.g., "/><Run FontStyle="Italic" Text="world.scripts.poison_effect"/><Run Text=")."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Use the "/><Run FontWeight="SemiBold" Text="Add Effect"/><Run Text=" button to add a new effect row. Remove individual effects with the X button on each row."/>
+                <LineBreak/>
+                <Run Text="&#8226; Effect changes are "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" and mark the project as dirty."/>
+            </TextBlock>
+            <!-- Sources -->
+            <TextBlock Text="Sources" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Sources define where and how the item can be obtained in the game world. This information is used by the Evennia export to generate acquisition data and documentation:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Each source entry includes a "/><Run FontWeight="SemiBold" Text="Source Type"/><Run Text=" dropdown ("/><Run FontStyle="Italic" Text="Drop"/><Run Text=", "/><Run FontStyle="Italic" Text="Shop"/><Run Text=", "/><Run FontStyle="Italic" Text="Quest"/><Run Text=", "/><Run FontStyle="Italic" Text="Crafting"/><Run Text=", "/><Run FontStyle="Italic" Text="Starting"/><Run Text=", "/><Run FontStyle="Italic" Text="Event"/><Run Text=") and an optional "/><Run FontWeight="SemiBold" Text="Source Detail"/><Run Text=" text field for notes (e.g., which NPC drops it, which shop sells it)."/>
+                <LineBreak/>
+                <Run Text="&#8226; Sources can also be auto-populated by the project: when you assign an item to a spawn, loot table, or shop, The Forge can optionally add that assignment as a source entry on the item."/>
+                <LineBreak/>
+                <Run Text="&#8226; Use the "/><Run FontWeight="SemiBold" Text="Add Source"/><Run Text=" and "/><Run FontWeight="SemiBold" Text="Remove"/><Run Text=" (X) buttons to manage source entries."/>
+                <LineBreak/>
+                <Run Text="&#8226; Source changes mark the project as dirty and support undo/redo."/>
+            </TextBlock>
+
+            <!-- Crafting Components -->
+            <TextBlock Text="Crafting Components" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="If the item can be crafted, the Crafting Components section defines the required ingredients:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Each component row has a "/><Run FontWeight="SemiBold" Text="Component"/><Run Text=" dropdown that lists all other items defined in the Item Editor. Select the ingredient item from the dropdown."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Quantity"/><Run Text=" &#8212; How many of the component are needed (integer, minimum 1)."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Consumed"/><Run Text=" &#8212; A checkbox indicating whether the component is consumed during crafting or remains (e.g., a mold is not consumed; ingredients are)."/>
+                <LineBreak/>
+                <Run Text="&#8226; Use the "/><Run FontWeight="SemiBold" Text="Add Component"/><Run Text=" and "/><Run FontWeight="SemiBold" Text="Remove"/><Run Text=" (X) buttons to manage the component list."/>
+                <LineBreak/>
+                <Run Text="&#8226; The component dropdown shows all items by Key. Selecting a component item creates a reference link &#8212; if that item is later deleted, validation flags the dangling reference."/>
+                <LineBreak/>
+                <Run Text="&#8226; Crafting component changes are "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" and mark the project as dirty."/>
+            </TextBlock>
+            <!-- Metadata: Aliases -->
+            <TextBlock Text="Metadata &#8212; Aliases" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Metadata section groups several Evennia-compatible attributes. "/><Run FontWeight="SemiBold" Text="Aliases"/><Run Text=" are alternate names players can use to refer to the item:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Enter a "/><Run FontWeight="SemiBold" Text="comma-separated list"/><Run Text=" of alternate names (e.g., "/><Run FontStyle="Italic" Text="sword, blade, iron"/><Run Text=" for an Iron Sword)."/>
+                <LineBreak/>
+                <Run Text="&#8226; Aliases are exported to Evennia as the item's aliases list, allowing players to interact with the item using any of its alternate names."/>
+                <LineBreak/>
+                <Run Text="&#8226; The field is a free-text input. Changing aliases marks the project as dirty."/>
+            </TextBlock>
+
+            <!-- Metadata: Tags -->
+            <TextBlock Text="Metadata &#8212; Tags" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Tags are Evennia tags attached to the item, used for categorization, filtering, and gameplay logic:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Enter tags as a "/><Run FontWeight="SemiBold" Text="comma-separated list"/><Run Text=" (e.g., "/><Run FontStyle="Italic" Text="weapon, metal, loot"/><Run Text=")."/>
+                <LineBreak/>
+                <Run Text="&#8226; Tags are exported to Evennia where they can be used in scripts, quests, and dialogue conditions (e.g., checking if a player has an item tagged "/><Run FontStyle="Italic" Text="quest"/><Run Text=")."/>
+                <LineBreak/>
+                <Run Text="&#8226; The Tags field is free-text. Changing tags marks the project as dirty."/>
+            </TextBlock>
+
+            <!-- Metadata: Attributes -->
+            <TextBlock Text="Metadata &#8212; Attributes" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Attributes are key-value pairs exported as Evennia attributes on the item. They store structured data used by game systems:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Each attribute row has a "/><Run FontWeight="SemiBold" Text="Key"/><Run Text=" field (the attribute name) and a "/><Run FontWeight="SemiBold" Text="Value"/><Run Text=" field (the data &#8212; string, number, or JSON)."/>
+                <LineBreak/>
+                <Run Text="&#8226; Examples: "/><Run FontStyle="Italic" Text="weight = 5.2"/><Run Text=", "/><Run FontStyle="Italic" Text="rarity = epic"/><Run Text=", "/><Run FontStyle="Italic" Text="damage_type = fire"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="&#8226; Use the "/><Run FontWeight="SemiBold" Text="Add Attribute"/><Run Text=" and "/><Run FontWeight="SemiBold" Text="Remove"/><Run Text=" (X) buttons to manage the attribute list."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Duplicate keys are not allowed"/><Run Text=" &#8212; if you enter the same key twice, the editor shows a validation warning immediately and prevents committing the duplicate until it is resolved."/>
+                <LineBreak/>
+                <Run Text="&#8226; Attribute changes are undoable and mark the project as dirty."/>
+            </TextBlock>
+            <!-- Metadata: Permissions -->
+            <TextBlock Text="Metadata &#8212; Permissions" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Permissions control who can interact with the item in-game using Evennia's lock system:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Lock String"/><Run Text=" &#8212; A free-text Evennia lock string (e.g., "/><Run FontStyle="Italic" Text="get:perm(Player);drop:perm(Player)"/><Run Text="). This defines who can pick up, drop, use, or otherwise interact with the item."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Home"/><Run Text=" &#8212; The home location (room key or #dbref) where the item returns if dropped or reset. Leave empty for no home."/>
+                <LineBreak/>
+                <Run Text="&#8226; Permissions are exported directly to Evennia. The Lock String field is free-text and is not validated by The Forge for syntax correctness &#8212; Evennia will report any lock errors at runtime."/>
+                <LineBreak/>
+                <Run Text="&#8226; Changing the Lock String or Home marks the project as dirty."/>
+            </TextBlock>
+
+            <!-- Dirty Tracking -->
+            <TextBlock Text="Dirty Tracking" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Item Editor integrates with The Forge's project-wide dirty tracking system to ensure you never lose unsaved work:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Any change made in the Item Editor &#8212; creating, deleting, duplicating, or modifying any field of any item &#8212; "/><Run FontWeight="SemiBold" Text="marks the project as dirty"/><Run Text=" (unsaved changes)."/>
+                <LineBreak/>
+                <Run Text="&#8226; The dirty state is indicated by an "/><Run FontWeight="SemiBold" Text="asterisk (*)"/><Run Text=" in the main window title bar (e.g., "/><Run FontStyle="Italic" Text="MyProject.json *"/><Run Text=")."/>
+                <LineBreak/>
+                <Run Text="&#8226; Changes are persisted to the project's in-memory data immediately, but are only written to disk when you "/><Run FontWeight="SemiBold" Text="Save"/><Run Text=" (Ctrl+S)."/>
+                <LineBreak/>
+                <Run Text="&#8226; Closing the Item Editor does not save changes to disk &#8212; only saving the project does. If you close the project or exit The Forge with unsaved changes, you are prompted to save."/>
+                <LineBreak/>
+                <Run Text="&#8226; Undo/redo operations in the Item Editor also respect dirty tracking: undoing the last change that made the project dirty clears the dirty flag if that was the only unsaved change."/>
+            </TextBlock>
+
+            <!-- Validation -->
+            <TextBlock Text="Item Editor Validation" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Forge's validation system checks items for issues that would cause problems during export or in-game. Run validation from the toolbar or menu at any time:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="Item validation rules:"/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="EI001 &#8212; Empty item ID (ERROR)"/><Run Text=": An item has no identifier. This usually indicates data corruption."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="EI002 &#8212; Duplicate item ID (ERROR)"/><Run Text=": Two items share the same ID. Each item must have a unique identifier."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="EI003 &#8212; Duplicate item Key (ERROR)"/><Run Text=": Two items have the same Key. Item keys must be unique across the project."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="EI004 &#8212; Empty item Key (WARNING)"/><Run Text=": An item has no Key set. Items without keys are still exported but will be harder for players and builders to identify."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="DR005 &#8212; Spawn references missing item (ERROR)"/><Run Text=": An item spawn's EntityId points to an item that no longer exists. This occurs when a spawn references an item that has been deleted from the Item Editor. The spawn dropdown will show "/><Run FontStyle="Italic" Text="(none)"/><Run Text=" for the broken reference."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="DR010 &#8212; Crafting component references missing item (ERROR)"/><Run Text=": A crafting component references an item that has been deleted."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="DR011 &#8212; Loot table / shop references missing item (ERROR)"/><Run Text=": A loot table entry or shop inventory slot references an item that no longer exists."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="Validation errors block Evennia export &#8212; you must resolve all errors before exporting your project. Warnings do not block export but should be reviewed."/>
+            </TextBlock>
+<!-- ============================================ -->
+            <!-- NPC Editor Section                              -->
+            <!-- ============================================ -->
+
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,10">
+                <Border Background="#4CAF50" Width="4" CornerRadius="1"
+                        VerticalAlignment="Stretch" Margin="0,0,10,0"/>
+                <TextBlock Text="NPC Editor" FontSize="14" FontWeight="SemiBold"
+                           Foreground="#D0D0D0"/>
+            </StackPanel>
+
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The "/><Run FontWeight="SemiBold" Text="NPC Editor"/><Run Text=" is where you define every non-player character (NPC) in your project — monsters, quest givers, merchants, and any other character players can encounter. NPCs created here appear as selectable options in the Monster / NPC Spawns dropdown, in Loot Tables, in Shop inventories, and in Dialogue assignments. The NPC Editor is accessed from the main window."/>
+            </TextBlock>
+
+            <!-- Opening the NPC Editor -->
+            <TextBlock Text="Opening the NPC Editor" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="You can open the NPC Editor in several ways:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Menu bar"/><Run Text=" &#8212; Click "/><Run FontWeight="SemiBold" Text="Tools &#8594; NPC Editor"/><Run Text=" in the main window menu. A separate dialog window opens showing all NPCs currently defined in the project."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Toolbar button"/><Run Text=" &#8212; If the NPC Editor button is present on the toolbar, clicking it opens the editor directly."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Keyboard shortcut"/><Run Text=" &#8212; The NPC Editor has an assigned keyboard shortcut for quick access."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="The NPC Editor opens as a modeless dialog, meaning you can interact with the main map window while the editor remains open. This allows you to reference rooms, spawns, loot tables, shops, and dialogue trees as you work on NPCs."/>
+            </TextBlock>
+<!-- Creating NPCs -->
+            <TextBlock Text="Creating NPCs" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="To add a new NPC to your project:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Click the New NPC button"/><Run Text=" in the NPC Editor toolbar. A new NPC is created with a unique auto-generated ID (e.g., "/><Run FontStyle="Italic" Text="myproject_npc_0001"/><Run Text=") and default placeholder values."/>
+                <LineBreak/>
+                <Run Text="&#8226; The new NPC appears in the list on the left side of the editor and is automatically selected, ready for editing."/>
+                <LineBreak/>
+                <Run Text="&#8226; Default values for a new NPC include: Key = "/><Run FontStyle="Italic" Text="New NPC"/><Run Text=", Classification = "/><Run FontStyle="Italic" Text="Creature"/><Run Text=", Behavior = "/><Run FontStyle="Italic" Text="Neutral"/><Run Text=", and empty Description, Notes, Stats, and other fields."/>
+                <LineBreak/>
+                <Run Text="&#8226; Creating an NPC is a fully "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" operation (Ctrl+Z). Undoing NPC creation removes the NPC from the project and from any spawns, loot tables, shops, or dialogue references that pointed to it."/>
+            </TextBlock>
+
+            <!-- Selecting NPCs -->
+            <TextBlock Text="Selecting NPCs" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The NPC Editor displays a list of all NPCs on the left side of the dialog:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Click an NPC in the list"/><Run Text=" to select it. The right-side property panel updates to show that NPC's fields for editing."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Search/Filter"/><Run Text=" &#8212; A search box at the top of the NPC list lets you filter by Key (name) or ID to quickly find a specific NPC."/>
+                <LineBreak/>
+                <Run Text="&#8226; The selected NPC is highlighted in the list. Only one NPC can be selected at a time."/>
+                <LineBreak/>
+                <Run Text="&#8226; If you have unsaved changes in the currently selected NPC's fields, switching to another NPC saves those changes to the project data automatically (and marks the project dirty)."/>
+            </TextBlock>
+<!-- Duplicating NPCs -->
+            <TextBlock Text="Duplicating NPCs" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="You can create a copy of an existing NPC to use as a starting point for a new one:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Select the NPC"/><Run Text=" you want to duplicate in the list."/>
+                <LineBreak/>
+                <Run Text="&#8226; Click the "/><Run FontWeight="SemiBold" Text="Duplicate"/><Run Text=" button. A new NPC is created with a unique ID and the same Key appended with "/><Run FontStyle="Italic" Text=" (Copy)"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="All properties are copied"/><Run Text=" &#8212; Stats, Combat Settings, Classification, Behavior, Abilities, Resistances, Equipment, Inventory, Patrol Waypoints, Loot Table assignment, Dialogue assignment, and all Metadata fields (Aliases, Tags, Attributes, Permissions) are duplicated exactly."/>
+                <LineBreak/>
+                <Run Text="&#8226; The duplicated NPC is automatically selected and scrolled into view in the list."/>
+                <LineBreak/>
+                <Run Text="&#8226; Duplication is an "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" operation (Ctrl+Z)."/>
+            </TextBlock>
+
+            <!-- Deleting NPCs -->
+            <TextBlock Text="Deleting NPCs" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="To permanently remove an NPC from the project:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Select the NPC"/><Run Text=" in the list and click the "/><Run FontWeight="SemiBold" Text="Delete"/><Run Text=" button."/>
+                <LineBreak/>
+                <Run Text="&#8226; A "/><Run FontWeight="SemiBold" Text="confirmation dialog"/><Run Text=" appears, warning you that deleting this NPC will also affect any spawns, loot tables, shops, or dialogue references that reference it. The dialog lists the number of references that will be broken."/>
+                <LineBreak/>
+                <Run Text="&#8226; If you confirm, the NPC is removed from the project and any references to it (in spawns, shops, loot tables, dialogue, etc.) are set to "/><Run FontStyle="Italic" Text="(none)"/><Run Text=" &#8212; becoming dangling references that validation will flag."/>
+                <LineBreak/>
+                <Run Text="&#8226; Deletion is an "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" operation (Ctrl+Z). Undoing restores the NPC and re-links any references that were broken."/>
+            </TextBlock>
+
+            <!-- ID, Key, and Name Fields -->
+            <TextBlock Text="NPC ID, Key, and Name" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Every NPC has three fundamental identifier fields:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="ID"/><Run Text=" &#8212; A read-only unique identifier auto-generated when the NPC is created (e.g., "/><Run FontStyle="Italic" Text="myproject_npc_0001"/><Run Text="). The ID is used internally to link NPCs to spawns, loot tables, shops, dialogue trees, and quests. It cannot be changed after creation to preserve referential integrity."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Key"/><Run Text=" &#8212; The primary display name of the NPC (e.g., "/><Run FontStyle="Italic" Text="Goblin Warrior"/><Run Text=", "/><Run FontStyle="Italic" Text="Elder Mage"/><Run Text="). This is what players see in-game and what appears in spawn dropdowns, shop keeper lists, and dialogue assignments. The Key must be unique across all NPCs &#8212; the editor validates this and shows an error if you enter a duplicate Key."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Name"/><Run Text=" &#8212; An optional display name that can differ from the Key. When set, the Name field overrides the Key for in-game display purposes. This is useful for NPCs that have a short Key for reference but a longer, more descriptive Name for players (e.g., Key = "/><Run FontStyle="Italic" Text="goblin_scout"/><Run Text=", Name = "/><Run FontStyle="Italic" Text="Scout of the Crimson Fang Tribe"/><Run Text=")."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Changing the Key or Name marks the project as dirty. If you change the Key to a value already used by another NPC, a validation message appears immediately, and the change is not committed until the conflict is resolved."/>
+            </TextBlock>
+<!-- Description and Notes -->
+            <TextBlock Text="Description and Notes" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Every NPC has two text areas for documentation and in-game flavor:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Description"/><Run Text=" &#8212; The in-game description shown to players when they look at or examine the NPC. This is the narrative flavor text that brings the NPC to life (e.g., "/><Run FontStyle="Italic" Text="A short, wiry goblin clad in scavenged leather armor. Its beady eyes dart nervously."/><Run Text=")."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Notes"/><Run Text=" &#8212; Internal builder notes not shown to players. Use this field for documentation, design intent, quest hooks, or reminders for yourself and your team. Notes are for editor reference only and are not exported to Evennia."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Both fields are free-text multi-line text areas. Changing either field marks the project as dirty."/>
+            </TextBlock>
+
+            <!-- Stats -->
+            <TextBlock Text="Stats" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Stats section defines the NPC's core numerical attributes used in combat and gameplay calculations:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="HP (Hit Points)"/><Run Text=" &#8212; The NPC's maximum health. Determines how much damage the NPC can withstand before being defeated."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="MP (Mana Points)"/><Run Text=" &#8212; The NPC's magical energy pool, consumed when casting spells or using special abilities."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Attack"/><Run Text=" &#8212; Base physical damage dealt per hit before modifiers. Higher values make the NPC more dangerous in melee combat."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Defense"/><Run Text=" &#8212; Damage reduction applied to incoming physical attacks. Higher values make the NPC harder to damage."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Speed"/><Run Text=" &#8212; Determines turn order in combat. NPCs with higher Speed act before slower characters."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Level"/><Run Text=" &#8212; The NPC's relative power tier. Level is used for XP reward calculations and difficulty scaling."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Each stat is a numeric field. Entering non-numeric values is rejected immediately. All stat changes are "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" and mark the project as dirty."/>
+            </TextBlock>
+<!-- Combat Settings -->
+            <TextBlock Text="Combat Settings" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Combat Settings control how the NPC behaves during encounters:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Aggression Range"/><Run Text=" &#8212; The distance (in room units or grid cells) at which the NPC will detect and engage players. Set to 0 for passive NPCs that never initiate combat."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Flee Threshold"/><Run Text=" &#8212; The HP percentage at which the NPC will attempt to flee combat. For example, a value of 25 means the NPC flees when its HP drops to 25% or below. Set to 0 to disable fleeing."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Combat Style"/><Run Text=" &#8212; A dropdown defining the NPC's combat role: "/><Run FontStyle="Italic" Text="Melee"/><Run Text=" (close-range fighter), "/><Run FontStyle="Italic" Text="Ranged"/><Run Text=" (attacks from a distance), "/><Run FontStyle="Italic" Text="Caster"/><Run Text=" (prioritizes spells and abilities), "/><Run FontStyle="Italic" Text="Healer"/><Run Text=" (supports allies), or "/><Run FontStyle="Italic" Text="Mixed"/><Run Text=" (adapts to the situation)."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="XP Reward"/><Run Text=" &#8212; The amount of experience points awarded to players who defeat this NPC. Set to 0 for non-combat NPCs."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; All combat settings are numeric or dropdown fields. Changes are undoable and mark the project as dirty."/>
+            </TextBlock>
+
+            <!-- Classification -->
+            <TextBlock Text="Classification" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Classification defines the NPC's type and faction, affecting how other NPCs and game systems interact with them:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="NPC Type"/><Run Text=" &#8212; A dropdown categorizing the NPC's nature: "/><Run FontStyle="Italic" Text="Creature"/><Run Text=" (monsters, animals, beasts), "/><Run FontStyle="Italic" Text="Humanoid"/><Run Text=" (people, races), "/><Run FontStyle="Italic" Text="Undead"/><Run Text=" (skeletons, zombies, ghosts), "/><Run FontStyle="Italic" Text="Construct"/><Run Text=" (golems, automatons), "/><Run FontStyle="Italic" Text="Elemental"/><Run Text=", "/><Run FontStyle="Italic" Text="Dragon"/><Run Text=", "/><Run FontStyle="Italic" Text="Demon"/><Run Text=", and "/><Run FontStyle="Italic" Text="Boss"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Faction"/><Run Text=" &#8212; The NPC's allegiance group (e.g., "/><Run FontStyle="Italic" Text="Hostile"/><Run Text=", "/><Run FontStyle="Italic" Text="Friendly"/><Run Text=", "/><Run FontStyle="Italic" Text="Neutral"/><Run Text=", or custom factions like "/><Run FontStyle="Italic" Text="Goblin Horde"/><Run Text=", "/><Run FontStyle="Italic" Text="Town Guard"/><Run Text="). NPCs of the same faction do not attack each other."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Is Unique"/><Run Text=" &#8212; A checkbox indicating whether this NPC is a one-of-a-kind character (e.g., a named quest boss) or a generic spawnable creature. Unique NPCs are flagged in export so Evennia can enforce single-instance spawning."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Type and Faction are dropdown selections. Changing classification marks the project as dirty."/>
+            </TextBlock>
+<!-- Behavior -->
+            <TextBlock Text="Behavior" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Behavior controls the NPC's default stance and idle routines outside of combat:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Default Stance"/><Run Text=" &#8212; A dropdown defining how the NPC reacts to players when not in combat: "/><Run FontStyle="Italic" Text="Neutral"/><Run Text=" (ignores players unless provoked), "/><Run FontStyle="Italic" Text="Friendly"/><Run Text=" (welcomes players, may offer help), "/><Run FontStyle="Italic" Text="Hostile"/><Run Text=" (attacks on sight), "/><Run FontStyle="Italic" Text="Fearful"/><Run Text=" (flees from players), or "/><Run FontStyle="Italic" Text="Guard"/><Run Text=" (stands watch, attacks intruders in a defined area)."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Idle Behavior"/><Run Text=" &#8212; What the NPC does when not interacting with players: "/><Run FontStyle="Italic" Text="Stand Still"/><Run Text=" (stays in place), "/><Run FontStyle="Italic" Text="Wander"/><Run Text=" (roams randomly within the room or patrol area), "/><Run FontStyle="Italic" Text="Follow Path"/><Run Text=" (walks a fixed patrol route defined by waypoints), or "/><Run FontStyle="Italic" Text="Scripted"/><Run Text=" (runs custom behavior scripts)."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Talkative"/><Run Text=" &#8212; A checkbox indicating whether the NPC can be spoken to. Talkative NPCs can have dialogue assigned. Non-talkative NPCs are purely combat or environmental."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Behavior settings are dropdowns and checkboxes. Changing behavior marks the project as dirty."/>
+            </TextBlock>
+<!-- Abilities -->
+            <TextBlock Text="Abilities" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Abilities define special actions the NPC can perform in combat or in the world. Each ability entry has several fields:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Name"/><Run Text=" &#8212; The display name of the ability (e.g., "/><Run FontStyle="Italic" Text="Fire Breath"/><Run Text=", "/><Run FontStyle="Italic" Text="Backstab"/><Run Text=", "/><Run FontStyle="Italic" Text="Healing Wave"/><Run Text=")."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Type"/><Run Text=" &#8212; The category of ability: "/><Run FontStyle="Italic" Text="Physical"/><Run Text=", "/><Run FontStyle="Italic" Text="Magical"/><Run Text=", "/><Run FontStyle="Italic" Text="Status"/><Run Text=" (buffs/debuffs), "/><Run FontStyle="Italic" Text="Heal"/><Run Text=", "/><Run FontStyle="Italic" Text="Summon"/><Run Text=", or "/><Run FontStyle="Italic" Text="Script"/><Run Text=" (custom behavior)."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Power"/><Run Text=" &#8212; A numeric value indicating the ability's strength. Higher values mean more damage, stronger heals, or more potent effects."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="MP Cost"/><Run Text=" &#8212; The mana points required to use this ability. The NPC must have sufficient remaining MP to execute the ability."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Cooldown"/><Run Text=" &#8212; The number of combat rounds the NPC must wait before using this ability again. Set to 0 for abilities that can be used every round."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Target"/><Run Text=" &#8212; Who the ability affects: "/><Run FontStyle="Italic" Text="Single Enemy"/><Run Text=", "/><Run FontStyle="Italic" Text="All Enemies"/><Run Text=", "/><Run FontStyle="Italic" Text="Self"/><Run Text=", "/><Run FontStyle="Italic" Text="Single Ally"/><Run Text=", "/><Run FontStyle="Italic" Text="All Allies"/><Run Text=", or "/><Run FontStyle="Italic" Text="Area"/><Run Text="."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Use the "/><Run FontWeight="SemiBold" Text="Add Ability"/><Run Text=" button to create a new ability row. Use the "/><Run FontWeight="SemiBold" Text="Remove"/><Run Text=" button (X) on each row to delete that ability."/>
+                <LineBreak/>
+                <Run Text="&#8226; Ability changes (add, remove, edit) are all "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" and mark the project as dirty."/>
+            </TextBlock>
+<!-- Resistances -->
+            <TextBlock Text="Resistances" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Resistances define the NPC's vulnerability or immunity to different damage types and status effects. Each resistance entry has two components:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Type"/><Run Text=" &#8212; The damage type or effect being resisted: "/><Run FontStyle="Italic" Text="Physical"/><Run Text=" (slashing, piercing, bludgeoning), "/><Run FontStyle="Italic" Text="Fire"/><Run Text=", "/><Run FontStyle="Italic" Text="Ice"/><Run Text=", "/><Run FontStyle="Italic" Text="Lightning"/><Run Text=", "/><Run FontStyle="Italic" Text="Poison"/><Run Text=", "/><Run FontStyle="Italic" Text="Holy"/><Run Text=", "/><Run FontStyle="Italic" Text="Dark"/><Run Text=", "/><Run FontStyle="Italic" Text="Arcane"/><Run Text=", "/><Run FontStyle="Italic" Text="Stun"/><Run Text=", "/><Run FontStyle="Italic" Text="Sleep"/><Run Text=", "/><Run FontStyle="Italic" Text="Fear"/><Run Text=", "/><Run FontStyle="Italic" Text="Charm"/><Run Text=", or other custom types."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Value"/><Run Text=" &#8212; A percentage indicating the resistance level: "/><Run FontStyle="Italic" Text="100"/><Run Text=" = full immunity, "/><Run FontStyle="Italic" Text="50"/><Run Text=" = half damage/effect duration, "/><Run FontStyle="Italic" Text="0"/><Run Text=" = normal damage, "/><Run FontStyle="Italic" Text="-50"/><Run Text=" = 50% extra weakness (takes bonus damage)."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; For example, a Fire Elemental might have "/><Run FontStyle="Italic" Text="Fire = 100"/><Run Text=" (immune) and "/><Run FontStyle="Italic" Text="Ice = -50"/><Run Text=" (weak). A Skeleton might have "/><Run FontStyle="Italic" Text="Piercing = 50"/><Run Text=" (resistant) and "/><Run FontStyle="Italic" Text="Holy = -25"/><Run Text=" (weak)."/>
+                <LineBreak/>
+                <Run Text="&#8226; Use the "/><Run FontWeight="SemiBold" Text="Add Resistance"/><Run Text=" and "/><Run FontWeight="SemiBold" Text="Remove"/><Run Text=" (X) buttons to manage the resistance list."/>
+                <LineBreak/>
+                <Run Text="&#8226; Resistance changes are undoable and mark the project as dirty."/>
+            </TextBlock>
+
+            <!-- Equipment -->
+            <TextBlock Text="Equipment" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Equipment defines the items the NPC has actively equipped — its weapon, armor, and accessories. These items affect the NPC's combat stats and are dropped on defeat if configured:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Weapon"/><Run Text=" &#8212; A dropdown selector referencing an item from the Item Editor. The equipped weapon contributes its Attack modifier to the NPC's combat stats."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Armor"/><Run Text=" &#8212; A dropdown referencing an armor item. The armor's Defense modifier is added to the NPC's base Defense."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Accessory"/><Run Text=" &#8212; A dropdown referencing an accessory or trinket item. Accessories may provide special modifiers, resistances, or effects."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Shield"/><Run Text=" &#8212; A dropdown referencing a shield item. Contributes additional Defense and may enable blocking mechanics."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Each equipment slot is optional — leave any slot empty if the NPC does not use that equipment type."/>
+                <LineBreak/>
+                <Run Text="&#8226; The dropdown shows all items currently defined in the Item Editor. If the referenced item is deleted from the Item Editor, the slot shows "/><Run FontStyle="Italic" Text="(none)"/><Run Text=" and a validation warning (DR012) will be raised."/>
+                <LineBreak/>
+                <Run Text="&#8226; Equipment changes mark the project as dirty."/>
+            </TextBlock>
+<!-- Inventory -->
+            <TextBlock Text="Inventory" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Inventory defines items the NPC carries that are not actively equipped but may be dropped as loot upon defeat. This is distinct from the Loot Table assignment — inventory items are guaranteed drops, while loot table items are rolled randomly:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Each inventory entry has an "/><Run FontWeight="SemiBold" Text="Item"/><Run Text=" dropdown (referencing an item from the Item Editor) and a "/><Run FontWeight="SemiBold" Text="Quantity"/><Run Text=" field."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Drop Chance"/><Run Text=" &#8212; A percentage (0-100) controlling whether the item drops on defeat. Set to 100 for guaranteed drops, lower values for random chance."/>
+                <LineBreak/>
+                <Run Text="&#8226; Use the "/><Run FontWeight="SemiBold" Text="Add Inventory Item"/><Run Text=" and "/><Run FontWeight="SemiBold" Text="Remove"/><Run Text=" (X) buttons to manage the inventory list."/>
+                <LineBreak/>
+                <Run Text="&#8226; Inventory items are separate from the Loot Table assignment — the Loot Table provides randomized rewards, while Inventory represents specific items the NPC is known to carry."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Inventory changes (add, remove, edit) are all "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" and mark the project as dirty."/>
+            </TextBlock>
+<!-- Patrol Waypoints -->
+            <TextBlock Text="Patrol Waypoints" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Patrol Waypoints define a fixed route the NPC follows when its Idle Behavior is set to "/><Run FontStyle="Italic" Text="Follow Path"/><Run Text=". Waypoints are a sequence of room or location identifiers:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Each waypoint entry specifies a "/><Run FontWeight="SemiBold" Text="Room ID"/><Run Text=" &#8212; the destination room the NPC moves to. Rooms are selected from a dropdown showing all rooms in the current project."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Wait Time"/><Run Text=" &#8212; The number of seconds the NPC pauses at this waypoint before moving to the next one. Set to 0 for continuous movement."/>
+                <LineBreak/>
+                <Run Text="&#8226; The NPC follows waypoints in order from top to bottom. Upon reaching the last waypoint, the NPC either "/><Run FontWeight="SemiBold" Text="Loops"/><Run Text=" (returns to the first waypoint) or "/><Run FontWeight="SemiBold" Text="Reverses"/><Run Text=" (walks back through the waypoints in reverse), depending on the Loop/Reverse toggle."/>
+                <LineBreak/>
+                <Run Text="&#8226; Use the "/><Run FontWeight="SemiBold" Text="Add Waypoint"/><Run Text=" and "/><Run FontWeight="SemiBold" Text="Remove"/><Run Text=" (X) buttons to manage the patrol path. Use the "/><Run FontWeight="SemiBold" Text="Move Up"/><Run Text=" and "/><Run FontWeight="SemiBold" Text="Move Down"/><Run Text=" arrows to reorder waypoints."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Waypoint changes are "/><Run FontWeight="SemiBold" Text="undoable"/><Run Text=" and mark the project as dirty."/>
+            </TextBlock>
+
+            <!-- Loot Table Assignment -->
+            <TextBlock Text="Loot Table Assignment" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Loot Table assignment connects an NPC to a randomized loot drop system. This is separate from the NPC's Inventory (guaranteed drops):"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Loot Table"/><Run Text=" &#8212; A dropdown selector listing all loot tables defined in the Loot Table Editor. Selecting a loot table means that when the NPC is defeated, the game rolls on that table to determine random drops."/>
+                <LineBreak/>
+                <Run Text="&#8226; An NPC can be assigned to "/><Run FontWeight="SemiBold" Text="at most one"/><Run Text=" loot table at a time. The dropdown selection is single-choice."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="None"/><Run Text=" is a valid selection — leave it at None if the NPC should not drop random loot (it may still drop Inventory items if configured)."/>
+                <LineBreak/>
+                <Run Text="&#8226; If the assigned loot table is deleted from the Loot Table Editor, the dropdown reverts to "/><Run FontStyle="Italic" Text="(none)"/><Run Text=" and a validation warning is raised."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Changing the loot table assignment marks the project as dirty."/>
+            </TextBlock>
+
+            <!-- Dialogue Assignment -->
+            <TextBlock Text="Dialogue Assignment" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Dialogue assignment connects an NPC to a conversation tree defined in the Dialogue Editor. This is what players interact with when they speak to the NPC:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Dialogue"/><Run Text=" &#8212; A dropdown selector listing all dialogue trees defined in the Dialogue Editor. Selecting a dialogue tree makes it the NPC's conversation script when a player initiates dialogue."/>
+                <LineBreak/>
+                <Run Text="&#8226; Only NPCs with "/><Run FontWeight="SemiBold" Text="Talkative"/><Run Text=" checked in the Behavior section can have dialogue assigned. The dialogue dropdown is disabled for non-talkative NPCs."/>
+                <LineBreak/>
+                <Run Text="&#8226; An NPC can be assigned to "/><Run FontWeight="SemiBold" Text="at most one"/><Run Text=" dialogue tree. "/><Run FontStyle="Italic" Text="(none)"/><Run Text=" means the NPC has no conversation (players will see a generic message when attempting to talk)."/>
+                <LineBreak/>
+                <Run Text="&#8226; If the assigned dialogue tree is deleted from the Dialogue Editor, the dropdown reverts to "/><Run FontStyle="Italic" Text="(none)"/><Run Text=" and a validation warning is raised."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Changing the dialogue assignment marks the project as dirty."/>
+            </TextBlock>
+<!-- Metadata: Aliases -->
+            <TextBlock Text="Metadata &#8212; Aliases" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Aliases are alternate names or keywords that players can use to refer to the NPC:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Enter a "/><Run FontWeight="SemiBold" Text="comma-separated list"/><Run Text=" of alternate names (e.g., "/><Run FontStyle="Italic" Text="goblin, scout, greenskin"/><Run Text=")."/>
+                <LineBreak/>
+                <Run Text="&#8226; Aliases are exported to Evennia, allowing players to target or refer to the NPC by any of these names."/>
+                <LineBreak/>
+                <Run Text="&#8226; The Aliases field is free-text. Changing aliases marks the project as dirty."/>
+            </TextBlock>
+
+            <!-- Metadata: Tags -->
+            <TextBlock Text="Metadata &#8212; Tags" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Tags are labels applied to the NPC for categorization, quest scripting, and game logic:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Enter a "/><Run FontWeight="SemiBold" Text="comma-separated list"/><Run Text=" (e.g., "/><Run FontStyle="Italic" Text="monster, goblin, quest, elite"/><Run Text=")."/>
+                <LineBreak/>
+                <Run Text="&#8226; Tags are exported to Evennia where they can be used in scripts, quests, and dialogue conditions (e.g., checking if an NPC is tagged "/><Run FontStyle="Italic" Text="boss"/><Run Text=" or "/><Run FontStyle="Italic" Text="undead"/><Run Text=")."/>
+                <LineBreak/>
+                <Run Text="&#8226; The Tags field is free-text. Changing tags marks the project as dirty."/>
+            </TextBlock>
+
+            <!-- Metadata: Attributes -->
+            <TextBlock Text="Metadata &#8212; Attributes" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Attributes are key-value pairs exported as Evennia attributes on the NPC. They store structured data used by game systems:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Each attribute row has a "/><Run FontWeight="SemiBold" Text="Key"/><Run Text=" field (the attribute name) and a "/><Run FontWeight="SemiBold" Text="Value"/><Run Text=" field (the data &#8212; string, number, or JSON)."/>
+                <LineBreak/>
+                <Run Text="&#8226; Examples: "/><Run FontStyle="Italic" Text="faction_rank = lieutenant"/><Run Text=", "/><Run FontStyle="Italic" Text="quest_giver = true"/><Run Text=", "/><Run FontStyle="Italic" Text="spawn_limit = 3"/><Run Text="."/>
+                <LineBreak/>
+                <Run Text="&#8226; Use the "/><Run FontWeight="SemiBold" Text="Add Attribute"/><Run Text=" and "/><Run FontWeight="SemiBold" Text="Remove"/><Run Text=" (X) buttons to manage the attribute list."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Duplicate keys are not allowed"/><Run Text=" &#8212; if you enter the same key twice, the editor shows a validation warning immediately and prevents committing the duplicate until it is resolved."/>
+                <LineBreak/>
+                <Run Text="&#8226; Attribute changes are undoable and mark the project as dirty."/>
+            </TextBlock>
+
+            <!-- Metadata: Permissions -->
+            <TextBlock Text="Metadata &#8212; Permissions" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="Permissions control who can interact with the NPC in-game using Evennia's lock system:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Lock String"/><Run Text=" &#8212; A free-text Evennia lock string (e.g., "/><Run FontStyle="Italic" Text="control:perm(Builder);delete:perm(Admin)"/><Run Text="). This defines who can manage, control, or otherwise interact with the NPC as an admin or builder."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="Home"/><Run Text=" &#8212; The home location (room key or #dbref) where the NPC returns if reset or after a server restart. Leave empty for no home location."/>
+                <LineBreak/>
+                <Run Text="&#8226; Permissions are exported directly to Evennia. The Lock String field is free-text and is not validated by The Forge for syntax correctness &#8212; Evennia will report any lock errors at runtime."/>
+                <LineBreak/>
+                <Run Text="&#8226; Changing the Lock String or Home marks the project as dirty."/>
+            </TextBlock>
+<!-- Dirty Tracking -->
+            <TextBlock Text="Dirty Tracking" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The NPC Editor integrates with The Forge's project-wide dirty tracking system to ensure you never lose unsaved work:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="&#8226; Any change made in the NPC Editor &#8212; creating, deleting, duplicating, or modifying any field of any NPC &#8212; "/><Run FontWeight="SemiBold" Text="marks the project as dirty"/><Run Text=" (unsaved changes)."/>
+                <LineBreak/>
+                <Run Text="&#8226; The dirty state is indicated by an "/><Run FontWeight="SemiBold" Text="asterisk (*)"/><Run Text=" in the main window title bar (e.g., "/><Run FontStyle="Italic" Text="MyProject.json *"/><Run Text=")."/>
+                <LineBreak/>
+                <Run Text="&#8226; Changes are persisted to the project's in-memory data immediately, but are only written to disk when you "/><Run FontWeight="SemiBold" Text="Save"/><Run Text=" (Ctrl+S)."/>
+                <LineBreak/>
+                <Run Text="&#8226; Closing the NPC Editor does not save changes to disk &#8212; only saving the project does. If you close the project or exit The Forge with unsaved changes, you are prompted to save."/>
+                <LineBreak/>
+                <Run Text="&#8226; Undo/redo operations in the NPC Editor also respect dirty tracking: undoing the last change that made the project dirty clears the dirty flag if that was the only unsaved change."/>
+            </TextBlock>
+
+            <!-- Validation -->
+            <TextBlock Text="NPC Editor Validation" FontSize="13"
+                       FontWeight="SemiBold" Foreground="#B0B0B0" Margin="8,12,0,4"/>
+            <TextBlock FontSize="12" Foreground="#808080" Margin="8,0,0,12" TextWrapping="Wrap">
+                <Run Text="The Forge's validation system checks NPCs for issues that would cause problems during export or in-game. Run validation from the toolbar or menu at any time:"/>
+                <LineBreak/><LineBreak/>
+                <Run Text="NPC validation rules:"/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="EN001 &#8212; Empty NPC ID (ERROR)"/><Run Text=": An NPC has no identifier. This usually indicates data corruption."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="EN002 &#8212; Duplicate NPC ID (ERROR)"/><Run Text=": Two NPCs share the same ID. Each NPC must have a unique identifier."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="EN003 &#8212; Duplicate NPC Key (ERROR)"/><Run Text=": Two NPCs have the same Key. NPC keys must be unique across the project."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="EN004 &#8212; Empty NPC Key (WARNING)"/><Run Text=": An NPC has no Key set. NPCs without keys are still exported but will be harder for players and builders to identify."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="DR012 &#8212; NPC spawn references missing NPC (ERROR)"/><Run Text=": An NPC spawn's EntityId points to an NPC that no longer exists. This occurs when a spawn references an NPC that has been deleted from the NPC Editor."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="DR013 &#8212; Loot table / shop references missing NPC (ERROR)"/><Run Text=": A loot table entry or shop inventory slot references an NPC that no longer exists."/>
+                <LineBreak/>
+                <Run Text="&#8226; "/><Run FontWeight="SemiBold" Text="DR014 &#8212; Dialogue references missing NPC (ERROR)"/><Run Text=": A dialogue assignment or trigger references an NPC that has been deleted."/>
+                <LineBreak/><LineBreak/>
+                <Run Text="Validation errors block Evennia export &#8212; you must resolve all errors before exporting your project. Warnings do not block export but should be reviewed."/>
+            </TextBlock>
+            <!-- Close button -->
+            <Button Content="Close" Width="80" Height="28" Margin="0,20,0,0"
+                    HorizontalAlignment="Right"
+                    Background="#3E3E42" Foreground="#CCC"
+                    BorderBrush="Transparent"
+                    Click="Close_Click" IsCancel="True"/>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

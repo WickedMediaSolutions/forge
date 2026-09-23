@@ -5,6 +5,7 @@
         xmlns:converters="clr-namespace:EvenniaAtlas.Converters"
         Title="{Binding TitleBarText}" Height="750" Width="1200"
         MinHeight="500" MinWidth="900"
+        Icon="Images/the-forge-logo-ico.png"
         Background="#1E1E1E" FontFamily="Segoe UI"
         Closing="Window_Closing" PreviewKeyDown="Window_PreviewKeyDown">
 
@@ -16,12 +17,19 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <!-- MASTHEAD BANNER -->
+        <Image Grid.Row="0" Source="Images/the-forge-banner-100.png"
+               Height="100" Stretch="Uniform"
+               HorizontalAlignment="Center"
+               RenderOptions.BitmapScalingMode="HighQuality"/>
+
         <!-- BRANDING -->
-        <StackPanel Grid.Row="0">
+        <StackPanel Grid.Row="1">
             <Border Background="{StaticResource ShellHeaderBg}" Padding="8,3">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -33,19 +41,15 @@
                     <Border Grid.Column="0" Background="{StaticResource EvenniaGreen}"
                             CornerRadius="1" VerticalAlignment="Stretch"/>
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
-                        <TextBlock Text="EVENNIA ATLAS" FontSize="13" FontWeight="SemiBold"
-                                   Foreground="#E0E0E0" VerticalAlignment="Center"/>
-                        <TextBlock Text="  —  " Foreground="#555555" FontSize="11"
-                                   VerticalAlignment="Center"/>
-                        <TextBlock Text="Visual World &amp; Map Editor for Evennia"
-                                   FontSize="10" Foreground="#808080" VerticalAlignment="Center"/>
+                        <TextBlock Text="World &amp; Content Editor for Rites of Passage: A New Age"
+                                    FontSize="10" Foreground="#808080" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Grid>
             </Border>
         </StackPanel>
 
 <!-- MENU BAR -->
-        <Menu Grid.Row="1" Style="{StaticResource ShellMenuStyle}" VerticalAlignment="Top">
+        <Menu Grid.Row="2" Style="{StaticResource ShellMenuStyle}" VerticalAlignment="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_New Project" Click="New_Click" InputGestureText="Ctrl+N"/>
                 <MenuItem Header="_Open Project..." Click="Open_Click" InputGestureText="Ctrl+O"/>
@@ -79,16 +83,24 @@
             </MenuItem>
             <MenuItem Header="_Tools">
                 <MenuItem Header="_Validate Map" Click="Validate_Click"/>
+                <Separator/>
+                <MenuItem Header="_Item Editor" Click="ItemEditor_Click"/>
+                <MenuItem Header="_Npc Editor" Click="NpcEditor_Click"/>
+                <MenuItem Header="_Shop Editor" Click="ShopEditor_Click"/>
+                <MenuItem Header="_Loot Table Editor" Click="LootTableEditor_Click"/>
+                <MenuItem Header="_Quest Editor" Click="QuestEditor_Click"/>
+                <MenuItem Header="_Dialogue Editor" Click="DialogueEditor_Click"/>
+                <MenuItem Header="_Game Data" Click="GameDataEditor_Click"/>
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_How to Use" Click="HelpHowToUse_Click"/>
                 <MenuItem Header="_GitHub Repository" Click="HelpGitHub_Click"/>
                 <Separator Style="{StaticResource ShellMenuSeparatorStyle}"/>
-                <MenuItem Header="_About Evennia Atlas" Click="HelpAbout_Click"/>
+                <MenuItem Header="_About Rites of Passage: The Forge" Click="HelpAbout_Click"/>
             </MenuItem>
         </Menu>
 <!-- TOOLBAR -->
-        <Border Grid.Row="2" Background="{StaticResource ShellToolbarBg}" Padding="4,2"
+        <Border Grid.Row="3" Background="{StaticResource ShellToolbarBg}" Padding="4,2"
                 BorderBrush="{StaticResource ShellToolbarBorder}" BorderThickness="0,1,0,1">
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="BuildBtn" Click="BuildMode_Click"
@@ -160,7 +172,7 @@
             </StackPanel>
         </Border>
         <!-- MAIN -->
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -192,6 +204,76 @@
                         <TextBox Text="{Binding SelectedRoomTags, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,6"/>
                         <TextBlock Text="Notes" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
                         <TextBox Text="{Binding SelectedRoomNotes, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="40" Margin="0,0,0,6"/>
+<!-- ITEM SPAWNS -->
+                        <TextBlock Text="ITEM SPAWNS" FontWeight="SemiBold" Foreground="#E0E0E0" Margin="0,8,0,4"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <Button Content="Add Item Spawn" Command="{Binding AddItemSpawnCommand}" Margin="0,0,4,0"/>
+                            <Button Content="Remove" Command="{Binding RemoveItemSpawnCommand}"/>
+                        </StackPanel>
+                        <ListBox ItemsSource="{Binding SelectedRoomItemSpawns}"
+                                 SelectedItem="{Binding SelectedItemSpawn, Mode=TwoWay}"
+                                 Background="#2D2D2D" BorderBrush="#3E3E42"
+                                 Margin="0,0,0,8">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="3">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <ComboBox Grid.Row="0"
+                                                  ItemsSource="{Binding DataContext.AvailableItems, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                  DisplayMemberPath="Key"
+                                                  SelectedValuePath="Id"
+                                                  SelectedValue="{Binding EntityId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  Margin="0,0,0,3"/>
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                            <TextBlock Text="Qty" Foreground="#808080" FontSize="11" VerticalAlignment="Center" Margin="0,0,3,0"/>
+                                            <TextBox Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="0,0,6,0"/>
+                                            <TextBlock Text="Respawn (s)" Foreground="#808080" FontSize="11" VerticalAlignment="Center" Margin="0,0,3,0"/>
+                                            <TextBox Text="{Binding RespawnSeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="45" Margin="0,0,6,0"/>
+                                            <CheckBox Content="Enabled" IsChecked="{Binding Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      Foreground="#D0D0D0" FontSize="11" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <!-- MONSTER / NPC SPAWNS -->
+                        <TextBlock Text="MONSTER / NPC SPAWNS" FontWeight="SemiBold" Foreground="#E0E0E0" Margin="0,8,0,4"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <Button Content="Add Monster/NPC Spawn" Command="{Binding AddNpcSpawnCommand}" Margin="0,0,4,0"/>
+                            <Button Content="Remove" Command="{Binding RemoveNpcSpawnCommand}"/>
+                        </StackPanel>
+                        <ListBox ItemsSource="{Binding SelectedRoomNpcSpawns}"
+                                 SelectedItem="{Binding SelectedNpcSpawn, Mode=TwoWay}"
+                                 Background="#2D2D2D" BorderBrush="#3E3E42">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="3">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <ComboBox Grid.Row="0"
+                                                  ItemsSource="{Binding DataContext.AvailableNpcs, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                  DisplayMemberPath="Key"
+                                                  SelectedValuePath="Id"
+                                                  SelectedValue="{Binding EntityId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  Margin="0,0,0,3"/>
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                            <TextBlock Text="Qty" Foreground="#808080" FontSize="11" VerticalAlignment="Center" Margin="0,0,3,0"/>
+                                            <TextBox Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="40" Margin="0,0,6,0"/>
+                                            <TextBlock Text="Respawn (s)" Foreground="#808080" FontSize="11" VerticalAlignment="Center" Margin="0,0,3,0"/>
+                                            <TextBox Text="{Binding RespawnSeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="45" Margin="0,0,6,0"/>
+                                            <CheckBox Content="Enabled" IsChecked="{Binding Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      Foreground="#D0D0D0" FontSize="11" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                         <TextBlock Text="EXITS" FontWeight="SemiBold" Foreground="#E0E0E0" Margin="0,8,0,4"/>
                         <ItemsControl ItemsSource="{Binding RoomExits}">
                             <ItemsControl.ItemTemplate>
@@ -274,7 +356,7 @@
             </ScrollViewer>
         </Grid>
 
-        <Border Grid.Row="4"
+        <Border Grid.Row="5"
                 Background="#252526"
                 BorderBrush="#3E3E42"
                 BorderThickness="0,1,0,0"

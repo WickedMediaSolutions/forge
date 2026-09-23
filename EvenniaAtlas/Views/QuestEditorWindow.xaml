@@ -1,0 +1,537 @@
+<Window x:Class="EvenniaAtlas.Views.QuestEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:EvenniaAtlas.Converters"
+        Title="Quest Editor" Height="650" Width="900"
+        MinHeight="450" MinWidth="700"
+        Background="#1E1E1E" FontFamily="Segoe UI">
+
+    <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVis"/>
+        <converters:NullToVisibilityConverter x:Key="NullToVis"/>
+        <converters:NonEmptyToVisibilityConverter x:Key="NonEmptyToVis"/>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260" MinWidth="200"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- LEFT PANEL -->
+        <Border Grid.Column="0" Background="#252526"
+                BorderBrush="#3E3E42" BorderThickness="0,0,1,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Search -->
+                <Border Grid.Row="0" Padding="8,8,8,4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Search" Foreground="#808080" FontSize="11"
+                                   Margin="0,0,0,2"/>
+                        <TextBox Grid.Row="1"
+                                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                 ToolTip="Search by key, description, or notes"/>
+                    </Grid>
+                </Border>
+<!-- Quest List -->
+                <ListBox Grid.Row="1"
+                         ItemsSource="{Binding FilteredQuests}"
+                         SelectedItem="{Binding SelectedQuest}"
+                         Background="#2D2D2D" Foreground="#E0E0E0"
+                         BorderThickness="0" Margin="4,0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="8,4">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Key}" FontSize="13"
+                                               Foreground="#E0E0E0"/>
+                                    <TextBlock Text="{Binding Id}" FontSize="10"
+                                               Foreground="#888888"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- Action Buttons -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal"
+                            Margin="8,4" HorizontalAlignment="Center">
+                    <Button Content="+ New" Width="60" Height="26"
+                            Command="{Binding NewQuestCommand}"
+                            Background="#2D2D30" Foreground="#C0C0C0"
+                            BorderBrush="#555555" BorderThickness="1"
+                            FontSize="11" Padding="0"/>
+                    <Button Content="Dup" Width="50" Height="26" Margin="4,0,0,0"
+                            Command="{Binding DuplicateQuestCommand}"
+                            Background="#2D2D30" Foreground="#C0C0C0"
+                            BorderBrush="#555555" BorderThickness="1"
+                            FontSize="11" Padding="0"/>
+                    <Button Content="Del" Width="50" Height="26" Margin="4,0,0,0"
+                            Command="{Binding DeleteQuestCommand}"
+                            Background="#2D2D30" Foreground="#C0C0C0"
+                            BorderBrush="#555555" BorderThickness="1"
+                            FontSize="11" Padding="0"/>
+                </StackPanel>
+
+                <!-- Validation -->
+                <TextBlock Grid.Row="2" Text="{Binding ValidationMessage}"
+                           Foreground="#E08080" FontSize="10"
+                           Margin="8,30,8,4" TextWrapping="Wrap"
+                           Visibility="{Binding ValidationMessage, Converter={StaticResource NonEmptyToVis}}"/>
+            </Grid>
+        </Border>
+<!-- RIGHT PANEL -->
+        <Border Grid.Column="2" Background="#1E1E1E">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="12" Visibility="{Binding HasSelectedQuest, Converter={StaticResource BoolToVis}}">
+
+                    <!-- IDENTITY -->
+                    <TextBlock Text="IDENTITY" FontSize="12" FontWeight="SemiBold"
+                               Foreground="#E0E0E0" Margin="0,0,0,8"/>
+
+                    <TextBlock Text="ID" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                    <TextBox Text="{Binding SelectedQuest.Id, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,6"/>
+
+                    <TextBlock Text="Key" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                    <TextBox Text="{Binding SelectedQuest.Key, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,6"/>
+
+                    <TextBlock Text="Description" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                    <TextBox Text="{Binding SelectedQuest.Description, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,6" Height="60" TextWrapping="Wrap"
+                             AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+
+                    <TextBlock Text="Notes" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                    <TextBox Text="{Binding SelectedQuest.Notes, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,6" Height="60" TextWrapping="Wrap"
+                             AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+
+                    <!-- NPC RELATIONSHIPS -->
+                    <TextBlock Text="NPC RELATIONSHIPS" FontSize="12" FontWeight="SemiBold"
+                               Foreground="#E0E0E0" Margin="0,16,0,8"/>
+
+                    <TextBlock Text="Giver NPC" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                    <Grid Margin="0,0,0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="0"
+                                  ItemsSource="{Binding AvailableNpcs}"
+                                  DisplayMemberPath="Key"
+                                  SelectedValuePath="Id"
+                                  SelectedValue="{Binding SelectedQuest.GiverNpcId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button Grid.Column="1" Content="Clear" Width="44" Height="22"
+                                Margin="4,0,0,0"
+                                Command="{Binding ClearGiverNpcCommand}"
+                                Background="#2D2D30" Foreground="#C0C0C0"
+                                BorderBrush="#555555" BorderThickness="1"
+                                FontSize="10" Padding="0"
+                                ToolTip="Clear Giver NPC"/>
+                    </Grid>
+
+                    <TextBlock Text="Turn-In NPC" Foreground="#808080" FontSize="11" Margin="0,8,0,2"/>
+                    <Grid Margin="0,0,0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="0"
+                                  ItemsSource="{Binding AvailableNpcs}"
+                                  DisplayMemberPath="Key"
+                                  SelectedValuePath="Id"
+                                  SelectedValue="{Binding SelectedQuest.TurnInNpcId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button Grid.Column="1" Content="Clear" Width="44" Height="22"
+                                Margin="4,0,0,0"
+                                Command="{Binding ClearTurnInNpcCommand}"
+                                Background="#2D2D30" Foreground="#C0C0C0"
+                                BorderBrush="#555555" BorderThickness="1"
+                                FontSize="10" Padding="0"
+                                ToolTip="Clear Turn-In NPC"/>
+                    </Grid>
+
+                    <!-- OBJECTIVES -->
+                    <StackPanel>
+                        <Grid Margin="0,16,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="OBJECTIVES" FontSize="11" FontWeight="SemiBold"
+                                       Foreground="#A0A0A0" VerticalAlignment="Center"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <Button Content="+" Width="28" Height="22"
+                                        Command="{Binding AddQuestObjectiveCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="14" FontWeight="Bold" Padding="0"
+                                        ToolTip="Add Objective"/>
+                                <Button Content="&#x2212;" Width="28" Height="22" Margin="4,0,0,0"
+                                        Command="{Binding RemoveQuestObjectiveCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="14" FontWeight="Bold" Padding="0"
+                                        ToolTip="Remove Objective"/>
+                                <Button Content="&#x25B2;" Width="28" Height="22" Margin="4,0,0,0"
+                                        Command="{Binding MoveQuestObjectiveUpCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="12" FontWeight="Bold" Padding="0"
+                                        ToolTip="Move Up"/>
+                                <Button Content="&#x25BC;" Width="28" Height="22" Margin="4,0,0,0"
+                                        Command="{Binding MoveQuestObjectiveDownCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="12" FontWeight="Bold" Padding="0"
+                                        ToolTip="Move Down"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <ListBox ItemsSource="{Binding QuestObjectives}"
+                                 SelectedItem="{Binding SelectedQuestObjective, Mode=TwoWay}"
+                                 MinHeight="60" MaxHeight="140"
+                                 BorderThickness="0" Background="Transparent">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="{Binding ObjectiveType}" Foreground="#C0C0C0"
+                                                   Width="85" FontSize="11"/>
+                                        <TextBlock Text="{Binding TargetName}" Foreground="#E0E0E0"
+                                                   Width="120" FontSize="11"/>
+                                        <TextBlock Text="x" Foreground="#808080" Width="15" FontSize="11"/>
+                                        <TextBlock Text="{Binding RequiredCount}" Foreground="#888888"
+                                                   FontSize="11"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <StackPanel Visibility="{Binding SelectedQuestObjective, Converter={StaticResource NullToVis}}">
+                            <TextBlock Text="Objective Type" Foreground="#808080" FontSize="11"
+                                       Margin="0,8,0,2"/>
+                            <ComboBox ItemsSource="{Binding SelectedQuestObjective.ObjectiveTypes}"
+                                      SelectedItem="{Binding SelectedQuestObjective.ObjectiveType}"/>
+
+                            <ComboBox ItemsSource="{Binding SelectedQuestObjective.AvailableNpcs}"
+                                      DisplayMemberPath="Key" SelectedValuePath="Id"
+                                      SelectedValue="{Binding SelectedQuestObjective.TargetId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Visibility="{Binding SelectedQuestObjective.IsKillNpc, Converter={StaticResource BoolToVis}}"
+                                      Margin="0,4,0,0" ToolTip="Select NPC target"/>
+
+                            <ComboBox ItemsSource="{Binding SelectedQuestObjective.AvailableItems}"
+                                      DisplayMemberPath="Key" SelectedValuePath="Id"
+                                      SelectedValue="{Binding SelectedQuestObjective.TargetId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Visibility="{Binding SelectedQuestObjective.IsCollectItem, Converter={StaticResource BoolToVis}}"
+                                      Margin="0,4,0,0" ToolTip="Select Item target"/>
+
+                            <ComboBox ItemsSource="{Binding SelectedQuestObjective.AvailableRooms}"
+                                      DisplayMemberPath="Title" SelectedValuePath="Id"
+                                      SelectedValue="{Binding SelectedQuestObjective.TargetId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Visibility="{Binding SelectedQuestObjective.IsVisitRoom, Converter={StaticResource BoolToVis}}"
+                                      Margin="0,4,0,0" ToolTip="Select Room target"/>
+
+                            <TextBlock Text="Required Count" Foreground="#808080" FontSize="11"
+                                       Margin="0,8,0,2"/>
+                            <TextBox Text="{Binding SelectedQuestObjective.RequiredCount, UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,0,0,4"/>
+
+                            <TextBlock Text="Description" Foreground="#808080" FontSize="11"
+                                       Margin="0,8,0,2"/>
+                            <TextBox Text="{Binding SelectedQuestObjective.Description, UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,0,0,8"/>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <!-- REWARDS -->
+                    <StackPanel>
+                        <TextBlock Text="REWARDS" FontSize="12" FontWeight="SemiBold"
+                                   Foreground="#E0E0E0" Margin="0,16,0,8"/>
+
+                        <TextBlock Text="Experience Reward" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                        <TextBox Text="{Binding SelectedQuest.ExperienceReward, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,4"/>
+
+                        <TextBlock Text="Currency Reward" Foreground="#808080" FontSize="11" Margin="0,8,0,2"/>
+                        <TextBox Text="{Binding SelectedQuest.CurrencyReward, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,4"/>
+
+                        <TextBlock Text="Reward Loot Table" Foreground="#808080" FontSize="11" Margin="0,8,0,2"/>
+                        <Grid Margin="0,0,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox Grid.Column="0"
+                                      ItemsSource="{Binding AvailableLootTables}"
+                                      DisplayMemberPath="Key" SelectedValuePath="Id"
+                                      SelectedValue="{Binding SelectedQuest.RewardLootTableId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Button Grid.Column="1" Content="Clear" Width="44" Height="22"
+                                    Margin="4,0,0,0" Command="{Binding ClearRewardLootTableCommand}"
+                                    Background="#2D2D30" Foreground="#C0C0C0"
+                                    BorderBrush="#555555" BorderThickness="1"
+                                    FontSize="10" Padding="0" ToolTip="Clear Loot Table"/>
+                        </Grid>
+
+                        <Grid Margin="0,12,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="ITEM REWARDS" FontSize="11" FontWeight="SemiBold"
+                                       Foreground="#A0A0A0" VerticalAlignment="Center"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <Button Content="+" Width="28" Height="22"
+                                        Command="{Binding AddQuestItemRewardCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="14" FontWeight="Bold" Padding="0"
+                                        ToolTip="Add Item Reward"/>
+                                <Button Content="&#x2212;" Width="28" Height="22" Margin="4,0,0,0"
+                                        Command="{Binding RemoveQuestItemRewardCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="14" FontWeight="Bold" Padding="0"
+                                        ToolTip="Remove Item Reward"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <ListBox ItemsSource="{Binding QuestItemRewards}"
+                                 SelectedItem="{Binding SelectedQuestItemReward, Mode=TwoWay}"
+                                 MinHeight="60" MaxHeight="150"
+                                 BorderThickness="0" Background="Transparent">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                                        <TextBlock Text="{Binding ItemName}" Foreground="#E0E0E0"
+                                                   Width="160" FontSize="11"/>
+                                        <TextBlock Text="x" Foreground="#808080" Width="15" FontSize="11"/>
+                                        <TextBlock Text="{Binding Quantity}" Foreground="#888888" FontSize="11"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <StackPanel Visibility="{Binding SelectedQuestItemReward, Converter={StaticResource NullToVis}}">
+                            <TextBlock Text="Item" Foreground="#808080" FontSize="11" Margin="0,8,0,2"/>
+                            <ComboBox ItemsSource="{Binding SelectedQuestItemReward.AvailableItems}"
+                                      DisplayMemberPath="Key" SelectedValuePath="Id"
+                                      SelectedValue="{Binding SelectedQuestItemReward.ItemId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="Quantity" Foreground="#808080" FontSize="11" Margin="0,8,0,2"/>
+                            <TextBox Text="{Binding SelectedQuestItemReward.Quantity, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,4"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- METADATA -->
+                    <TextBlock Text="METADATA" FontSize="12" FontWeight="SemiBold"
+                               Foreground="#E0E0E0" Margin="0,16,0,8"/>
+
+                    <TextBlock Text="Typeclass Path" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                    <TextBox Text="{Binding SelectedQuest.Metadata.TypeclassPath, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,8"/>
+<!-- ALIASES -->
+                    <StackPanel>
+                        <Grid Margin="0,8,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="ALIASES" FontSize="11" FontWeight="SemiBold"
+                                       Foreground="#A0A0A0" VerticalAlignment="Center"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <Button Content="+" Width="28" Height="22"
+                                        Command="{Binding AddMetadataAliasCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="14" FontWeight="Bold" Padding="0"
+                                        ToolTip="Add Alias"/>
+                                <Button Content="&#x2212;" Width="28" Height="22" Margin="4,0,0,0"
+                                        Command="{Binding RemoveMetadataAliasCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="14" FontWeight="Bold" Padding="0"
+                                        ToolTip="Remove Alias"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <ListBox ItemsSource="{Binding SelectedQuest.Metadata.Aliases}"
+                                 SelectedItem="{Binding SelectedMetadataAlias, Mode=TwoWay}"
+                                 BorderThickness="0" Background="Transparent">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="0,0,2,0"/>
+                                        <TextBox Grid.Column="1" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                                Command="{Binding ClearTurnInNpcCommand}"
+                                Background="#2D2D30" Foreground="#C0C0C0"
+<!-- TAGS -->
+                    <StackPanel>
+                        <Grid Margin="0,12,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="TAGS" FontSize="11" FontWeight="SemiBold"
+                                       Foreground="#A0A0A0" VerticalAlignment="Center"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <Button Content="+" Width="28" Height="22"
+                                        Command="{Binding AddMetadataTagCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="14" FontWeight="Bold" Padding="0"
+                                        ToolTip="Add Tag"/>
+                                <Button Content="&#x2212;" Width="28" Height="22" Margin="4,0,0,0"
+                                        Command="{Binding RemoveMetadataTagCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="14" FontWeight="Bold" Padding="0"
+                                        ToolTip="Remove Tag"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <ListBox ItemsSource="{Binding SelectedQuest.Metadata.Tags}"
+                                 SelectedItem="{Binding SelectedMetadataTag, Mode=TwoWay}"
+                                 BorderThickness="0" Background="Transparent">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="0,0,2,0"/>
+                                        <TextBox Grid.Column="1" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="0,0,2,0"/>
+                                        <TextBox Grid.Column="2" Text="{Binding Data, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                                BorderBrush="#555555" BorderThickness="1"
+<!-- ATTRIBUTES -->
+                    <StackPanel>
+                        <Grid Margin="0,12,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="ATTRIBUTES" FontSize="11" FontWeight="SemiBold"
+                                       Foreground="#A0A0A0" VerticalAlignment="Center"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <Button Content="+" Width="28" Height="22"
+                                        Command="{Binding AddMetadataAttributeCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="14" FontWeight="Bold" Padding="0"
+                                        ToolTip="Add Attribute"/>
+                                <Button Content="&#x2212;" Width="28" Height="22" Margin="4,0,0,0"
+                                        Command="{Binding RemoveMetadataAttributeCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="14" FontWeight="Bold" Padding="0"
+                                        ToolTip="Remove Attribute"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <ListBox ItemsSource="{Binding SelectedQuest.Metadata.Attributes}"
+                                 SelectedItem="{Binding SelectedMetadataAttribute, Mode=TwoWay}"
+                                 BorderThickness="0" Background="Transparent">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="0,0,2,0"/>
+                                        <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="0,0,2,0"/>
+                                        <TextBox Grid.Column="2" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="0,0,2,0"/>
+                                        <TextBox Grid.Column="3" Text="{Binding LockString, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+<!-- PERMISSIONS -->
+                    <StackPanel>
+                        <Grid Margin="0,12,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="PERMISSIONS" FontSize="11" FontWeight="SemiBold"
+                                       Foreground="#A0A0A0" VerticalAlignment="Center"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <Button Content="+" Width="28" Height="22"
+                                        Command="{Binding AddMetadataPermissionCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="14" FontWeight="Bold" Padding="0"
+                                        ToolTip="Add Permission"/>
+                                <Button Content="&#x2212;" Width="28" Height="22" Margin="4,0,0,0"
+                                        Command="{Binding RemoveMetadataPermissionCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="14" FontWeight="Bold" Padding="0"
+                                        ToolTip="Remove Permission"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <ListBox ItemsSource="{Binding SelectedQuest.Metadata.Permissions}"
+                                 SelectedItem="{Binding SelectedMetadataPermission, Mode=TwoWay}"
+                                 BorderThickness="0" Background="Transparent">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding ., UpdateSourceTrigger=PropertyChanged}"
+                                             Margin="0,2"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+
+                    <!-- LOCK STRING -->
+                    <TextBlock Text="Lock String" Foreground="#808080" FontSize="11"
+                               Margin="0,16,0,2"/>
+                    <TextBox Text="{Binding SelectedQuest.Metadata.LockString, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,12"/>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Window>

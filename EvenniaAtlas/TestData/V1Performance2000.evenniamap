@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "id": "perf-v1-2000",
   "name": "V1 Performance 2000-Room Fixture",
   "defaultRoomTitle": "Perf Room",
@@ -198226,5 +198226,8 @@
       "lockString": "",
       "permissions": []
     }
-  ]
+  ],
+  "items": [],
+  "npcs": [],
+  "spawns": []
 }

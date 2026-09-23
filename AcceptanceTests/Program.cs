@@ -222,16 +222,239 @@ foreach (var i in issues) reportLines.Add($"  [{i.SeverityLabel}] [{i.Code}] {i.
 File.WriteAllLines(reportPath, reportLines);
 Console.WriteLine($"Report: {reportPath}");
 
-    // ================================================================
-    // PASS 3 — 2,000-ROOM PERFORMANCE + CULLING TEST
+// ================================================================
+    // PASS 2 — V2 ARCHITECTURE TESTS
     // ================================================================
     Console.WriteLine();
+    Console.WriteLine("========================================================");
+    Console.WriteLine("  EVENNIA ATLAS V2 ARCHITECTURE ACCEPTANCE (PASS 2)");
+    Console.WriteLine("========================================================");
+    Console.WriteLine();
+
+    int p2Pass = 0, p2Fail = 0;
+    void P2Check(string label, bool condition)
+    {
+        if (condition) { Console.WriteLine($"    PASS: {label}"); p2Pass++; }
+        else { Console.WriteLine($"    FAIL: {label}"); p2Fail++; }
+    }
+
+    // [P2-1] New v2 project initializes all required collections
+    Console.WriteLine("[P2-1] V2 project initialization...");
+    var v2Project = new MapProject();
+    P2Check("Default version is 2", v2Project.Version == 2);
+    P2Check("Rooms is non-null and empty", v2Project.Rooms != null && v2Project.Rooms.Count == 0);
+    P2Check("Connections is non-null and empty", v2Project.Connections != null && v2Project.Connections.Count == 0);
+    P2Check("Items is non-null and empty", v2Project.Items != null && v2Project.Items.Count == 0);
+    P2Check("Npcs is non-null and empty", v2Project.Npcs != null && v2Project.Npcs.Count == 0);
+    P2Check("Spawns is non-null and empty", v2Project.Spawns != null && v2Project.Spawns.Count == 0);
+    Console.WriteLine($"    V2 init: {p2Pass}/{p2Pass + p2Fail} passed (so far)");
+
+    // [P2-2] V2 project round-trips Items/Npcs/Spawns through ProjectFileService
+    Console.WriteLine();
+    Console.WriteLine("[P2-2] V2 round-trip with Items/Npcs/Spawns...");
+    var item1 = new ItemModel
+    {
+        Id = "item_0001",
+        Key = "Rusty Sword",
+        Description = "A worn but serviceable blade.",
+        Notes = "Starter weapon",
+        Metadata = new EvenniaObjectMetadata { TypeclassPath = "typeclasses.items.Weapon", LockString = "get:true()" }
+    };
+    item1.Metadata.Aliases.Add(new AliasModel { Key = "sword", Category = "weapons" });
+    item1.Metadata.Tags.Add(new TagModel { Key = "starter_gear", Category = "loot" });
+    item1.Metadata.Attributes.Add(new AttributeModel { Key = "durability", Value = "50", Category = "stats" });
+    item1.Metadata.Permissions.Add("Players");
+
+    var npc1 = new NpcModel
+    {
+        Id = "npc_0001",
+        Key = "Town Guard",
+        Description = "A stoic guard watching the town gates.",
+        Notes = "Neutral faction",
+        Metadata = new EvenniaObjectMetadata { TypeclassPath = "typeclasses.npcs.Guard", LockString = "talk:true()" }
+    };
+    npc1.Metadata.Tags.Add(new TagModel { Key = "town", Category = "zone" });
+
+    var spawn1 = new SpawnModel
+    {
+        Id = "spawn_0001", RoomId = "acceptance_room_0001", EntityId = "item_0001",
+        EntityType = EntityType.Item, Quantity = 3, RespawnSeconds = 60.0, Enabled = true
+    };
+    var spawn2 = new SpawnModel
+    {
+        Id = "spawn_0002", RoomId = "acceptance_room_0002", EntityId = "npc_0001",
+        EntityType = EntityType.Npc, Quantity = 1, RespawnSeconds = 300.0, Enabled = false
+    };
+    // ================================================================
+    // PASS 3 — 2,000-ROOM PERFORMANCE + CULLING TEST
+v2Project.Id = "v2-test";
+    v2Project.Name = "V2 Architecture Test";
+    v2Project.Rooms!.Add(new RoomModel { Id = "v2_room_1", Title = "Test Room", X = 0, Y = 0, Z = 0 });
+    v2Project.Connections!.Add(new ConnectionModel
+    {
+        Id = "v2_conn_1", SourceRoomId = "v2_room_1", DestinationRoomId = "v2_room_2",
+        Direction = Direction.North, ReverseDirection = Direction.South
+    });
+    v2Project.Rooms!.Add(new RoomModel { Id = "v2_room_2", Title = "Test Room 2", X = 0, Y = -1, Z = 0 });
+    v2Project.Items!.Add(item1);
+    v2Project.Npcs!.Add(npc1);
+    v2Project.Spawns!.Add(spawn1);
+    v2Project.Spawns!.Add(spawn2);
+
+    var v2FixturePath = Path.Combine(testDataDir, "V2Architecture.evenniamap");
+    var v2RoundTripPath = Path.Combine(testDataDir, "V2Architecture_roundtrip.evenniamap");
+
+    var pfs = new ProjectFileService();
+    pfs.Save(v2FixturePath, v2Project);
+    var v2Loaded = pfs.Load(v2FixturePath);
+    pfs.Save(v2RoundTripPath, v2Loaded);
+    var v2Reloaded = pfs.Load(v2RoundTripPath);
+
+    P2Check("V2: Room count preserved", v2Reloaded.Rooms.Count == 2);
+    P2Check("V2: Connection count preserved", v2Reloaded.Connections.Count == 1);
+    P2Check("V2: Items count preserved", v2Reloaded.Items.Count == 1);
+    P2Check("V2: Npcs count preserved", v2Reloaded.Npcs.Count == 1);
+    P2Check("V2: Spawns count preserved", v2Reloaded.Spawns.Count == 2);
+    // ================================================================
+var v2LoadedItem = v2Reloaded.Items[0];
+    P2Check("V2: Item Id preserved", v2LoadedItem.Id == "item_0001");
+    P2Check("V2: Item Key preserved", v2LoadedItem.Key == "Rusty Sword");
+    P2Check("V2: Item Description preserved", v2LoadedItem.Description == "A worn but serviceable blade.");
+    P2Check("V2: Item Notes preserved", v2LoadedItem.Notes == "Starter weapon");
+    P2Check("V2: Item TypeclassPath preserved", v2LoadedItem.Metadata.TypeclassPath == "typeclasses.items.Weapon");
+    P2Check("V2: Item LockString preserved", v2LoadedItem.Metadata.LockString == "get:true()");
+    P2Check("V2: Item alias preserved", v2LoadedItem.Metadata.Aliases.Any(a => a.Key == "sword"));
+    P2Check("V2: Item tag preserved", v2LoadedItem.Metadata.Tags.Any(t => t.Key == "starter_gear"));
+    P2Check("V2: Item attr preserved", v2LoadedItem.Metadata.Attributes.Any(a => a.Key == "durability" && a.Value == "50"));
+    P2Check("V2: Item perm preserved", v2LoadedItem.Metadata.Permissions.Contains("Players"));
+
+    var v2LoadedNpc = v2Reloaded.Npcs[0];
+    P2Check("V2: Npc Id preserved", v2LoadedNpc.Id == "npc_0001");
+    P2Check("V2: Npc Key preserved", v2LoadedNpc.Key == "Town Guard");
+    P2Check("V2: Npc tag preserved", v2LoadedNpc.Metadata.Tags.Any(t => t.Key == "town"));
+
+    var v2LoadedSpawn1 = v2Reloaded.Spawns.First(s => s.Id == "spawn_0001");
+    P2Check("V2: Spawn1 RoomId preserved", v2LoadedSpawn1.RoomId == "acceptance_room_0001");
+    P2Check("V2: Spawn1 EntityId preserved", v2LoadedSpawn1.EntityId == "item_0001");
+    P2Check("V2: Spawn1 EntityType preserved", v2LoadedSpawn1.EntityType == EntityType.Item);
+    P2Check("V2: Spawn1 Quantity preserved", v2LoadedSpawn1.Quantity == 3);
+    P2Check("V2: Spawn1 RespawnSec preserved", v2LoadedSpawn1.RespawnSeconds == 60.0);
+    P2Check("V2: Spawn1 Enabled preserved", v2LoadedSpawn1.Enabled == true);
+
+    var v2LoadedSpawn2 = v2Reloaded.Spawns.First(s => s.Id == "spawn_0002");
+    P2Check("V2: Spawn2 EntityType is Npc", v2LoadedSpawn2.EntityType == EntityType.Npc);
+    P2Check("V2: Spawn2 Enabled is false", v2LoadedSpawn2.Enabled == false);
+
+    var v2Json = File.ReadAllText(v2FixturePath);
+    P2Check("V2: Items serialized as array", v2Json.Contains("\"items\""));
+    P2Check("V2: Npcs serialized as array", v2Json.Contains("\"npcs\""));
+    P2Check("V2: Spawns serialized as array", v2Json.Contains("\"spawns\""));
+    P2Check("V2: Version in JSON is 2", v2Json.Contains("\"version\": 2"));
+    Console.WriteLine($"    V2 round-trip: {p2Pass}/{p2Pass + p2Fail} passed (cumulative)");
+    Console.WriteLine();
+// [P2-3] Loading representative v1 project JSON succeeds
+    Console.WriteLine();
+    Console.WriteLine("[P2-3] V1 project backward compatibility...");
+    var v1FixturePath = Path.Combine(testDataDir, "V1BackCompat.evenniamap");
+    var v1BackCompatJson = @"{
+  ""version"": 1,
+  ""id"": ""v1-backcompat"",
+  ""name"": ""V1 Backward Compat Test"",
+  ""defaultRoomTitle"": ""Room"",
+  ""rooms"": [
+    {""id"": ""v1_room_a"", ""title"": ""Origin"", ""description"": ""The origin room."", ""x"": 0, ""y"": 0, ""z"": 0, ""typeclassPath"": ""typeclasses.rooms.Room"", ""aliases"": [], ""evenniaTags"": [], ""attributes"": [], ""permissions"": [], ""lockString"": """", ""tags"": [], ""notes"": """", ""roomType"": """"},
+    {""id"": ""v1_room_b"", ""title"": ""Room B"", ""x"": 0, ""y"": -1, ""z"": 0, ""typeclassPath"": """", ""aliases"": [], ""evenniaTags"": [], ""attributes"": [], ""permissions"": [], ""lockString"": """", ""tags"": [], ""notes"": """", ""roomType"": """"}
+  ],
+  ""connections"": [
+    {""id"": ""v1_conn_ab"", ""sourceRoomId"": ""v1_room_a"", ""destinationRoomId"": ""v1_room_b"", ""direction"": 0, ""reverseDirection"": 1, ""isOneWay"": false, ""exitType"": 0, ""aliases"": """", ""sharedDoorId"": """", ""door"": null, ""autoCreateReverse"": true, ""keyName"": ""north"", ""description"": """", ""typeclassPath"": """", ""aliasesList"": [], ""evenniaTags"": [], ""attributes"": [], ""permissions"": [], ""lockString"": """"}
+  ]
+}";
+    File.WriteAllText(v1FixturePath, v1BackCompatJson);
+
+    var v1Loaded = pfs.Load(v1FixturePath);
+    P2Check("V1 load: Room count is 2", v1Loaded.Rooms.Count == 2);
+    P2Check("V1 load: Room A title preserved", v1Loaded.Rooms[0].Title == "Origin");
+    P2Check("V1 load: Room A desc preserved", v1Loaded.Rooms[0].Description == "The origin room.");
+    P2Check("V1 load: Room A typeclass preserved", v1Loaded.Rooms[0].TypeclassPath == "typeclasses.rooms.Room");
+    P2Check("V1 load: Connection count is 1", v1Loaded.Connections.Count == 1);
+    P2Check("V1 load: Conn direction preserved", v1Loaded.Connections[0].Direction == Direction.North);
+    P2Check("V1 load: Items is empty not null", v1Loaded.Items != null && v1Loaded.Items.Count == 0);
+    P2Check("V1 load: Npcs is empty not null", v1Loaded.Npcs != null && v1Loaded.Npcs.Count == 0);
+    P2Check("V1 load: Spawns is empty not null", v1Loaded.Spawns != null && v1Loaded.Spawns.Count == 0);
+
+    var v1UpgradedPath = Path.Combine(testDataDir, "V1BackCompat_Upgraded.evenniamap");
+    pfs.Save(v1UpgradedPath, v1Loaded);
+    var v1UpgradedJson = File.ReadAllText(v1UpgradedPath);
+    P2Check("V1 upgraded save: version is now 2", v1UpgradedJson.Contains("\"version\": 2"));
+    Console.WriteLine($"    V1 back-compat: {p2Pass}/{p2Pass + p2Fail} passed (cumulative)");
     Console.WriteLine("========================================================");
     Console.WriteLine("  EVENNIA ATLAS V1 ACCEPTANCE PASS 3");
     Console.WriteLine("  2,000-ROOM PERFORMANCE + CULLING TEST");
     Console.WriteLine("========================================================");
     Console.WriteLine();
 
+// [P2-4] Existing v1 fixture round-trips through v2 infrastructure
+    Console.WriteLine();
+    Console.WriteLine("[P2-4] Existing v1 fixture through v2 infrastructure...");
+    var v1FixtureLoaded = pfs.Load(fixturePath);
+    P2Check("V1 fixture: Room count preserved", v1FixtureLoaded.Rooms.Count == 7);
+    P2Check("V1 fixture: Connection count preserved", v1FixtureLoaded.Connections.Count == 13);
+    P2Check("V1 fixture: Items empty", v1FixtureLoaded.Items.Count == 0);
+    P2Check("V1 fixture: Npcs empty", v1FixtureLoaded.Npcs.Count == 0);
+    P2Check("V1 fixture: Spawns empty", v1FixtureLoaded.Spawns.Count == 0);
+
+    var v1ReSavedPath = Path.Combine(testDataDir, "V1Acceptance_AsV2.evenniamap");
+    pfs.Save(v1ReSavedPath, v1FixtureLoaded);
+    var v1ReLoaded = pfs.Load(v1ReSavedPath);
+    P2Check("V1 as v2: Room count preserved", v1ReLoaded.Rooms.Count == 7);
+    P2Check("V1 as v2: Connection count preserved", v1ReLoaded.Connections.Count == 13);
+    P2Check("V1 as v2: Room metadata preserved",
+        v1ReLoaded.Rooms.Any(r => r.Id == "acceptance_room_0001" && r.TypeclassPath == "typeclasses.rooms.Room"));
+    P2Check("V1 as v2: Door data preserved",
+        v1ReLoaded.Connections.Any(c => c.Id == "acceptance_conn_0003" && c.Door != null && c.Door.StartsLocked));
+    Console.WriteLine($"    Existing v1 round-trip: {p2Pass}/{p2Pass + p2Fail} passed (cumulative)");
+
+    // [P2-5] Unsupported future project version fails cleanly
+    Console.WriteLine();
+    Console.WriteLine("[P2-5] Future version rejection...");
+    var futureJson = @"{ ""version"": 999, ""id"": ""future"", ""name"": ""Future"" }";
+    var futurePath = Path.Combine(testDataDir, "FutureVersion.evenniamap");
+    File.WriteAllText(futurePath, futureJson);
+    try
+    {
+        pfs.Load(futurePath);
+        P2Check("Future version rejected", false);
+    }
+    catch (InvalidDataException ex)
+    {
+        P2Check("Future version rejected with message", ex.Message.Contains("999") && ex.Message.Contains("2"));
+    }
+    catch
+    {
+        P2Check("Future version rejected (wrong type)", false);
+    }
+    Console.WriteLine($"    Future version: {p2Pass}/{p2Pass + p2Fail} passed (cumulative)");
+
+    // [P2-6] SpawnModel defaults
+    Console.WriteLine();
+    Console.WriteLine("[P2-6] SpawnModel default values...");
+    var defaultSpawn = new SpawnModel();
+    P2Check("Default Quantity is 1", defaultSpawn.Quantity == 1);
+    P2Check("Default Enabled is true", defaultSpawn.Enabled == true);
+    P2Check("Default RespawnSeconds is 0", defaultSpawn.RespawnSeconds == 0);
+    Console.WriteLine($"    Spawn defaults: {p2Pass}/{p2Pass + p2Fail} passed (cumulative)");
+
+    // PASS 2 summary
+    Console.WriteLine();
+    Console.WriteLine("  PASS 2 SUMMARY");
+    Console.WriteLine($"  PASS: {p2Pass}  FAIL: {p2Fail}");
+    totalPass += p2Pass;
+    totalFail += p2Fail;
+
+    Console.WriteLine();
+    Console.WriteLine("========================================================");
+    Console.WriteLine($"  PASS 2: {(p2Fail == 0 ? "ALL PASSED" : p2Fail + " FAILURES")}");
+    Console.WriteLine("========================================================");
     var perfFixturePath = Path.Combine(testDataDir, "V1Performance2000.evenniamap");
     var perfReportPath = Path.Combine(testDataDir, "V1Performance2000_Report.txt");
     int pass3Pass = 0, pass3Fail = 0, pass3Manual = 0;

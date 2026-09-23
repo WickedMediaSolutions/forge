@@ -1,0 +1,579 @@
+<Window x:Class="EvenniaAtlas.Views.DialogueEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:EvenniaAtlas.Converters"
+        Title="Dialogue Editor" Height="650" Width="900"
+        MinHeight="450" MinWidth="700"
+        Background="#1E1E1E" FontFamily="Segoe UI">
+
+    <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVis"/>
+        <converters:NullToVisibilityConverter x:Key="NullToVis"/>
+        <converters:NonEmptyToVisibilityConverter x:Key="NonEmptyToVis"/>
+    </Window.Resources>
+<Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260" MinWidth="200"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- LEFT PANEL -->
+        <Border Grid.Column="0" Background="#252526"
+                BorderBrush="#3E3E42" BorderThickness="0,0,1,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Search -->
+                <Border Grid.Row="0" Padding="8,8,8,4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Search" Foreground="#808080" FontSize="11"
+                                   Margin="0,0,0,2"/>
+                        <TextBox Grid.Row="1"
+                                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                 ToolTip="Search by key, description, or notes"/>
+                    </Grid>
+                </Border>
+
+                <!-- Dialogue List -->
+                <ListBox Grid.Row="1"
+                         ItemsSource="{Binding FilteredDialogues}"
+                         SelectedItem="{Binding SelectedDialogue}"
+                         Background="#2D2D2D" Foreground="#E0E0E0"
+                         BorderThickness="0" Margin="4,0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="8,4">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Key}" FontSize="13"
+                                               Foreground="#E0E0E0"/>
+                                    <TextBlock Text="{Binding Id}" FontSize="10"
+                                               Foreground="#888888"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- Action Buttons -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal"
+                            Margin="8,4" HorizontalAlignment="Center">
+                    <Button Content="+ New" Width="60" Height="26"
+                            Command="{Binding NewDialogueCommand}"
+                            Background="#2D2D30" Foreground="#C0C0C0"
+                            BorderBrush="#555555" BorderThickness="1"
+                            FontSize="11" Padding="0"
+                            ToolTip="New Dialogue"/>
+                    <Button Content="Dup" Width="50" Height="26" Margin="4,0,0,0"
+                            Command="{Binding DuplicateDialogueCommand}"
+                            Background="#2D2D30" Foreground="#C0C0C0"
+                            BorderBrush="#555555" BorderThickness="1"
+                            FontSize="11" Padding="0"
+                            ToolTip="Duplicate selected dialogue"/>
+                    <Button Content="X" Width="36" Height="26" Margin="4,0,0,0"
+                            Command="{Binding DeleteDialogueCommand}"
+                            Background="#2D2D30" Foreground="#C0C0C0"
+                            BorderBrush="#555555" BorderThickness="1"
+                            FontSize="11" Padding="0"
+                            ToolTip="Delete selected dialogue"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+<!-- SPLITTER -->
+        <GridSplitter Grid.Column="1" Width="3"
+                      Background="#3E3E42"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Stretch"/>
+
+        <!-- RIGHT PANEL -->
+        <Border Grid.Column="2" Background="#1E1E1E">
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="16,12">
+
+                    <!-- VALIDATION -->
+                    <Border Background="#3D2020" Padding="8,4" CornerRadius="3"
+                            Margin="0,0,0,8"
+                            Visibility="{Binding ValidationMessage, Converter={StaticResource NonEmptyToVis}}">
+                        <TextBlock Text="{Binding ValidationMessage}"
+                                   Foreground="#FF6B6B" FontSize="11"
+                                   TextWrapping="Wrap"/>
+                    </Border>
+
+                    <!-- EMPTY SELECTION -->
+                    <TextBlock Text="Select a dialogue to edit."
+                               Foreground="#808080" FontSize="14"
+                               TextWrapping="Wrap"
+                               Visibility="{Binding HasSelectedDialogue, Converter={StaticResource BoolToVis}, ConverterParameter=Invert}"/>
+
+                    <!-- EDITOR CONTENT -->
+                    <StackPanel Visibility="{Binding HasSelectedDialogue, Converter={StaticResource BoolToVis}}">
+<!-- IDENTITY SECTION -->
+                        <TextBlock Text="IDENTITY" FontSize="12" FontWeight="SemiBold"
+                                   Foreground="#E0E0E0" Margin="0,0,0,8"/>
+
+                        <TextBlock Text="Id" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                        <TextBox Text="{Binding SelectedDialogue.Id}"
+                                 IsReadOnly="True"
+                                 Background="#333333" Foreground="#888888"
+                                 Margin="0,0,0,6"/>
+
+                        <TextBlock Text="Key" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                        <TextBox Text="{Binding SelectedDialogue.Key, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,0,6"/>
+
+                        <TextBlock Text="Description" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                        <TextBox Text="{Binding SelectedDialogue.Description, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,0,6" AcceptsReturn="True" MinHeight="60"
+                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+
+                        <TextBlock Text="Notes" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                        <TextBox Text="{Binding SelectedDialogue.Notes, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,0,6" AcceptsReturn="True" MinHeight="60"
+                                  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+<!-- NODES -->
+                        <TextBlock Text="NODES" FontSize="12" FontWeight="SemiBold"
+                                   Foreground="#E0E0E0" Margin="0,16,0,8"/>
+
+                        <!-- Node action buttons -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                            <Button Content="+ Add" Width="52" Height="24"
+                                    Command="{Binding AddDialogueNodeCommand}"
+                                    Background="#2D2D30" Foreground="#C0C0C0"
+                                    BorderBrush="#555555" BorderThickness="1"
+                                    FontSize="11" Padding="0"
+                                    ToolTip="Add a dialogue node"/>
+                            <Button Content="- Del" Width="48" Height="24" Margin="4,0,0,0"
+                                    Command="{Binding RemoveDialogueNodeCommand}"
+                                    Background="#2D2D30" Foreground="#C0C0C0"
+                                    BorderBrush="#555555" BorderThickness="1"
+                                    FontSize="11" Padding="0"
+                                    ToolTip="Remove selected node"/>
+                            <Button Content="^" Width="28" Height="24" Margin="4,0,0,0"
+                                    FontWeight="Bold"
+                                    Command="{Binding MoveDialogueNodeUpCommand}"
+                                    Background="#2D2D30" Foreground="#C0C0C0"
+                                    BorderBrush="#555555" BorderThickness="1"
+                                    FontSize="11" Padding="0"
+                                    ToolTip="Move selected node up"/>
+                            <Button Content="v" Width="28" Height="24" Margin="4,0,0,0"
+                                    FontWeight="Bold"
+                                    Command="{Binding MoveDialogueNodeDownCommand}"
+                                    Background="#2D2D30" Foreground="#C0C0C0"
+                                    BorderBrush="#555555" BorderThickness="1"
+                                    FontSize="11" Padding="0"
+                                    ToolTip="Move selected node down"/>
+                        </StackPanel>
+
+                        <!-- Start Node -->
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Start Node:"
+                                       Foreground="#A0A0A0" FontSize="11"
+                                       VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <ComboBox Grid.Column="1"
+                                      ItemsSource="{Binding DialogueNodes}"
+                                      DisplayMemberPath="Id"
+                                      SelectedValuePath="Id"
+                                      SelectedValue="{Binding SelectedDialogue.StartNodeId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Background="#2D2D2D" Foreground="#E0E0E0"
+                                      BorderBrush="#555555" BorderThickness="1"
+                                      Height="24"/>
+                            <Button Grid.Column="2" Content="X" Width="24" Height="24" Margin="4,0,0,0"
+                                    Command="{Binding ClearStartNodeCommand}"
+                                    Background="#2D2D30" Foreground="#C0C0C0"
+                                    BorderBrush="#555555" BorderThickness="1"
+                                    FontSize="11" FontWeight="Bold" Padding="0"
+                                    ToolTip="Clear Start Node"/>
+                        </Grid>
+
+                        <!-- Node ListBox -->
+                        <ListBox ItemsSource="{Binding DialogueNodes}"
+                                 SelectedItem="{Binding SelectedDialogueNode}"
+                                 Background="#2D2D2D" Foreground="#E0E0E0"
+                                 BorderBrush="#3E3E42" BorderThickness="1"
+                                 MaxHeight="180" Margin="0,0,0,6">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Padding="6,3">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Id}" FontSize="11"
+                                                       Foreground="#C0C0C0" Width="80"/>
+                                            <TextBlock Text="{Binding SpeakerName}" FontSize="10"
+                                                       Foreground="#888" Width="70"
+                                                       Margin="4,0,0,0"/>
+                                            <TextBlock Text="{Binding Text}" FontSize="10"
+                                                       Foreground="#A0A0A0"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <!-- SELECTED NODE EDITOR -->
+                        <StackPanel Visibility="{Binding HasSelectedDialogueNode, Converter={StaticResource BoolToVis}}">
+                            <TextBlock Text="Node ID" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                            <TextBox Text="{Binding SelectedDialogueNode.Id, UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,0,0,6"/>
+
+                            <TextBlock Text="Node Text" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                            <TextBox Text="{Binding SelectedDialogueNode.Text, UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,0,0,6" AcceptsReturn="True" MinHeight="50"
+                                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+
+                            <TextBlock Text="Speaker NPC" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0"
+                                          ItemsSource="{Binding SelectedDialogueNode.AvailableNpcs}"
+                                          DisplayMemberPath="Key"
+                                          SelectedValuePath="Id"
+                                          SelectedValue="{Binding SelectedDialogueNode.SpeakerNpcId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Background="#2D2D2D" Foreground="#E0E0E0"
+                                          BorderBrush="#555555" BorderThickness="1"
+                                          Height="24"/>
+                                <Button Grid.Column="1" Content="X" Width="24" Height="24" Margin="4,0,0,0"
+                                        Command="{Binding ClearSpeakerNpcCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="11" FontWeight="Bold" Padding="0"
+                                        ToolTip="Clear Speaker"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- RESPONSES -->
+                        <StackPanel Visibility="{Binding HasSelectedDialogueNode, Converter={StaticResource BoolToVis}}">
+                            <TextBlock Text="RESPONSES" FontSize="11" FontWeight="SemiBold"
+                                       Foreground="#A0A0A0" Margin="0,6,0,4"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                <Button Content="+ Add" Width="52" Height="24"
+                                        Command="{Binding AddDialogueResponseCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="11" Padding="0"
+                                        ToolTip="Add a response"/>
+                                <Button Content="- Del" Width="48" Height="24" Margin="4,0,0,0"
+                                        Command="{Binding RemoveDialogueResponseCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="11" Padding="0"
+                                        ToolTip="Remove selected response"/>
+                                <Button Content="^" Width="28" Height="24" Margin="4,0,0,0"
+                                        FontWeight="Bold"
+                                        Command="{Binding MoveDialogueResponseUpCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="11" Padding="0"
+                                        ToolTip="Move selected response up"/>
+                                <Button Content="v" Width="28" Height="24" Margin="4,0,0,0"
+                                        FontWeight="Bold"
+                                        Command="{Binding MoveDialogueResponseDownCommand}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="11" Padding="0"
+                                        ToolTip="Move selected response down"/>
+                            </StackPanel>
+
+                            <ListBox ItemsSource="{Binding SelectedDialogueNode.Responses}"
+                                     SelectedItem="{Binding SelectedDialogueNode.SelectedResponse}"
+                                     Background="#2D2D2D" Foreground="#E0E0E0"
+                                     BorderBrush="#3E3E42" BorderThickness="1"
+                                     MaxHeight="120" Margin="0,0,0,4">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Padding="6,2">
+                                            <TextBlock Text="{Binding Text}" FontSize="10"
+                                                       Foreground="#C0C0C0"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+
+                        <!-- SELECTED RESPONSE EDITOR -->
+                        <StackPanel Visibility="{Binding SelectedDialogueNode.HasSelectedResponse, Converter={StaticResource BoolToVis}}">
+                            <TextBlock Text="Response Text" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                            <TextBox Text="{Binding SelectedDialogueNode.SelectedResponse.Text, UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,0,0,6" AcceptsReturn="True" MinHeight="40"
+                                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+
+                            <TextBlock Text="Next Node" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0"
+                                          ItemsSource="{Binding SelectedDialogueNode.SelectedResponse.AvailableNodes}"
+                                          DisplayMemberPath="Id"
+                                          SelectedValuePath="Id"
+                                          SelectedValue="{Binding SelectedDialogueNode.SelectedResponse.NextNodeId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Background="#2D2D2D" Foreground="#E0E0E0"
+                                          BorderBrush="#555555" BorderThickness="1"
+                                          Height="24"/>
+                                <Button Grid.Column="1" Content="X" Width="24" Height="24" Margin="4,0,0,0"
+                                        Command="{Binding DataContext.ClearResponseNextNodeCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="11" FontWeight="Bold" Padding="0"
+                                        ToolTip="Clear Next Node"/>
+                            </Grid>
+
+                            <TextBlock Text="Starts Quest" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0"
+                                          ItemsSource="{Binding SelectedDialogueNode.SelectedResponse.AvailableQuests}"
+                                          DisplayMemberPath="Key"
+                                          SelectedValuePath="Id"
+                                          SelectedValue="{Binding SelectedDialogueNode.SelectedResponse.StartsQuestId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Background="#2D2D2D" Foreground="#E0E0E0"
+                                          BorderBrush="#555555" BorderThickness="1"
+                                          Height="24"/>
+                                <Button Grid.Column="1" Content="X" Width="24" Height="24" Margin="4,0,0,0"
+                                        Command="{Binding DataContext.ClearResponseStartsQuestCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="11" FontWeight="Bold" Padding="0"
+                                        ToolTip="Clear Starts Quest"/>
+                            </Grid>
+
+                            <TextBlock Text="Completes Quest" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0"
+                                          ItemsSource="{Binding SelectedDialogueNode.SelectedResponse.AvailableQuests}"
+                                          DisplayMemberPath="Key"
+                                          SelectedValuePath="Id"
+                                          SelectedValue="{Binding SelectedDialogueNode.SelectedResponse.CompletesQuestId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Background="#2D2D2D" Foreground="#E0E0E0"
+                                          BorderBrush="#555555" BorderThickness="1"
+                                          Height="24"/>
+                                <Button Grid.Column="1" Content="X" Width="24" Height="24" Margin="4,0,0,0"
+                                        Command="{Binding DataContext.ClearResponseCompletesQuestCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        Background="#2D2D30" Foreground="#C0C0C0"
+                                        BorderBrush="#555555" BorderThickness="1"
+                                        FontSize="11" FontWeight="Bold" Padding="0"
+                                        ToolTip="Clear Completes Quest"/>
+                            </Grid>
+                        </StackPanel>
+<!-- EVENNIA METADATA -->
+                        <TextBlock Text="EVENNIA METADATA" FontSize="12" FontWeight="SemiBold"
+                                   Foreground="#E0E0E0" Margin="0,16,0,8"/>
+
+                        <TextBlock Text="Typeclass Path" Foreground="#808080" FontSize="11" Margin="0,0,0,2"/>
+                        <TextBox Text="{Binding SelectedDialogue.Metadata.TypeclassPath, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,0,6"/>
+
+<!-- ALIASES -->
+                        <StackPanel>
+                            <Grid Margin="0,12,0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="ALIASES" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="#A0A0A0" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <Button Content="+" Width="28" Height="22"
+                                            Command="{Binding AddMetadataAliasCommand}"
+                                            Background="#2D2D30" Foreground="#C0C0C0"
+                                            BorderBrush="#555555" BorderThickness="1"
+                                            FontSize="14" FontWeight="Bold" Padding="0"
+                                            ToolTip="Add Alias"/>
+                                    <Button Content="&#x2212;" Width="28" Height="22" Margin="4,0,0,0"
+                                            Command="{Binding RemoveMetadataAliasCommand}"
+                                            Background="#2D2D30" Foreground="#C0C0C0"
+                                            BorderBrush="#555555" BorderThickness="1"
+                                            FontSize="14" FontWeight="Bold" Padding="0"
+                                            ToolTip="Remove Alias"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <ListBox ItemsSource="{Binding SelectedDialogue.Metadata.Aliases}"
+                                     SelectedItem="{Binding SelectedMetadataAlias, Mode=TwoWay}"
+                                     BorderThickness="0" Background="Transparent">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}"
+                                                     Margin="0,0,2,0"/>
+                                            <TextBox Grid.Column="1" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+<!-- TAGS -->
+                        <StackPanel>
+                            <Grid Margin="0,12,0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="TAGS" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="#A0A0A0" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <Button Content="+" Width="28" Height="22"
+                                            Command="{Binding AddMetadataTagCommand}"
+                                            Background="#2D2D30" Foreground="#C0C0C0"
+                                            BorderBrush="#555555" BorderThickness="1"
+                                            FontSize="14" FontWeight="Bold" Padding="0"
+                                            ToolTip="Add Tag"/>
+                                    <Button Content="&#x2212;" Width="28" Height="22" Margin="4,0,0,0"
+                                            Command="{Binding RemoveMetadataTagCommand}"
+                                            Background="#2D2D30" Foreground="#C0C0C0"
+                                            BorderBrush="#555555" BorderThickness="1"
+                                            FontSize="14" FontWeight="Bold" Padding="0"
+                                            ToolTip="Remove Tag"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <ListBox ItemsSource="{Binding SelectedDialogue.Metadata.Tags}"
+                                     SelectedItem="{Binding SelectedMetadataTag, Mode=TwoWay}"
+                                     BorderThickness="0" Background="Transparent">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}"
+                                                     Margin="0,0,2,0"/>
+                                            <TextBox Grid.Column="1" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}"
+                                                     Margin="0,0,2,0"/>
+                                            <TextBox Grid.Column="2" Text="{Binding Data, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+<!-- ATTRIBUTES -->
+                        <StackPanel>
+                            <Grid Margin="0,12,0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="ATTRIBUTES" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="#A0A0A0" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <Button Content="+" Width="28" Height="22"
+                                            Command="{Binding AddMetadataAttributeCommand}"
+                                            Background="#2D2D30" Foreground="#C0C0C0"
+                                            BorderBrush="#555555" BorderThickness="1"
+                                            FontSize="14" FontWeight="Bold" Padding="0"
+                                            ToolTip="Add Attribute"/>
+                                    <Button Content="&#x2212;" Width="28" Height="22" Margin="4,0,0,0"
+                                            Command="{Binding RemoveMetadataAttributeCommand}"
+                                            Background="#2D2D30" Foreground="#C0C0C0"
+                                            BorderBrush="#555555" BorderThickness="1"
+                                            FontSize="14" FontWeight="Bold" Padding="0"
+                                            ToolTip="Remove Attribute"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <ListBox ItemsSource="{Binding SelectedDialogue.Metadata.Attributes}"
+                                     SelectedItem="{Binding SelectedMetadataAttribute, Mode=TwoWay}"
+                                     BorderThickness="0" Background="Transparent">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Column="0" Text="{Binding Key, UpdateSourceTrigger=PropertyChanged}"
+                                                     Margin="0,0,2,0"/>
+                                            <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                                     Margin="0,0,2,0"/>
+                                            <TextBox Grid.Column="2" Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}"
+                                                     Margin="0,0,2,0"/>
+                                            <TextBox Grid.Column="3" Text="{Binding LockString, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+<!-- PERMISSIONS -->
+                        <StackPanel>
+                            <Grid Margin="0,12,0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="PERMISSIONS" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="#A0A0A0" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <Button Content="+" Width="28" Height="22"
+                                            Command="{Binding AddMetadataPermissionCommand}"
+                                            Background="#2D2D30" Foreground="#C0C0C0"
+                                            BorderBrush="#555555" BorderThickness="1"
+                                            FontSize="14" FontWeight="Bold" Padding="0"
+                                            ToolTip="Add Permission"/>
+                                    <Button Content="&#x2212;" Width="28" Height="22" Margin="4,0,0,0"
+                                            Command="{Binding RemoveMetadataPermissionCommand}"
+                                            Background="#2D2D30" Foreground="#C0C0C0"
+                                            BorderBrush="#555555" BorderThickness="1"
+                                            FontSize="14" FontWeight="Bold" Padding="0"
+                                            ToolTip="Remove Permission"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <ListBox ItemsSource="{Binding SelectedDialogue.Metadata.Permissions}"
+                                     SelectedItem="{Binding SelectedMetadataPermission, Mode=TwoWay}"
+                                     BorderThickness="0" Background="Transparent">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding ., UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="0,2"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+
+                        <!-- LOCK STRING -->
+                        <TextBlock Text="Lock String" Foreground="#808080" FontSize="11"
+                                   Margin="0,16,0,2"/>
+                        <TextBox Text="{Binding SelectedDialogue.Metadata.LockString, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,0,12"/>
+
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Window>

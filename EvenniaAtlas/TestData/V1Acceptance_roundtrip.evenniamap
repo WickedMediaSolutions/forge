@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "id": "acceptance-v1",
   "name": "V1 Acceptance Test Map",
   "defaultRoomTitle": "Room",
@@ -503,5 +503,8 @@
       "lockString": "",
       "permissions": []
     }
-  ]
+  ],
+  "items": [],
+  "npcs": [],
+  "spawns": []
 }

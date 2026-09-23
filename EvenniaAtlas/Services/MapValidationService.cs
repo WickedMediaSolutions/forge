@@ -141,6 +141,206 @@ public class MapValidationService
             foreach (var p in d.DoorPermissions ?? new()) if (string.IsNullOrWhiteSpace(p)) issues.Add(new ValidationIssue { Severity = ValidationSeverity.Warning, Code = "M004", Message = "Door has empty permission.", ConnectionId = c.Id });
         }
 
+        // Items
+        foreach (var i in project.Items.Where(it => string.IsNullOrWhiteSpace(it.Id)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "I001", Message = "Item has empty ID." });
+        foreach (var g in project.Items.Where(it => !string.IsNullOrWhiteSpace(it.Id)).GroupBy(it => it.Id).Where(g => g.Count() > 1))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "I002", Message = "Duplicate Item ID '" + g.Key + "' found " + g.Count() + " times." });
+
+        // NPCs
+        foreach (var n in project.Npcs.Where(n => string.IsNullOrWhiteSpace(n.Id)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "N001", Message = "NPC has empty ID." });
+        foreach (var g in project.Npcs.Where(n => !string.IsNullOrWhiteSpace(n.Id)).GroupBy(n => n.Id).Where(g => g.Count() > 1))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "N002", Message = "Duplicate NPC ID '" + g.Key + "' found " + g.Count() + " times." });
+
+        // Spawns
+        foreach (var s in project.Spawns.Where(s => string.IsNullOrWhiteSpace(s.Id)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "S001", Message = "Spawn has empty ID." });
+        foreach (var g in project.Spawns.Where(s => !string.IsNullOrWhiteSpace(s.Id)).GroupBy(s => s.Id).Where(g => g.Count() > 1))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "S002", Message = "Duplicate Spawn ID '" + g.Key + "' found " + g.Count() + " times." });
+
+        // Shops
+        foreach (var s in project.Shops.Where(s => string.IsNullOrWhiteSpace(s.Id)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "H001", Message = "Shop has empty ID." });
+        foreach (var g in project.Shops.Where(s => !string.IsNullOrWhiteSpace(s.Id)).GroupBy(s => s.Id).Where(g => g.Count() > 1))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "H002", Message = "Duplicate Shop ID '" + g.Key + "' found " + g.Count() + " times." });
+
+        // LootTables
+        foreach (var l in project.LootTables.Where(l => string.IsNullOrWhiteSpace(l.Id)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "L001", Message = "LootTable has empty ID." });
+        foreach (var g in project.LootTables.Where(l => !string.IsNullOrWhiteSpace(l.Id)).GroupBy(l => l.Id).Where(g => g.Count() > 1))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "L002", Message = "Duplicate LootTable ID '" + g.Key + "' found " + g.Count() + " times." });
+
+        // Quests
+        foreach (var q in project.Quests.Where(q => string.IsNullOrWhiteSpace(q.Id)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "Q001", Message = "Quest has empty ID." });
+        foreach (var g in project.Quests.Where(q => !string.IsNullOrWhiteSpace(q.Id)).GroupBy(q => q.Id).Where(g => g.Count() > 1))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "Q002", Message = "Duplicate Quest ID '" + g.Key + "' found " + g.Count() + " times." });
+
+        // Dialogues
+        foreach (var d in project.Dialogues.Where(d => string.IsNullOrWhiteSpace(d.Id)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DG001", Message = "Dialogue has empty ID." });
+        foreach (var g in project.Dialogues.Where(d => !string.IsNullOrWhiteSpace(d.Id)).GroupBy(d => d.Id).Where(g => g.Count() > 1))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DG002", Message = "Duplicate Dialogue ID '" + g.Key + "' found " + g.Count() + " times." });
+
+        // ===== GAME DATA REGISTRY ID VALIDATION =====
+        // DamageTypes
+        foreach (var e in project.DamageTypes.Where(e => string.IsNullOrWhiteSpace(e.Id)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DT001", Message = "DamageType entry has empty ID." });
+        foreach (var g in project.DamageTypes.Where(e => !string.IsNullOrWhiteSpace(e.Id)).GroupBy(e => e.Id).Where(g => g.Count() > 1))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DT002", Message = "Duplicate DamageType ID '" + g.Key + "' found " + g.Count() + " times." });
+
+        // Factions
+        foreach (var e in project.Factions.Where(e => string.IsNullOrWhiteSpace(e.Id)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "FC001", Message = "Faction entry has empty ID." });
+        foreach (var g in project.Factions.Where(e => !string.IsNullOrWhiteSpace(e.Id)).GroupBy(e => e.Id).Where(g => g.Count() > 1))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "FC002", Message = "Duplicate Faction ID '" + g.Key + "' found " + g.Count() + " times." });
+
+        // Professions
+        foreach (var e in project.Professions.Where(e => string.IsNullOrWhiteSpace(e.Id)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "PF001", Message = "Profession entry has empty ID." });
+        foreach (var g in project.Professions.Where(e => !string.IsNullOrWhiteSpace(e.Id)).GroupBy(e => e.Id).Where(g => g.Count() > 1))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "PF002", Message = "Duplicate Profession ID '" + g.Key + "' found " + g.Count() + " times." });
+
+        // Species
+        foreach (var e in project.Species.Where(e => string.IsNullOrWhiteSpace(e.Id)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "SS001", Message = "Species entry has empty ID." });
+        foreach (var g in project.Species.Where(e => !string.IsNullOrWhiteSpace(e.Id)).GroupBy(e => e.Id).Where(g => g.Count() > 1))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "SS002", Message = "Duplicate Species ID '" + g.Key + "' found " + g.Count() + " times." });
+
+        // Alignments
+        foreach (var e in project.Alignments.Where(e => string.IsNullOrWhiteSpace(e.Id)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "AL001", Message = "Alignment entry has empty ID." });
+        foreach (var g in project.Alignments.Where(e => !string.IsNullOrWhiteSpace(e.Id)).GroupBy(e => e.Id).Where(g => g.Count() > 1))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "AL002", Message = "Duplicate Alignment ID '" + g.Key + "' found " + g.Count() + " times." });
+
+        // ===== DANGLING REFERENCE VALIDATION (Phase B) =====
+        var itemById = project.Items.Where(i => !string.IsNullOrWhiteSpace(i.Id)).ToDictionary(i => i.Id, i => i);
+        var npcById = project.Npcs.Where(n => !string.IsNullOrWhiteSpace(n.Id)).ToDictionary(n => n.Id, n => n);
+        var lootTableById = project.LootTables.Where(l => !string.IsNullOrWhiteSpace(l.Id)).ToDictionary(l => l.Id, l => l);
+        var questById = project.Quests.Where(q => !string.IsNullOrWhiteSpace(q.Id)).ToDictionary(q => q.Id, q => q);
+        var dialogueById = project.Dialogues.Where(d => !string.IsNullOrWhiteSpace(d.Id)).ToDictionary(d => d.Id, d => d);
+
+        // --- ROOM dangling references ---
+        // DR001: Spawn.RoomId
+        foreach (var s in project.Spawns.Where(s => !string.IsNullOrWhiteSpace(s.RoomId) && !roomById.ContainsKey(s.RoomId)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR001", Message = $"Spawn '{s.Id}' references missing Room '{s.RoomId}'." });
+
+        // DR002: NPC Patrol.Waypoints[].RoomId
+        foreach (var n in project.Npcs.Where(n => n.Patrol != null))
+            foreach (var wp in n.Patrol.Waypoints.Where(wp => !string.IsNullOrWhiteSpace(wp.RoomId) && !roomById.ContainsKey(wp.RoomId)))
+                issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR002", Message = $"NPC '{n.Id}' patrol waypoint references missing Room '{wp.RoomId}'." });
+
+        // DR003: Quest VisitRoom objective TargetId
+        foreach (var q in project.Quests)
+            foreach (var obj in q.Objectives.Where(o => o.ObjectiveType == QuestObjectiveType.VisitRoom && !string.IsNullOrWhiteSpace(o.TargetId) && !roomById.ContainsKey(o.TargetId)))
+                issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR003", Message = $"Quest '{q.Id}' VisitRoom objective references missing Room '{obj.TargetId}'." });
+
+        // --- ITEM dangling references ---
+        // DR004: Item.CraftingComponents[].ItemId
+        foreach (var i in project.Items)
+            foreach (var cc in i.CraftingComponents.Where(cc => !string.IsNullOrWhiteSpace(cc.ItemId) && !itemById.ContainsKey(cc.ItemId)))
+                issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR004", Message = $"Item '{i.Id}' crafting component references missing Item '{cc.ItemId}'." });
+
+        // DR005: Spawn.EntityId when EntityType == Item
+        foreach (var s in project.Spawns.Where(s => s.EntityType == EntityType.Item && !string.IsNullOrWhiteSpace(s.EntityId) && !itemById.ContainsKey(s.EntityId)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR005", Message = $"Spawn '{s.Id}' references missing Item '{s.EntityId}'." });
+// DR006: NPC Equipment[].ItemId
+        foreach (var n in project.Npcs)
+            foreach (var eq in n.Equipment.Where(eq => !string.IsNullOrWhiteSpace(eq.ItemId) && !itemById.ContainsKey(eq.ItemId)))
+                issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR006", Message = $"NPC '{n.Id}' equipment references missing Item '{eq.ItemId}'." });
+
+        // DR007: NPC Inventory[].ItemId
+        foreach (var n in project.Npcs)
+            foreach (var inv in n.Inventory.Where(inv => !string.IsNullOrWhiteSpace(inv.ItemId) && !itemById.ContainsKey(inv.ItemId)))
+                issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR007", Message = $"NPC '{n.Id}' inventory references missing Item '{inv.ItemId}'." });
+
+        // DR008: Shop Inventory[].ItemId
+        foreach (var s in project.Shops)
+            foreach (var inv in s.Inventory.Where(inv => !string.IsNullOrWhiteSpace(inv.ItemId) && !itemById.ContainsKey(inv.ItemId)))
+                issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR008", Message = $"Shop '{s.Id}' inventory references missing Item '{inv.ItemId}'." });
+
+        // DR009: LootTable Entries[].ItemId
+        foreach (var lt in project.LootTables)
+            foreach (var e in lt.Entries.Where(e => !string.IsNullOrWhiteSpace(e.ItemId) && !itemById.ContainsKey(e.ItemId)))
+                issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR009", Message = $"LootTable '{lt.Id}' entry references missing Item '{e.ItemId}'." });
+
+        // DR010: Quest CollectItem objective TargetId
+        foreach (var q in project.Quests)
+            foreach (var obj in q.Objectives.Where(o => o.ObjectiveType == QuestObjectiveType.CollectItem && !string.IsNullOrWhiteSpace(o.TargetId) && !itemById.ContainsKey(o.TargetId)))
+                issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR010", Message = $"Quest '{q.Id}' CollectItem objective references missing Item '{obj.TargetId}'." });
+
+        // DR011: Quest ItemRewards[].ItemId
+        foreach (var q in project.Quests)
+            foreach (var ir in q.ItemRewards.Where(ir => !string.IsNullOrWhiteSpace(ir.ItemId) && !itemById.ContainsKey(ir.ItemId)))
+                issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR011", Message = $"Quest '{q.Id}' item reward references missing Item '{ir.ItemId}'." });
+
+        // --- NPC dangling references ---
+        // DR012: Spawn.EntityId when EntityType == Npc
+        foreach (var s in project.Spawns.Where(s => s.EntityType == EntityType.Npc && !string.IsNullOrWhiteSpace(s.EntityId) && !npcById.ContainsKey(s.EntityId)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR012", Message = $"Spawn '{s.Id}' references missing NPC '{s.EntityId}'." });
+
+        // DR013: Shop.NpcId
+        foreach (var s in project.Shops.Where(s => !string.IsNullOrWhiteSpace(s.NpcId) && !npcById.ContainsKey(s.NpcId)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR013", Message = $"Shop '{s.Id}' references missing NPC '{s.NpcId}'." });
+
+        // DR014: Quest.GiverNpcId
+        foreach (var q in project.Quests.Where(q => !string.IsNullOrWhiteSpace(q.GiverNpcId) && !npcById.ContainsKey(q.GiverNpcId)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR014", Message = $"Quest '{q.Id}' references missing Giver NPC '{q.GiverNpcId}'." });
+
+        // DR015: Quest.TurnInNpcId
+        foreach (var q in project.Quests.Where(q => !string.IsNullOrWhiteSpace(q.TurnInNpcId) && !npcById.ContainsKey(q.TurnInNpcId)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR015", Message = $"Quest '{q.Id}' references missing TurnIn NPC '{q.TurnInNpcId}'." });
+
+        // DR016: Quest KillNpc objective TargetId
+        foreach (var q in project.Quests)
+            foreach (var obj in q.Objectives.Where(o => o.ObjectiveType == QuestObjectiveType.KillNpc && !string.IsNullOrWhiteSpace(o.TargetId) && !npcById.ContainsKey(o.TargetId)))
+                issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR016", Message = $"Quest '{q.Id}' KillNpc objective references missing NPC '{obj.TargetId}'." });
+
+        // DR017: Dialogue Nodes[].SpeakerNpcId
+        foreach (var d in project.Dialogues)
+            foreach (var node in d.Nodes.Where(n => !string.IsNullOrWhiteSpace(n.SpeakerNpcId) && !npcById.ContainsKey(n.SpeakerNpcId)))
+                issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR017", Message = $"Dialogue '{d.Id}' node '{node.Id}' references missing NPC '{node.SpeakerNpcId}'." });
+
+        // --- LOOT TABLE dangling references ---
+        // DR018: NPC.LootTableId
+        foreach (var n in project.Npcs.Where(n => !string.IsNullOrWhiteSpace(n.LootTableId) && !lootTableById.ContainsKey(n.LootTableId)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR018", Message = $"NPC '{n.Id}' references missing LootTable '{n.LootTableId}'." });
+
+        // DR019: Quest.RewardLootTableId
+        foreach (var q in project.Quests.Where(q => !string.IsNullOrWhiteSpace(q.RewardLootTableId) && !lootTableById.ContainsKey(q.RewardLootTableId)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR019", Message = $"Quest '{q.Id}' references missing Reward LootTable '{q.RewardLootTableId}'." });
+
+        // --- QUEST dangling references ---
+        // DR020: Dialogue Responses[].StartsQuestId
+        foreach (var d in project.Dialogues)
+            foreach (var node in d.Nodes)
+                foreach (var resp in node.Responses.Where(r => !string.IsNullOrWhiteSpace(r.StartsQuestId) && !questById.ContainsKey(r.StartsQuestId)))
+                    issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR020", Message = $"Dialogue '{d.Id}' response references missing Quest '{resp.StartsQuestId}' (StartsQuestId)." });
+
+        // DR021: Dialogue Responses[].CompletesQuestId
+        foreach (var d in project.Dialogues)
+            foreach (var node in d.Nodes)
+                foreach (var resp in node.Responses.Where(r => !string.IsNullOrWhiteSpace(r.CompletesQuestId) && !questById.ContainsKey(r.CompletesQuestId)))
+                    issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR021", Message = $"Dialogue '{d.Id}' response references missing Quest '{resp.CompletesQuestId}' (CompletesQuestId)." });
+
+        // --- DIALOGUE dangling references ---
+        // DR022: NPC.DialogueId
+        foreach (var n in project.Npcs.Where(n => !string.IsNullOrWhiteSpace(n.DialogueId) && !dialogueById.ContainsKey(n.DialogueId)))
+            issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR022", Message = $"NPC '{n.Id}' references missing Dialogue '{n.DialogueId}'." });
+
+        // --- INTRA-DIALOGUE dangling references ---
+        // DR023 & DR024: StartNodeId and Response.NextNodeId (within same Dialogue)
+        foreach (var d in project.Dialogues)
+        {
+            var nodeIds = new HashSet<string>(d.Nodes.Where(n => !string.IsNullOrWhiteSpace(n.Id)).Select(n => n.Id));
+            if (!string.IsNullOrWhiteSpace(d.StartNodeId) && !nodeIds.Contains(d.StartNodeId))
+                issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR023", Message = $"Dialogue '{d.Id}' StartNodeId '{d.StartNodeId}' not found in dialogue nodes." });
+            foreach (var node in d.Nodes)
+                foreach (var resp in node.Responses.Where(r => !string.IsNullOrWhiteSpace(r.NextNodeId) && !nodeIds.Contains(r.NextNodeId)))
+                    issues.Add(new ValidationIssue { Severity = ValidationSeverity.Error, Code = "DR024", Message = $"Dialogue '{d.Id}' node '{node.Id}' response NextNodeId '{resp.NextNodeId}' not found in dialogue nodes." });
+        }
+
         issues = issues.GroupBy(i => i.Code + "|" + i.ConnectionId + "|" + i.RoomId + "|" + i.Message).Select(g => g.First()).ToList();
         return issues;
     }

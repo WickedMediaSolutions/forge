@@ -1,0 +1,143 @@
+{
+  "version": 2,
+  "id": "v2-test",
+  "name": "V2 Architecture Test",
+  "defaultRoomTitle": "",
+  "rooms": [
+    {
+      "id": "v2_room_1",
+      "title": "Test Room",
+      "roomType": "",
+      "description": "",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "tags": [],
+      "notes": "",
+      "typeclassPath": "",
+      "aliases": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "lockString": "",
+      "permissions": []
+    },
+    {
+      "id": "v2_room_2",
+      "title": "Test Room 2",
+      "roomType": "",
+      "description": "",
+      "x": 0,
+      "y": -1,
+      "z": 0,
+      "tags": [],
+      "notes": "",
+      "typeclassPath": "",
+      "aliases": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "lockString": "",
+      "permissions": []
+    }
+  ],
+  "connections": [
+    {
+      "id": "v2_conn_1",
+      "sourceRoomId": "v2_room_1",
+      "destinationRoomId": "v2_room_2",
+      "direction": 0,
+      "reverseDirection": 1,
+      "isOneWay": false,
+      "exitType": 0,
+      "aliases": "",
+      "sharedDoorId": "",
+      "door": null,
+      "autoCreateReverse": true,
+      "keyName": "",
+      "description": "",
+      "typeclassPath": "",
+      "aliasesList": [],
+      "evenniaTags": [],
+      "attributes": [],
+      "lockString": "",
+      "permissions": []
+    }
+  ],
+  "items": [
+    {
+      "id": "item_0001",
+      "key": "Rusty Sword",
+      "description": "A worn but serviceable blade.",
+      "notes": "Starter weapon",
+      "metadata": {
+        "typeclassPath": "typeclasses.items.Weapon",
+        "aliases": [
+          {
+            "key": "sword",
+            "category": "weapons"
+          }
+        ],
+        "tags": [
+          {
+            "key": "starter_gear",
+            "category": "loot",
+            "data": ""
+          }
+        ],
+        "attributes": [
+          {
+            "key": "durability",
+            "value": "50",
+            "category": "stats",
+            "lockString": ""
+          }
+        ],
+        "permissions": [
+          "Players"
+        ],
+        "lockString": "get:true()"
+      }
+    }
+  ],
+  "npcs": [
+    {
+      "id": "npc_0001",
+      "key": "Town Guard",
+      "description": "A stoic guard watching the town gates.",
+      "notes": "Neutral faction",
+      "metadata": {
+        "typeclassPath": "typeclasses.npcs.Guard",
+        "aliases": [],
+        "tags": [
+          {
+            "key": "town",
+            "category": "zone",
+            "data": ""
+          }
+        ],
+        "attributes": [],
+        "permissions": [],
+        "lockString": "talk:true()"
+      }
+    }
+  ],
+  "spawns": [
+    {
+      "id": "spawn_0001",
+      "roomId": "acceptance_room_0001",
+      "entityId": "item_0001",
+      "entityType": 0,
+      "quantity": 3,
+      "respawnSeconds": 60,
+      "enabled": true
+    },
+    {
+      "id": "spawn_0002",
+      "roomId": "acceptance_room_0002",
+      "entityId": "npc_0001",
+      "entityType": 1,
+      "quantity": 1,
+      "respawnSeconds": 300,
+      "enabled": false
+    }
+  ]
+}

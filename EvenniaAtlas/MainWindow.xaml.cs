@@ -26,7 +26,7 @@ public partial class MainWindow : Window
     {
         try
         {
-            var iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EvenniaAtlas.ico");
+            var iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "the-forge-logo-ico.png");
             if (File.Exists(iconPath))
                 Icon = BitmapFrame.Create(new Uri(iconPath));
         }
@@ -103,9 +103,8 @@ public partial class MainWindow : Window
     // Help menu handlers
     private void HelpHowToUse_Click(object s, RoutedEventArgs e)
     {
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(
-            "https://github.com/dirtysouthjosh/evennia-atlas#readme")
-            { UseShellExecute = true });
+        var dialog = new Dialogs.HelpManualWindow { Owner = this };
+        dialog.ShowDialog();
     }
 
     private void HelpGitHub_Click(object s, RoutedEventArgs e)
@@ -119,6 +118,55 @@ public partial class MainWindow : Window
     {
         var dialog = new Dialogs.AboutDialog { Owner = this };
         dialog.ShowDialog();
+    }
+
+    private void ItemEditor_Click(object s, RoutedEventArgs e)
+    {
+        var editor = new Views.ItemEditorWindow(ViewModel.CurrentProject, ViewModel.MarkDirtyPublic);
+        editor.Owner = this;
+        editor.Show();
+    }
+
+    private void NpcEditor_Click(object s, RoutedEventArgs e)
+    {
+        var editor = new Views.NpcEditorWindow(ViewModel.CurrentProject, ViewModel.MarkDirtyPublic);
+        editor.Owner = this;
+        editor.Show();
+    }
+
+    private void ShopEditor_Click(object s, RoutedEventArgs e)
+    {
+        var editor = new Views.ShopEditorWindow(ViewModel.CurrentProject, ViewModel.MarkDirtyPublic);
+        editor.Owner = this;
+        editor.Show();
+    }
+
+    private void LootTableEditor_Click(object s, RoutedEventArgs e)
+    {
+        var editor = new Views.LootTableEditorWindow(ViewModel.CurrentProject, ViewModel.MarkDirtyPublic);
+        editor.Owner = this;
+        editor.Show();
+    }
+
+    private void QuestEditor_Click(object s, RoutedEventArgs e)
+    {
+        var editor = new Views.QuestEditorWindow(ViewModel.CurrentProject, ViewModel.MarkDirtyPublic);
+        editor.Owner = this;
+        editor.Show();
+    }
+
+    private void DialogueEditor_Click(object s, RoutedEventArgs e)
+    {
+        var editor = new Views.DialogueEditorWindow(ViewModel.CurrentProject, ViewModel.MarkDirtyPublic);
+        editor.Owner = this;
+        editor.Show();
+    }
+
+    private void GameDataEditor_Click(object s, RoutedEventArgs e)
+    {
+        var editor = new Views.GameDataEditorWindow(ViewModel.CurrentProject, ViewModel.MarkDirtyPublic);
+        editor.Owner = this;
+        editor.Show();
     }
 }
 
